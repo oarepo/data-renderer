@@ -28,6 +28,23 @@ A library for providing simple (but configurable) UI for rendering JSON data
 
 See the demo running at [http://mesemus.no-ip.org/demo-data-renderer](http://mesemus.no-ip.org/demo-data-renderer)
 
+## Example
+
+```vue
+<template lang="pug">
+    data-renderer(:data="data")
+</template>
+<script>
+export default {
+    data: function() {
+        return {
+            data: { 'title': 'Hello world'}
+        }
+    }
+}
+</script>
+```
+
 ## Installation
 ```
 yarn add @oarepo/data-renderer vue-uid
