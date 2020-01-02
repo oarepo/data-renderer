@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+- 11
+script: yarn build && yarn test:unit
+
+#deploy:
+#  provider: npm
+#  edge: true
+#  src: dist
+#  access: public
+#  email: miroslav.simek@gmail.com
+#  api_key:
+#    secure: c0KBdOXEoLj8ntqkksW4OluA45wgvChzZRLNLlaV6DQJRZvQBktmrKepCHbxK+/pJ+LnsakQd6Cye0McocwZGFSOI6VK7Oj5BO4cLCx6ES9DVhgp8TMAbX4WE/hQ0Vvy4zluwMV9M59cjGiFeExwsfDtACYos0BUkU7FYehtSF8rBLb2tsdNvims2VIz4Ub5xdZOKQRTFyLu04EdT2mfr8K3v+dpsL0uCj8MPrFkodkbhIOfvq0jx0FQmuxw1EEj9NwofkW/KzXEFEMnKhi5baIT2TsJCdEV51rjt3TgZ7BPJw5V4IftHbAULsvUls1dOju3wVh9IwsTAdvGBDITER7wp+ekwvwkPeuS4DWyCvUWUfMS87vrrIBqlYbsPg6anuUt/ZMnvg6ma84h1MqZgB20sNqS1UXTU/ERYJEIXN0iq1xm5D7YaCg8//QpzuQ7wudT0NJOXiqgJyFl6tDkB6Z3Kh8t81O2hAjtE9zRLYschFhNVEuHZLv0eAWmFbR1vTSNBcVkv6fsLcwGZ0k8FRwddAg9UHg+jIjZqXGI7zRV44O0jLGrJVvnp6BVgyHWpO1gVMpplhRJRxK3FTS0vRbZFaveBRY8tY7jUyic7bGOKEFa13b95NkMiRxGQbTIb4WVLUThiJbK8pLK8Fp/955LDewaWO1wNLKQg17hcgA=
+#  on:
+#    tags: true
+#    repo: oarepo/invenio-api-vuex
+#    only: master
