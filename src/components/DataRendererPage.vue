@@ -14,7 +14,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererDefault.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererDefault.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Default rendering
                     q-separator.q-mb-md.q-mt-sm
@@ -24,7 +24,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererSlotThumbnail.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererSlotThumbnail.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Rendered with #[code v-slot:value-thumbnail]
                     q-separator.q-mb-md.q-mt-sm
@@ -35,7 +35,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererSlotRootThumbnail.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererSlotRootThumbnail.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Rendered with #[code v-slot:-value-thumbnail]
                     q-separator.q-mb-md.q-mt-sm
@@ -45,7 +45,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererSlotValueContact.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererSlotValueContact.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Rendered with #[code v-slot:value-contact]
                     q-separator.q-mb-md.q-mt-sm
@@ -55,7 +55,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererSlotTreeDefinition.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererSlotTreeDefinition.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Rendered with tree definition
                     q-separator.q-mb-md.q-mt-sm
@@ -67,7 +67,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererComponentCreator.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererComponentCreator.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Rendered with custom component for Creator
                     q-separator.q-mb-md.q-mt-sm
@@ -77,7 +77,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererComponentCreatorLabel.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererComponentCreatorLabel.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Rendered with custom component for Creator label
                     q-separator.q-mb-md.q-mt-sm
@@ -88,7 +88,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererComponentCreatorValue.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererComponentCreatorValue.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Rendered with custom component for Creator value
                     q-separator.q-mb-md.q-mt-sm
@@ -98,7 +98,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererComponentCreatorSkip.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererComponentCreatorSkip.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Skipping creator with a custom component set to null
                     q-separator.q-mb-md.q-mt-sm
@@ -108,7 +108,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererComponentCreatorDefinition.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererComponentCreatorDefinition.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Rendered with custom component in definition
                     q-separator.q-mb-md.q-mt-sm
@@ -120,7 +120,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererDynamic.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererDynamic.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium No definition at all
                     q-separator.q-mb-md.q-mt-sm
@@ -130,7 +130,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererDynamicContact.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererDynamicContact.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Definition with dynamic contact details
                     q-separator.q-mb-md.q-mt-sm
@@ -140,7 +140,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererDynamicContactDefinition.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererDynamicContactDefinition.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Dynamic definition with custom definition of Contact
                     q-separator.q-mb-md.q-mt-sm
@@ -150,7 +150,7 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererDynamicNoContact.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererDynamicNoContact.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Dynamic definition with removed Contact
                     q-separator.q-mb-md.q-mt-sm
