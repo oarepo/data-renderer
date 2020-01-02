@@ -1,6 +1,6 @@
-# invenio-quasar
+# @oarepo/data-renderer
 
-A library for providing simple (but configurable) UI for ``@oarepo/invenio-api-vuex``
+A library for providing simple (but configurable) UI for rendering JSON data
 
 <!-- toc -->
 
@@ -17,7 +17,7 @@ A library for providing simple (but configurable) UI for ``@oarepo/invenio-api-v
 
 ## Demo
 
-See the demo running at [http://mesemus.no-ip.org/demo-invenio-quasar](http://mesemus.no-ip.org/demo-invenio-quasar)
+See the demo running at [http://mesemus.no-ip.org/demo-data-renderer](http://mesemus.no-ip.org/demo-data-renderer)
 
 ## Installation
 ```
