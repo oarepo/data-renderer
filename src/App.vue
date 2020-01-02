@@ -1,17 +1,21 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<template lang="pug">
+q-layout(view='lHh Lpr lFf')
+  q-header.glossy(elevated='')
+    q-toolbar
+      q-toolbar-title
+        | @oarepo/data-renderer
+  q-page-container
+    data-renderer-page
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import DataRendererPage from './components/DataRendererPage'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+      'data-renderer-page': DataRendererPage
   }
 }
 </script>
