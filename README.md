@@ -2,6 +2,15 @@
 
 A library for providing simple (but configurable) UI for rendering JSON data
 
+<p align="center">
+    <a href="https://travis-ci.org/oarepo/data-renderer" target="_blank">
+        <img src="https://img.shields.io/travis/oarepo/data-renderer"
+            alt="travis build stat"></a>
+    <a href="https://www.npmjs.com/package/@oarepo/data-renderer" target="_blank">
+        <img src="https://img.shields.io/npm/v/@oarepo/data-renderer"
+            alt="npm version"></a>
+</p>
+
 <!-- toc -->
 
 - [Demo](#demo)
