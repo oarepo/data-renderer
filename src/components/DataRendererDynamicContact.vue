@@ -4,12 +4,7 @@ data-renderer(:data="data" :url="url" :definition="d5"
 </template>
 
 <script>
-import { DataRenderer } from '@oarepo/invenio-quasar';
-
 export default {
-    components: {
-        'data-renderer': DataRenderer
-    },
     props: {
         query: Object
     },

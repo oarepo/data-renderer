@@ -418,7 +418,7 @@ export default {
         currentSchema() {
             const schema = this.currentSchemaCode;
             if (isString(schema)) {
-                return this.$oarepo.quasar.schemas[schema];
+                return this.$oarepo.dataRenderer.schemas[schema];
             }
             return schema;
         },
@@ -429,7 +429,7 @@ export default {
             if (this.labelTranslator) {
                 return this.labelTranslator;
             }
-            return this.$oarepo.quasar.labelTranslator;
+            return this.$oarepo.dataRenderer.labelTranslator;
         },
         dynamicRendering() {
             if (this.definition === undefined) {
@@ -438,7 +438,7 @@ export default {
             if (this.dynamicDefinition !== undefined) {
                 return this.dynamicDefinition;
             }
-            return this.$oarepo.quasar.dynamicDefinition;
+            return this.$oarepo.dataRenderer.dynamicDefinition;
         }
     },
     render(h) {

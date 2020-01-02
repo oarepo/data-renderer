@@ -5,8 +5,6 @@ data-renderer(:data="data" :definition="d1" :url="url"
 </template>
 
 <script>
-import { DataRenderer } from '@oarepo/invenio-quasar';
-
 /* eslint no-console:off */
 
 const CustomComponent = {
@@ -52,9 +50,6 @@ const CustomTableComponent = {
 };
 
 export default {
-    components: {
-        'data-renderer': DataRenderer
-    },
     props: {
         query: Object
     },

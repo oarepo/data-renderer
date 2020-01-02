@@ -3,11 +3,7 @@ data-renderer(:data="data" :definition="d3" :url="url" :schema="query.schema")
 </template>
 
 <script>
-import { DataRenderer } from '@oarepo/invenio-quasar';
 export default {
-    components: {
-        'data-renderer': DataRenderer
-    },
     props: {
         query: Object
     },

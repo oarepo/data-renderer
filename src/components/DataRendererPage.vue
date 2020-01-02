@@ -1,8 +1,5 @@
 <template lang="pug">
 q-page.q-ma-lg
-    q-btn.float-right(icon="launch"
-        href="https://github.com/oarepo/invenio-oarepo-ui-quasar/tree/invenio-3.2/src/components/misc/DataRendererPage.vue"
-        type="a" target="_blank" flat) View source
 
     .q-gutter-sm.fixed-top-right.z-max.q-pt-xs.q-pr-lg.text-white
         span Display schema:

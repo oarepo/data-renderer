@@ -5,18 +5,13 @@ q-layout(view='lHh Lpr lFf')
       q-toolbar-title
         | @oarepo/data-renderer
   q-page-container
-    data-renderer-page
+    router-view
 </template>
 
 <script>
 
-import DataRendererPage from './components/DataRendererPage'
-
 export default {
   name: 'app',
-  components: {
-      'data-renderer-page': DataRendererPage
-  }
 }
 </script>
 
