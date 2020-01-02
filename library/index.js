@@ -30,7 +30,9 @@ export default {
                     value: {
                         style: { display: 'inline' }
                     },
-                    childrenWrapper: {},
+                    childrenWrapper: {
+                        style: {'margin-left': '30px'}
+                    },
                     root: {
                         element: 'div',
                         class: '',
@@ -49,7 +51,9 @@ export default {
                         style: { display: 'block' }
                     },
                     value: {},
-                    childrenWrapper: {},
+                    childrenWrapper: {
+                        style: {'margin-left': '30px'}
+                    },
                     root: {
                         element: 'div',
                         class: '',
@@ -72,7 +76,8 @@ export default {
                         class: ['col-9']
                     },
                     value: {},
-                    childrenWrapper: {},
+                    childrenWrapper: {
+                    },
                     root: {
                         element: 'div',
                         class: '',
