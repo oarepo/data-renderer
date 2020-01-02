@@ -2,23 +2,15 @@
   "name": "@oarepo/data-renderer",
   "version": "1.0.0",
   "private": false,
-  "main": "oarepo-data-renderer.esm.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "demo-build": "vue-cli-service build",
     "build": "./build.sh",
+    "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
+    "demo-build": "vue-cli-service build",
     "toc": "markdown-toc --maxdepth 5 -i README.md"
   },
-  "license": "MIT",
-  "keywords": [
-    "oarepo",
-    "vuejs",
-    "data visualization",
-    "json visualization",
-    "json rendering"
-  ],
-  "homepage": "https://github.com/oarepo/data-renderer",
+  "main": "oarepo-data-renderer.esm.js",
   "dependencies": {
     "@oarepo/vue-query-synchronizer": "^1.1.0",
     "@quasar/extras": "^1.0.0",
@@ -33,12 +25,15 @@
     "@vue/cli-plugin-babel": "^4.1.0",
     "@vue/cli-plugin-eslint": "^4.1.0",
     "@vue/cli-plugin-router": "^4.1.2",
+    "@vue/cli-plugin-unit-mocha": "^4.1.2",
     "@vue/cli-service": "^4.1.0",
+    "@vue/test-utils": "1.0.0-beta.29",
     "babel-eslint": "^10.0.3",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-imports": "1.5.0",
     "babel-preset-vue": "^2.0.2",
     "bili": "^4.8.1",
+    "chai": "^4.1.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "json": "^9.0.6",
@@ -49,5 +44,14 @@
     "vue-cli-plugin-pug": "^1.0.7",
     "vue-cli-plugin-quasar": "^2.0.0",
     "vue-template-compiler": "^2.6.10"
-  }
+  },
+  "homepage": "https://github.com/oarepo/data-renderer",
+  "keywords": [
+    "oarepo",
+    "vuejs",
+    "data visualization",
+    "json visualization",
+    "json rendering"
+  ],
+  "license": "MIT"
 }
