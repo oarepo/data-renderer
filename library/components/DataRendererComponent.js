@@ -16,7 +16,6 @@ export default {
             type: [Array, Object]
         },
         url: String,
-        debug: Boolean,
         components: {
             type: [Function, Object],
         },

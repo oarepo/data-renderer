@@ -102,8 +102,7 @@ To apply this definition, add to template:
 
 ```pug
 data-renderer(:definition="definition" :data="data" :url="url for a router-link" 
-              schema="block|inline|table|<object with default definition>"
-              :debug="true")
+              schema="block|inline|table|<object with default definition>")
 ```
 
 ### Overriding elements with slots
@@ -111,7 +110,7 @@ data-renderer(:definition="definition" :data="data" :url="url for a router-link"
 Each part of the definition can be overridden with a template:
 
 ```pug
-data-renderer(:definition="definition" :data="data" :url="url for a" :debug="true")
+data-renderer(:definition="definition" :data="data" :url="url for a")
     template(v-slot:value-thumbnail="{context, definition, data, paths, value}")
         <img :src="value">
 ```
