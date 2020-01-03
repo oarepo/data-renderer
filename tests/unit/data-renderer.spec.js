@@ -181,7 +181,7 @@ describe('DataRendererComponent.vue', () => {
                         }
                     }
                 }
-            },
+            }
         })
         expect(wrapper.html()).to.include(
             '<img src="abc" width="16" class="iqdr-value iqdr-value-inline iqdr-path-thumbnail" style="display: inline;">')
@@ -201,14 +201,14 @@ describe('DataRendererComponent.vue', () => {
                     creator: {
                         label: {
                             component: {
-                                render(h) {
+                                render (h) {
                                     return h('span', '**label**')
                                 }
                             }
                         }
                     }
                 }
-            },
+            }
         })
         expect(wrapper.html()).to.include(
             '**label**')
@@ -230,7 +230,7 @@ describe('DataRendererComponent.vue', () => {
                     }
                 },
                 url: 'http://google.com'
-            },
+            }
         })
         expect(wrapper.html()).to.include(
             '<router-link to="http://google.com" class="iqdr-link iqdr-link-inline iqdr-path-creator">')
@@ -254,7 +254,7 @@ describe('DataRendererComponent.vue', () => {
                     }
                 },
                 url: 'http://google.com'
-            },
+            }
         })
         expect(wrapper.html()).to.include(
             '<router-link to="http://google.com" class="test iqdr-link iqdr-link-inline iqdr-path-creator">')
@@ -275,15 +275,39 @@ describe('DataRendererComponent.vue', () => {
                         link: {
                             element: 'a',
                             attrs: {
-                                href: ({url}) => url
+                                href: ({ url }) => url
                             }
                         }
                     }
                 },
                 url: 'http://google.com'
-            },
+            }
         })
         expect(wrapper.html()).to.include(
             '<a href="http://google.com" class="iqdr-link iqdr-link-inline iqdr-path-creator"><div class="iqdr-value iqdr-value-inline iqdr-path-creator" style="display: inline;">abc</div></a>')
+    })
+
+    it('renders correctly table in dynamic mode', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    title: 'abc',
+                    location: {
+                        street: '1'
+                    }
+                },
+                pathDefinitions: {
+                    path: 'location',
+                    dynamic: true,
+                    label: 'Location'
+                },
+                schema: 'table'
+            }
+        })
+        expect(wrapper.html()).to.include('<td class="iqdr-value-wrapper iqdr-value-wrapper-table iqdr-path-location"><table class="iqdr-children-wrapper iqdr-children-wrapper-table iqdr-path-location" style="border-collapse: collapse;">')
     })
 })

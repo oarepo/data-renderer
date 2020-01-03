@@ -9,6 +9,10 @@ function isObject (obj) {
     return Object(obj) === obj
 }
 
+function applyDefault(...args) {
+    return args.find(x => x !== undefined)
+}
+
 export default {
     name: 'data-renderer',
     props: {
@@ -163,8 +167,10 @@ export default {
                     })
                 }
             }
-            const nestedChildren = this.defunc(definition.nestedChildren, { context: data, definition, paths }) ||
-                this.defunc(this.nestedChildren, { context: data, definition, paths })
+            const nestedChildren = applyDefault(
+                this.defunc(definition.nestedChildren, { context: data, definition, paths }),
+                this.defunc(this.nestedChildren, { context: data, definition, paths }) ||
+                this.currentSchema.nestedChildren)
 
             const valueWrapperDef = {
                 ...this.currentSchema['valueWrapper'],
