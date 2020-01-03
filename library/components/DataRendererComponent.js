@@ -191,7 +191,7 @@ export default {
                             renderedValueDef, key, paths, value)
                         if (renderedValue.content !== undefined) {
                             // if handled via slot or component, return the rendering
-                            if (definition.link) {
+                            if (definition.link && this.url !== undefined) {
                                 renderedValues.push(
                                     ...this.createLink(h, definition.link, ...renderedValue.content,
                                         definition, data, key + '{link}', paths, values))
@@ -204,7 +204,7 @@ export default {
                                 value = JSON.stringify(value, null, 4)
                                     .replace(',', ', ')
                             }
-                            if (definition.link) {
+                            if (definition.link && this.url !== undefined) {
                                 renderedValues.push(
                                     ...this.createLink(h, definition.link, renderedValue.factory(value),
                                         definition, data, key + '{link}', paths, values))
