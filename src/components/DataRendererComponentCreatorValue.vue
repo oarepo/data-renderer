@@ -1,6 +1,6 @@
 <template lang="pug">
 data-renderer(:data="data" :definition="d1" :url="url"
-    :schema="query.schema" :components="creatorValueCustomComponent")
+    :schema="query.schema" :pathDefinitions="creatorValueCustomComponent")
 
 </template>
 
@@ -88,8 +88,16 @@ export default {
                 }
             ],
             creatorValueCustomComponent: {
-                'value-creator': CustomComponent,
-                'value-creator$table': CustomTableComponent
+                'creator': {
+                    value: {
+                        component: CustomComponent
+                    }
+                },
+                'creator$table': {
+                    value: {
+                        component: CustomTableComponent
+                    }
+                }
             },
         };
     }

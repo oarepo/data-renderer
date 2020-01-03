@@ -1,6 +1,6 @@
 <template lang="pug">
 data-renderer(:data="data" :definition="d1" :url="url"
-    :schema="query.schema" :components="creatorCustomComponent")
+    :schema="query.schema" :pathDefinitions="creatorCustomComponent")
 
 </template>
 
@@ -68,7 +68,11 @@ export default {
                 }
             ],
             creatorCustomComponent: {
-                'wrapper-creator': CustomComponent
+                'creator': {
+                    wrapper: {
+                        component: CustomComponent
+                    }
+                }
             },
 
         };

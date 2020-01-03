@@ -1,6 +1,6 @@
 <template lang="pug">
 data-renderer(:data="data" :definition="d1" :url="url"
-    :schema="query.schema" :components="creatorLabelCustomComponent")
+    :schema="query.schema" :pathDefinitions="creatorLabelCustomComponent")
 
 </template>
 
@@ -88,8 +88,16 @@ export default {
                 }
             ],
             creatorLabelCustomComponent: {
-                'label-creator': CustomComponent,
-                'label-creator$table': CustomTableComponent
+                creator: {
+                    label: {
+                        component: CustomComponent
+                    }
+                },
+                creator$table: {
+                    label: {
+                        component: CustomTableComponent
+                    }
+                }
             },
         };
     }

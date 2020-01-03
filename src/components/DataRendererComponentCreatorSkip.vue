@@ -1,6 +1,6 @@
 <template lang="pug">
 data-renderer(:data="data" :definition="d1" :url="url"
-    :schema="query.schema" :components="creatorSkip")
+    :schema="query.schema" :pathDefinitions="creatorSkip")
 
 
 </template>
@@ -47,7 +47,7 @@ export default {
                 }
             ],
             creatorSkip: {
-                'wrapper-creator': null
+                'creator': null
             },
         };
     }

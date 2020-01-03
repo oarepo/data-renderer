@@ -133,4 +133,84 @@ describe('DataRendererComponent.vue', () => {
         expect(wrapper.html()).to.include(
             '<div class=""><div class="wr"></div></div>')
     })
+
+    it('value slot gets value', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    title: 'abc'
+                }
+            },
+            scopedSlots: {
+                'value-title': (props) => {
+                    return `${props.value}`
+                }
+            }
+        })
+        expect(wrapper.html()).to.include(
+            '<div class=""><div class="iqdr-wrapper iqdr-wrapper-inline iqdr-path-title"><label class="iqdr-label iqdr-label-inline iqdr-path-title">title: </label><div class="iqdr-value-wrapper iqdr-value-wrapper-inline iqdr-path-title" style="display: inline;">abc</div></div></div>')
+    })
+
+    it('attr gets value', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    thumbnail: 'abc'
+                },
+                pathDefinitions: {
+                    thumbnail: {
+                        path: 'thumbnail',
+                        label: 'Thumbnail',
+                        value: {
+                            component: 'img',
+                            attrs: {
+                                src: (args) => {
+                                    expect(Object.keys(args)).to.contain('value')
+                                    return args.value
+                                },
+                                width: '16'
+                            }
+                        }
+                    }
+                }
+            },
+        })
+        expect(wrapper.html()).to.include(
+            '<img src="abc" width="16" class="iqdr-value iqdr-value-inline iqdr-path-thumbnail" style="display: inline;">')
+    })
+
+    it('correct label component rendering in pathDefinitions', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    creator: 'abc'
+                },
+                pathDefinitions: {
+                    creator: {
+                        label: {
+                            component: {
+                                render(h) {
+                                    return h('span', '**label**')
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+        })
+        expect(wrapper.html()).to.include(
+            '**label**')
+    })
 })

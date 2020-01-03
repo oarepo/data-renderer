@@ -1,4 +1,5 @@
 import { JSONPath } from 'jsonpath-plus'
+import deepmerge from 'deepmerge'
 
 function isString (obj) {
     return (Object.prototype.toString.call(obj) === '[object String]')
@@ -16,9 +17,6 @@ export default {
             type: [Array, Object]
         },
         url: String,
-        components: {
-            type: [Function, Object]
-        },
         root: Object,
         showEmpty: Boolean,
         nestedChildren: Boolean,
@@ -27,7 +25,8 @@ export default {
         dynamicDefinition: Boolean,
         pathDefinitions: {
             type: [Function, Object]
-        }
+        },
+        definitionMergeOptions: Object,     // to be used for deepmerge
     },
     methods: {
         renderDefinitionList (h, data, definition, key, paths) {
@@ -41,7 +40,7 @@ export default {
             let localKey = key
             if (definition.path) {
                 values = JSONPath({
-                    path: this.defunc(definition.path, data, definition, paths),
+                    path: this.defunc(definition.path, { context: data, definition, paths }),
                     json: data
                 })
                 const noArrayPath = definition.path.replace(/\[.*?\]/g, '')
@@ -54,8 +53,23 @@ export default {
                 }
             }
 
+            const overridenDefinition = this.currentPathDefinitions(
+                {
+                    context: data,
+                    definition,
+                    data: this.data,
+                    paths: paths
+                })
+            if (overridenDefinition === null) {
+                return []
+            }
+            if (overridenDefinition !== undefined) {
+                definition = ((this.definitionMergeOptions || {}).merge || deepmerge)(
+                    definition, overridenDefinition, this.definitionMergeOptions)
+            }
+
             // do not show empty value unless explicitly asked for
-            const showEmpty = this.defunc(definition.showEmpty, data, definition, paths)
+            const showEmpty = this.defunc(definition.showEmpty, { context: data, definition, paths })
             if (values.length === 0 && (showEmpty === false || (showEmpty === undefined && this.showEmpty === false))) {
                 return []
             }
@@ -63,12 +77,12 @@ export default {
             // create the definition of wrapper
             const wrapperDef = {
                 ...this.currentSchema['wrapper'],
-                ...(this.defunc(definition.wrapper, data, definition, paths, false) || {})
+                ...(this.defunc(definition.wrapper, { context: data, definition, paths }, false) || {})
             }
             const wrapper = this.renderElement(h, data, definition,
                 'wrapper', 'div',
                 wrapperDef, key, paths, values)
-            if (wrapper.content) {
+            if (wrapper.content !== undefined) {
                 // if handled via slot or component, return the rendering
                 return wrapper.content
             }
@@ -76,7 +90,7 @@ export default {
             const wrapperContent = []
 
             // get the label definition
-            let labelDef = this.defunc(definition.label, data, definition, paths, false) || {}
+            let labelDef = this.defunc(definition.label, { context: data, definition, paths }, false) || {}
             // if the value is string, just take it as a shortcut to write label: str instead of label: { value: str }
             if (isString(labelDef)) {
                 labelDef = {
@@ -86,29 +100,34 @@ export default {
             } else {
                 labelDef = {
                     ...this.currentSchema['label'],
-                    labelDef
+                    ...labelDef
                 }
             }
-            const labelValue = this.currentLabelTranslator(
-                {
-                    label: this.defunc(labelDef.value, data, definition, paths),
-                    context: data,
-                    definition,
-                    data: this.data,
-                    vue: this,
-                    paths,
-                    schema: this.currentSchemaCode
-                })
 
             const label = this.renderElement(h, data, definition,
                 'label', 'label',
                 labelDef, key, paths, values)
-            if (label.content) {
+            if (label.content !== undefined) {
                 // if handled via slot or component, use as is
                 wrapperContent.push(...label.content)
                 layout.label = label.content
             } else {
                 // otherwise apply the value of the label
+                let labelValue = this.defunc(labelDef.value, { context: data, definition, paths })
+                const translatedValue = this.currentLabelTranslator(
+                    {
+                        label: labelValue,
+                        context: data,
+                        definition,
+                        data: this.data,
+                        vue: this,
+                        paths,
+                        schema: this.currentSchemaCode
+                    })
+                if (translatedValue !== undefined) {
+                    labelValue = translatedValue
+                }
+
                 if (labelValue) {
                     const labelTree = label.factory(labelValue)
                     wrapperContent.push(...labelTree)
@@ -119,12 +138,12 @@ export default {
             const childrenWrapperTree = []
             const childrenWrapperDef = {
                 ...this.currentSchema['childrenWrapper'],
-                ...(this.defunc(definition.childrenWrapper, data, definition, paths, false) || {})
+                ...(this.defunc(definition.childrenWrapper, { context: data, definition, paths }, false) || {})
             }
             const childrenWrapper = this.renderElement(h, data, definition,
                 'children-wrapper', 'div',
                 childrenWrapperDef, key, paths, values)
-            if (childrenWrapper.content) {
+            if (childrenWrapper.content !== undefined) {
                 childrenWrapperTree.push(...childrenWrapper.content)
             } else {
                 if (definition.children && definition.children.length > 0) {
@@ -144,16 +163,17 @@ export default {
                     })
                 }
             }
-            const nestedChildren = this.defunc(definition.nestedChildren, data, definition, paths) || this.defunc(this.nestedChildren, data, definition, paths)
+            const nestedChildren = this.defunc(definition.nestedChildren, { context: data, definition, paths }) ||
+                this.defunc(this.nestedChildren, { context: data, definition, paths })
 
             const valueWrapperDef = {
                 ...this.currentSchema['valueWrapper'],
-                ...(this.defunc(definition.valueWrapper, data, definition, paths, false) || {})
+                ...(this.defunc(definition.valueWrapper, { context: data, definition, paths }, false) || {})
             }
             const valueWrapper = this.renderElement(h, data, definition,
                 'value-wrapper', 'div',
                 valueWrapperDef, key, paths, values)
-            if (valueWrapper.content) {
+            if (valueWrapper.content !== undefined) {
                 wrapperContent.push(...valueWrapper.content)
                 layout.valueWrapper = valueWrapper.content
             } else {
@@ -164,12 +184,12 @@ export default {
                     values.forEach(value => {
                         const renderedValueDef = {
                             ...this.currentSchema['value'],
-                            ...(this.defunc(definition.value, data, definition, paths, false) || {})
+                            ...(this.defunc(definition.value, { context: data, definition, paths }, false) || {})
                         }
                         const renderedValue = this.renderElement(h, data, definition,
                             'value', 'div',
                             renderedValueDef, key, paths, value)
-                        if (renderedValue.content) {
+                        if (renderedValue.content !== undefined) {
                             // if handled via slot or component, return the rendering
                             renderedValues.push(...renderedValue.content)
                         } else {
@@ -218,56 +238,26 @@ export default {
                     ]
                 }
             }
-
+            const defuncExtra = { context: data, definition, paths, value: values, values }
             // now check if there is a custom component
-            const component =
-                this.defunc(elDefinition.component, data, definition, paths, false) ||
-                this.currentComponents({
-                    context: data,
-                    definition,
-                    data: this.data,
-                    paths,
-                    element
-                })
+            const component = this.defunc(elDefinition.component, defuncExtra, false)
             if (component === null) {
                 return {
                     content: []
                 }
             }
             if (component !== undefined) {
-                if (component.takesChildren) {
-                    // create the component later with slot filled, so return a factory
-                    return {
-                        factory: (content) => {
-                            return [
-                                h(
-                                    component,
-                                    {
-                                        class: [
-                                            ...(this.defunc(elDefinition.class, data, definition, paths) || []),
-                                            `iqdr-${element}`, `iqdr-${element}-${this.currentSchemaCode}`,
-                                            ...paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
-                                        ],
-                                        style: this.defunc(elDefinition.style, data, definition, paths),
-                                        attrs: this.defunc(elDefinition.attrs, data, definition, paths)
-                                    },
-                                    content
-                                )
-                            ]
-                        }
-                    }
-                }
                 return {
                     content: [
                         h(component, {
                             class: [
-                                ...(this.defunc(elDefinition.class, data, definition, paths) || []),
+                                ...(this.defunc(elDefinition.class, defuncExtra) || []),
                                 `iqdr-${element}`,
                                 `iqdr-${element}-${this.currentSchemaCode}`,
                                 ...paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
                             ],
-                            style: this.defunc(elDefinition.style, data, definition, paths),
-                            attrs: this.defunc(elDefinition.attrs, data, definition, paths),
+                            style: this.defunc(elDefinition.style, defuncExtra),
+                            attrs: this.defunc(elDefinition.attrs, defuncExtra),
                             props: {
                                 context: data,
                                 definition: definition,
@@ -281,24 +271,29 @@ export default {
                 }
             }
 
+            const elementTag = this.defunc(elDefinition.element, { context: data, definition, paths })
+            if (elementTag === null) {
+                return []
+            }
+
             // otherwise will render the element
             return {
                 factory: (content) => {
-                    const visible = this.defunc(elDefinition.visible, data, definition, paths)
+                    const visible = this.defunc(elDefinition.visible, { context: data, definition, paths })
                     if (visible === false) {
                         return content
                     }
                     return [
                         h(
-                            this.defunc(elDefinition.element, data, definition, paths) || defaultTag,
+                            elementTag || defaultTag,
                             {
                                 class: [
-                                    ...(this.defunc(elDefinition.class, data, definition, paths) || []),
+                                    ...(this.defunc(elDefinition.class, { context: data, definition, paths }) || []),
                                     `iqdr-${element}`, `iqdr-${element}-${this.currentSchemaCode}`,
                                     ...paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
                                 ],
-                                style: this.defunc(elDefinition.style, data, definition, paths),
-                                attrs: this.defunc(elDefinition.attrs, data, definition, paths)
+                                style: this.defunc(elDefinition.style, { context: data, definition, paths }),
+                                attrs: this.defunc(elDefinition.attrs, { context: data, definition, paths })
                             },
                             content
                         )
@@ -342,42 +337,40 @@ export default {
         findSlot (paths, element) {
             return this.findPathInDict(paths, this.$scopedSlots, element)
         },
-        defunc (value, context, definition, paths, recursive = true) {
-            if (value === null || value === undefined) {
-                return value
+        defunc (funcOrValue, extra /*{context, definition, paths, value, values}*/, recursive = true) {
+            if (funcOrValue === null || funcOrValue === undefined) {
+                return funcOrValue
             }
-            if (isString(value)) {
-                return value
+            if (isString(funcOrValue)) {
+                return funcOrValue
             }
-            if (value instanceof Function) {
+            if (funcOrValue instanceof Function) {
                 // the result of a function is supposed to be resolved, so do not resolve again
                 return this.defunc(
-                    value({
-                        context,
-                        definition,
+                    funcOrValue({
+                        ...extra,
                         data: this.data,
-                        vue: this,
-                        paths
+                        vue: this
                     }),
-                    context, definition, paths, false)
+                    extra, false)
             }
             if (recursive) {
-                if (Array.isArray(value)) {
-                    return value.map(x => this.defunc(x, context, definition, paths, recursive))
+                if (Array.isArray(funcOrValue)) {
+                    return funcOrValue.map(x => this.defunc(x, extra, recursive))
                 }
-                if (isObject(value)) {
-                    return Object.getOwnPropertyNames({ ...value })
+                if (isObject(funcOrValue)) {
+                    return Object.getOwnPropertyNames({ ...funcOrValue })
                         .reduce((prev, current) => {
                             if (current === 'component') {
-                                prev[current] = this.defunc(value[current], context, definition, paths, false)
+                                prev[current] = this.defunc(funcOrValue[current], extra, false)
                             } else {
-                                prev[current] = this.defunc(value[current], context, definition, paths, recursive)
+                                prev[current] = this.defunc(funcOrValue[current], extra, recursive)
                             }
                             return prev
                         }, {})
                 }
             }
-            return value
+            return funcOrValue
         },
         createDynamicDefinition (context, definition, paths, data) {
             if (isObject(data)) {
@@ -385,17 +378,9 @@ export default {
                     .map(childName => {
                         const childPaths = paths.map(path => `${path}/${childName}`)
                         childPaths.push(childName)
-                        const ret = this.currentPathDefinitions(
-                            {
-                                context,
-                                definition,
-                                data: this.data,
-                                paths: childPaths
-                            })
                         return {
                             path: childName,
-                            label: childName,
-                            ...(ret || {})
+                            label: childName
                         }
                     }).filter(x => !!x)
             }
@@ -403,14 +388,6 @@ export default {
         }
     },
     computed: {
-        currentComponents () {
-            if (this.components instanceof Function) {
-                return this.components
-            }
-            return ({ /* context, definition, data, */ paths, element }) => {
-                return this.findPathInDict(paths, this.components, element)
-            }
-        },
         currentPathDefinitions () {
             if (this.pathDefinitions instanceof Function) {
                 return this.pathDefinitions

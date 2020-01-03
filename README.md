@@ -83,6 +83,8 @@ This tree is defined via the following definition:
 ```javascript
 
 elementProperties = {
+   element: null,
+   component: null,
    class: {},           // element classes
    style: '',           // element style
    attrs: {},           // element attrs
@@ -91,25 +93,25 @@ elementProperties = {
 
 definition = {
    wrapper: {
+       ...elementProperties,
        element: 'div',      
-       ...elementProperties
    },
    label: {
+       ...elementProperties,
        element: 'label',
        value: 'Label to be shown',
-       ...elementProperties
    },
    valueWrapper: {
+       ...elementProperties,
        element: 'div',      
-       ...elementProperties
    },
    value: {
+       ...elementProperties,
        element: 'div',      
-       ...elementProperties
    },
    childrenWrapper: {
+       ...elementProperties,
        element: 'div',      
-       ...elementProperties
    },
    path: '',                // json path pointing to the displayed value inside record metadata
    link: '',                // if true, <router-link> will be rendered around the value
@@ -119,7 +121,7 @@ definition = {
 }
 ```
 
-Every property can be a function ``func({context, definition, data, vue, paths})`` where context
+Every property can be a function ``func({context, definition, data, vue, paths, ...})`` where context
 points to the actual parts of data being rendered
 
 ## Usage
@@ -130,6 +132,20 @@ To apply this definition, add to template:
 data-renderer(:definition="definition" :data="data" :url="url for a router-link" 
               schema="block|inline|table|<object with default definition>")
 ```
+
+### Element vs. Component
+
+The ``elementProperties`` contains two ways for choosing components to be rendered: 
+``element`` or ``component``.
+They work the same way, the difference is in passing generated content into the default slot.
+
+``element`` - children are passed into the default slot (and in case of HTML elements, such as ``div``, 
+              rendered into the page)   
+
+``component`` - VNodes for children are not rendered nor passed into the default slot.
+
+For example, if you need to display an image instead of value, use ``component``.
+To render empty html tags (``br``, ``q-separator``, etc.) use ``component`` as well.
 
 ### Overriding elements with slots
 
@@ -153,8 +169,8 @@ is json path to the element (without array indices) with '/' replaced by '-'. Fo
 Element is one of ``wrapper``, ``label``, ``value-wrapper``, 
 ``value``, ``values``, ``children-wrapper``. 
 All these slots are provided with ``{context, definition, data, paths}``.
-In addition, ``value-wrapper`` and ``values`` are given the array of ``values``.
- ``value`` is given the current value (and will be called multiple times for each value).
+In addition, ``value-wrapper`` and ``values`` elements are given the array of ``values``.
+ ``value`` element is given the current value (and will be called multiple times for each value).
 
 When slots are matched, the best matching slot is used. For example, jsonpath ``people[0]/firstName``
 and element ``wrapper`` the resolution will try the following slots:
@@ -165,38 +181,20 @@ and element ``wrapper`` the resolution will try the following slots:
  The difference between the first two is that the first one matches only ``people/firstName`` in the root
  of data, the second one would match any path ending with ``people/firstName``.
 
-### Overriding elements with custom components
+### Overriding parts of definition
 
-Alternatively the elements can be overridden with custom components. Each component receives the same props
-as those above for templates. To pass the components, supply ``data-renderer`` with ``components`` property.
+It might be useful to be able to override the definition for selected paths. 
+To do this, pass ``:pathDefinitions`` property.
+
 The value of the property is either:
 
- * object with keys (same as slot names) and value the Component to be rendered
- * function taking ``({context, definition, data, paths, element})`` (element is 
-   ``wrapper``, ``label``, ``value-wrapper``, ``value``, ``values``, ``children-wrapper``) 
+ * object with keys (same as slot names but without the 'element' prefix) 
+   and value the definition of the object at the given path
+ * function taking ``({context, definition, data, paths})``  
    and returning 
-   - vue Component
+   - the definition
    - ``null`` if the element should not be rendered at all
-   - ``undefined`` to use default rendering of the element 
-   
-Custom component can take the rendered content of the element it is replacing as its
-default slot. To use this functionality, annotate the component with takesChildren set 
-to true:
-
-```vue
-<template>
-<div>
-   <slot></slot>
-</div>
-</template>
-<script>
-export default {
-  // normal component goes here
-  // ...
-  takesChildren: true
-}
-</script>
-```
+   - ``undefined`` to use dynamic rendering on the element
 
 ### Translating labels
 
@@ -217,17 +215,3 @@ the definition can be created "on-the-fly".
 To use this feature, either do not pass ``definition`` at all or pass the known
 part of the definition and annotate the elements to be rendered dynamically
 as ``dynamic: true`` (or use the global ``dynamicDefinition`` option or prop).
-
-It might be useful to have the whole definition or parts dynamic but provide
-custom definition for selected paths. To do this, pass ``:pathDefinitions``
-property.
-
-The value of the property is either:
-
- * object with keys (same as slot names but without the 'element' prefix) 
-   and value the definition of the object at the given path
- * function taking ``({context, definition, data, paths})``  
-   and returning 
-   - the definition
-   - ``null`` if the element should not be rendered at all
-   - ``undefined`` to use dynamic rendering on the element
