@@ -213,4 +213,77 @@ describe('DataRendererComponent.vue', () => {
         expect(wrapper.html()).to.include(
             '**label**')
     })
+
+    it('renders default link', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    creator: 'abc'
+                },
+                pathDefinitions: {
+                    creator: {
+                        link: true
+                    }
+                },
+                url: 'http://google.com'
+            },
+        })
+        expect(wrapper.html()).to.include(
+            '<router-link to="http://google.com" class="iqdr-link iqdr-link-inline iqdr-path-creator">')
+    })
+
+    it('renders default link with a class', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    creator: 'abc'
+                },
+                pathDefinitions: {
+                    creator: {
+                        link: {
+                            class: ['test']
+                        }
+                    }
+                },
+                url: 'http://google.com'
+            },
+        })
+        expect(wrapper.html()).to.include(
+            '<router-link to="http://google.com" class="test iqdr-link iqdr-link-inline iqdr-path-creator">')
+    })
+
+    it('renders custom link', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    creator: 'abc'
+                },
+                pathDefinitions: {
+                    creator: {
+                        link: {
+                            element: 'a',
+                            attrs: {
+                                href: ({url}) => url
+                            }
+                        }
+                    }
+                },
+                url: 'http://google.com'
+            },
+        })
+        expect(wrapper.html()).to.include(
+            '<a href="http://google.com" class="iqdr-link iqdr-link-inline iqdr-path-creator"><div class="iqdr-value iqdr-value-inline iqdr-path-creator" style="display: inline;">abc</div></a>')
+    })
 })

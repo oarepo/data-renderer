@@ -24,6 +24,16 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererLink.vue"
+                        type="a" target="_blank" flat size="x-small") View source
+                    .text-weight-medium Default rendering with links
+                    q-separator.q-mb-md.q-mt-sm
+                    data-renderer-link(:query="query")
+
+        .div.col-4
+            .q-card.full-height
+                q-card-section
+                    q-btn.float-right(icon="launch"
                         href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererSlotThumbnail.vue"
                         type="a" target="_blank" flat size="x-small") View source
                     .text-weight-medium Rendered with #[code v-slot:value-thumbnail]
@@ -173,6 +183,7 @@ import DataRendererDynamic from './DataRendererDynamic';
 import DataRendererDynamicContact from './DataRendererDynamicContact';
 import DataRendererDynamicContactDefinition from './DataRendererDynamicContactDefinition';
 import DataRendererDynamicNoContact from './DataRendererDynamicNoContact';
+import DataRendererLink from './DataRendererLink'
 
 export default {
     components: {
@@ -189,7 +200,8 @@ export default {
         'data-renderer-dynamic': DataRendererDynamic,
         'data-renderer-dynamic-contact': DataRendererDynamicContact,
         'data-renderer-dynamic-contact-definition': DataRendererDynamicContactDefinition,
-        'data-renderer-dynamic-no-contact': DataRendererDynamicNoContact
+        'data-renderer-dynamic-no-contact': DataRendererDynamicNoContact,
+        'data-renderer-link': DataRendererLink
     },
     props: {
         query: Object

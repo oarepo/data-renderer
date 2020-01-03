@@ -26,7 +26,7 @@ export default {
         pathDefinitions: {
             type: [Function, Object]
         },
-        definitionMergeOptions: Object,     // to be used for deepmerge
+        definitionMergeOptions: Object     // to be used for deepmerge
     },
     methods: {
         renderDefinitionList (h, data, definition, key, paths) {
@@ -191,14 +191,26 @@ export default {
                             renderedValueDef, key, paths, value)
                         if (renderedValue.content !== undefined) {
                             // if handled via slot or component, return the rendering
-                            renderedValues.push(...renderedValue.content)
+                            if (definition.link) {
+                                renderedValues.push(
+                                    ...this.createLink(h, definition.link, ...renderedValue.content,
+                                        definition, data, key + '{link}', paths, values))
+                            } else {
+                                renderedValues.push(...renderedValue.content)
+                            }
                         } else {
                             if (!isString(value)) {
                                 // TODO: render value as tree
                                 value = JSON.stringify(value, null, 4)
                                     .replace(',', ', ')
                             }
-                            renderedValues.push(...renderedValue.factory(value))
+                            if (definition.link) {
+                                renderedValues.push(
+                                    ...this.createLink(h, definition.link, renderedValue.factory(value),
+                                        definition, data, key + '{link}', paths, values))
+                            } else {
+                                renderedValues.push(...renderedValue.factory(value))
+                            }
                         }
                     })
                 }
@@ -233,7 +245,9 @@ export default {
                             data: this.data,
                             paths,
                             value: values,
-                            values
+                            values,
+                            url: this.url,
+                            vue: this
                         })
                     ]
                 }
@@ -264,7 +278,9 @@ export default {
                                 data: this.data,
                                 paths,
                                 value: values,
-                                values
+                                values,
+                                url: this.url,
+                                vue: this
                             }
                         })
                     ]
@@ -293,13 +309,41 @@ export default {
                                     ...paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
                                 ],
                                 style: this.defunc(elDefinition.style, { context: data, definition, paths }),
-                                attrs: this.defunc(elDefinition.attrs, { context: data, definition, paths })
+                                attrs: this.defunc(elDefinition.attrs, { context: data, definition, paths }),
+                                props: {
+                                    context: data,
+                                    definition: definition,
+                                    data: this.data,
+                                    paths,
+                                    value: values,
+                                    values,
+                                    url: this.url,
+                                    vue: this
+                                }
                             },
                             content
                         )
                     ]
                 }
             }
+        },
+        createLink (h, link, content, definition, context, key, paths, values) {
+            if (link === true) {
+                link = {}
+            }
+            if (!link.element && !link.component) {
+                link = deepmerge(link, {
+                    attrs: {
+                        to: this.url
+                    }
+                })
+            }
+            const ret = this.renderElement(h, context, definition, 'link', 'router-link',
+                link, key, paths, values)
+            if (ret.content) {
+                return ret.content
+            }
+            return ret.factory(content)
         },
         findPathInDict (paths, mapper, element) {
             if (element) {
@@ -350,7 +394,8 @@ export default {
                     funcOrValue({
                         ...extra,
                         data: this.data,
-                        vue: this
+                        vue: this,
+                        url: this.url
                     }),
                     extra, false)
             }

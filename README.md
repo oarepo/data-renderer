@@ -114,7 +114,7 @@ definition = {
        element: 'div',      
    },
    path: '',                // json path pointing to the displayed value inside record metadata
-   link: '',                // if true, <router-link> will be rendered around the value
+   link: undefined,         // if true, <router-link> will be rendered around the value
    showEmpty: false,        // if true, the element will be rendered even if there is no value 
    nestedChildren: false,   // if true, children are nested inside the valueWrapper element
    children: []             // any children definitions of this node
@@ -215,3 +215,16 @@ the definition can be created "on-the-fly".
 To use this feature, either do not pass ``definition`` at all or pass the known
 part of the definition and annotate the elements to be rendered dynamically
 as ``dynamic: true`` (or use the global ``dynamicDefinition`` option or prop).
+
+### Links
+
+To render the value as a link, set the ``link`` property of the definition. 
+Allowed values:
+
+  * ``true`` - render a router-link with ``to`` pointing to the passed ``:url`` prop
+  * ``elementProperties`` without ``element`` and ``component``. ``router-link`` will be 
+    generated as above and passed any extra classes/style/attrs.
+  * ``elementProperties`` with either ``element`` or ``component``. 
+    Element/component without any default attributes will be generated. It is your responsibility
+    to add whatever ``attrs`` you need. Note that if you use ``component``, the rendered value would 
+    not get passed into the component, so in most cases ``element`` should be used.
