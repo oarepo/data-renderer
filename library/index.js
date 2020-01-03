@@ -116,7 +116,8 @@ export default {
                                 ...(layout.valueWrapper[0].data.attrs || {})
                             };
                         }
-                    }
+                    },
+                    nestedChildren: true
                 },
             }
         };
