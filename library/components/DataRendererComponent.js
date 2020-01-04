@@ -37,6 +37,15 @@ export default {
             return definition.map(x => this.renderDefinition(h, data, x, key, paths))
                 .flat()
         },
+        setKeyedPaths: function (key, paths) {
+            if (paths.length > 0) {
+                paths = paths.map(x => `${x}/${key}`)
+                paths.push(key)
+            } else {
+                paths = [key]
+            }
+            return paths
+        },
         renderDefinition (h, data, definition, key, paths) {
             if (isString(definition)) {
                 definition = {
@@ -54,22 +63,15 @@ export default {
                 }) || []
                 if (definition.key) {
                     localKey = key + definition.key
-                    if (paths.length > 0) {
-                        paths = paths.map(x => `${x}/${definition.key}`)
-                        paths.push(definition.key)
-                    } else {
-                        paths = [definition.key]
-                    }
+                    paths = this.setKeyedPaths(definition.key, paths)
                 } else {
                     const noArrayPath = definition.path.replace(/\[.*?\]/g, '')
                     localKey = key + noArrayPath
-                    if (paths.length > 0) {
-                        paths = paths.map(x => `${x}/${noArrayPath}`)
-                        paths.push(noArrayPath)
-                    } else {
-                        paths = [noArrayPath]
-                    }
+                    paths = this.setKeyedPaths(noArrayPath, paths)
                 }
+            } else if (definition.key) {
+                localKey = key + definition.key
+                paths = this.setKeyedPaths(definition.key, paths)
             }
 
             const overridenDefinition = this.currentPathDefinitions(

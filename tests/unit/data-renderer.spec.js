@@ -343,4 +343,21 @@ describe('DataRendererComponent.vue', () => {
         expect(wrapper.html()).to.include('iqdr-path-aaa')
         expect(wrapper.html()).to.not.include('iqdr-path-title')
     })
+
+    it('custom path on collection', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    title: 'abc',
+                },
+                definition: [{key: 'aaa', children: ['title']}],
+            }
+        })
+        expect(wrapper.html()).to.include('iqdr-path-aaa')
+        expect(wrapper.html()).to.include('iqdr-path-aaa-title')
+    })
 })
