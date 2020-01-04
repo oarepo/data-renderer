@@ -39,7 +39,7 @@ export default {
         },
         setKeyedPaths: function (key, paths) {
             if (paths.length > 0) {
-                paths = paths.map(x => `${x}/${key}`)
+                paths = paths.map(x => `${x}-${key}`)
                 paths.push(key)
             } else {
                 paths = [key]

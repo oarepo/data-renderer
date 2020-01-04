@@ -211,8 +211,8 @@ definition = {
 }
 ```
 
-The path for the root is ``['location']``. The path for ``street`` is ``['location/street', 'street']`` 
-- i.e. for each of the parent paths, ``'/street'`` is appended to the path and an extra ``street``.
+The path for the root is ``['location']``. The path for ``street`` is ``['location-street', 'street']`` 
+- i.e. for each of the parent paths, ``'-street'`` is appended to the path and an extra ``street``.
 
 Sometimes it might be useful to override the path. An example might be if we want to render
 the same json value twice, each time with a different presentation. To be able to apply ``pathDefinitions``,
@@ -228,7 +228,7 @@ definition = {
 }
 ```
 
-would result to ``['loc1/street', 'street']`` paths for ``street``. 
+would result to ``['loc1-street', 'street']`` paths for ``street``. 
 
 ### Translating labels
 
