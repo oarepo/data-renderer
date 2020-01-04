@@ -181,6 +181,7 @@ and element ``wrapper`` the resolution will try the following slots:
  The difference between the first two is that the first one matches only ``people/firstName`` in the root
  of data, the second one would match any path ending with ``people/firstName``.
 
+
 ### Overriding parts of definition
 
 It might be useful to be able to override the definition for selected paths. 
@@ -195,6 +196,39 @@ The value of the property is either:
    - the definition
    - ``null`` if the element should not be rendered at all
    - ``undefined`` to use dynamic rendering on the element
+
+#### Path details
+
+As stated above, the path is given by a jsonpath of the data being rendered. The set of paths 
+for each rendered node is constructed as follows:
+
+```javascript
+definition = {
+    path: "location",
+    children: [
+        'street', 'number', 'zipcode'
+    ]
+}
+```
+
+The path for the root is ``['location']``. The path for ``street`` is ``['location/street', 'street']`` 
+- i.e. for each of the parent paths, ``'/street'`` is appended to the path and an extra ``street``.
+
+Sometimes it might be useful to override the path. An example might be if we want to render
+the same json value twice, each time with a different presentation. To be able to apply ``pathDefinitions``,
+specify an extra property ``key`` to replace the path. So:
+
+```javascript
+definition = {
+    path: "location",
+    key: "loc1",
+    children: [
+        'street', 'number', 'zipcode'
+    ]
+}
+```
+
+would result to ``['loc1/street', 'street']`` paths for ``street``. 
 
 ### Translating labels
 

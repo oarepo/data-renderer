@@ -38,7 +38,12 @@ export default {
                 .flat()
         },
         renderDefinition (h, data, definition, key, paths) {
-
+            if (isString(definition)) {
+                definition = {
+                    path: definition,
+                    label: definition
+                }
+            }
             // get the values
             let values = [data]
             let localKey = key
@@ -47,13 +52,23 @@ export default {
                     path: this.defunc(definition.path, { context: data, definition, paths }),
                     json: data
                 }) || []
-                const noArrayPath = definition.path.replace(/\[.*?\]/g, '')
-                localKey = key + noArrayPath
-                if (paths.length > 0) {
-                    paths = paths.map(x => `${x}/${noArrayPath}`)
-                    paths.push(noArrayPath)
+                if (definition.key) {
+                    localKey = key + definition.key
+                    if (paths.length > 0) {
+                        paths = paths.map(x => `${x}/${definition.key}`)
+                        paths.push(definition.key)
+                    } else {
+                        paths = [definition.key]
+                    }
                 } else {
-                    paths = [noArrayPath]
+                    const noArrayPath = definition.path.replace(/\[.*?\]/g, '')
+                    localKey = key + noArrayPath
+                    if (paths.length > 0) {
+                        paths = paths.map(x => `${x}/${noArrayPath}`)
+                        paths.push(noArrayPath)
+                    } else {
+                        paths = [noArrayPath]
+                    }
                 }
             }
 

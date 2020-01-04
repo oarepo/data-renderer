@@ -310,4 +310,37 @@ describe('DataRendererComponent.vue', () => {
         })
         expect(wrapper.html()).to.include('<td class="iqdr-value-wrapper iqdr-value-wrapper-table iqdr-path-location"><table class="iqdr-children-wrapper iqdr-children-wrapper-table iqdr-path-location" style="border-collapse: collapse;">')
     })
+
+    it('renders string instead of definition', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    title: 'abc',
+                },
+                definition: ['title'],
+            }
+        })
+        expect(wrapper.html()).to.include('abc')
+    })
+
+    it('custom path', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    title: 'abc',
+                },
+                definition: [{path: 'title', key: 'aaa'}],
+            }
+        })
+        expect(wrapper.html()).to.include('iqdr-path-aaa')
+        expect(wrapper.html()).to.not.include('iqdr-path-title')
+    })
 })
