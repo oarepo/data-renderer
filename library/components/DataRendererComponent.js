@@ -46,7 +46,7 @@ export default {
                 values = JSONPath({
                     path: this.defunc(definition.path, { context: data, definition, paths }),
                     json: data
-                })
+                }) || []
                 const noArrayPath = definition.path.replace(/\[.*?\]/g, '')
                 localKey = key + noArrayPath
                 if (paths.length > 0) {
