@@ -1,37 +1,54 @@
-import DataRendererComponent from './components/DataRendererComponent';
+import DataRendererComponent from './components/DataRendererComponent'
+import KVPairComponent, { SKIP_WRAPPER } from './components/KVPairComponent'
 
 export default {
-    install(Vue, options) {
+    install (Vue, options) {
 
         options = {
-            labelTranslator: function ({label, schema}) {
-                if (schema === 'inline' && label) {
-                    return `${label}: `;
+            labelTranslator: function (label, options) {
+                if (!label) {
+                    return label
                 }
-                return label;
+                if (options.schema === 'inline' && label) {
+                    return `${label}: `
+                }
+                return label
             },
             ...options
-        };
+        }
 
-        Vue.component(options.dataRendererName || DataRendererComponent.name, DataRendererComponent);
+        Vue.component(options.dataRendererName || DataRendererComponent.name, DataRendererComponent)
 
         if (Vue.prototype.$oarepo === undefined) {
-            Vue.prototype.$oarepo = {};
+            Vue.prototype.$oarepo = {}
         }
         Vue.prototype.$oarepo.dataRenderer = {
             ...options,
             schemas: {
                 inline: {
-                    wrapper: {},
-                    label: {},
-                    valueWrapper: {
+                    wrapper: {
+                        element: 'div'
+                    },
+                    label: {
+                        element: 'label'
+                    },
+                    'value-wrapper': {
+                        element: 'div',
                         style: { display: 'inline' }
                     },
                     value: {
+                        element: 'div',
                         style: { display: 'inline' }
                     },
-                    childrenWrapper: {
-                        style: {'margin-left': '30px'}
+                    'children-wrapper': {
+                        element: 'div',
+                        style: { 'margin-left': '30px' }
+                    },
+                    'link-wrapper': {
+                        element: 'router-link',
+                        attrs: {
+                            to: (options) => options.url
+                        }
                     },
                     root: {
                         element: 'div',
@@ -43,16 +60,29 @@ export default {
                     }
                 },
                 block: {
-                    wrapper: {},
+                    wrapper: {
+                        element: 'div'
+                    },
                     label: {
+                        element: 'div',
                         style: { 'vertical-align': 'top' }
                     },
-                    valueWrapper: {
+                    'value-wrapper': {
+                        element: 'div',
                         style: { display: 'block' }
                     },
-                    value: {},
-                    childrenWrapper: {
-                        style: {'margin-left': '30px'}
+                    value: {
+                        element: 'div'
+                    },
+                    'children-wrapper': {
+                        element: 'div',
+                        style: { 'margin-left': '30px' }
+                    },
+                    'link-wrapper': {
+                        element: 'router-link',
+                        attrs: {
+                            to: (options) => options.url
+                        }
                     },
                     root: {
                         element: 'div',
@@ -65,18 +95,30 @@ export default {
                 },
                 flex: {
                     wrapper: {
+                        element: 'div',
                         class: ['row', 'q-col-gutter-sm']
                     },
                     label: {
+                        element: 'div',
                         style: { 'vertical-align': 'top' },
                         class: ['col-3']
                     },
-                    valueWrapper: {
+                    'value-wrapper': {
+                        element: 'div',
                         style: { display: 'block' },
                         class: ['col-9']
                     },
-                    value: {},
-                    childrenWrapper: {
+                    value: {
+                        element: 'div'
+                    },
+                    'children-wrapper': {
+                        element: 'div'
+                    },
+                    'link-wrapper': {
+                        element: 'router-link',
+                        attrs: {
+                            to: (options) => options.url
+                        }
                     },
                     root: {
                         element: 'div',
@@ -95,18 +137,26 @@ export default {
                         element: 'td',
                         style: { 'vertical-align': 'top' }
                     },
-                    valueWrapper: {
+                    'value-wrapper': {
                         element: 'td'
                     },
-                    value: {},
-                    childrenWrapper: {
+                    value: {
+                        element: 'div'
+                    },
+                    'children-wrapper': {
                         element: 'table',
-                        style: {'border-collapse': 'collapse'},
+                        style: { 'border-collapse': 'collapse' }
+                    },
+                    'link-wrapper': {
+                        element: 'router-link',
+                        attrs: {
+                            to: (options) => options.url
+                        }
                     },
                     root: {
                         element: 'table',
                         class: '',
-                        style: {'border-collapse': 'collapse'},
+                        style: { 'border-collapse': 'collapse' },
                         attrs: ''
                     },
                     layoutCallback: (layout) => {
@@ -114,16 +164,41 @@ export default {
                             layout.valueWrapper[0].data.attrs = {
                                 colspan: 2,
                                 ...(layout.valueWrapper[0].data.attrs || {})
-                            };
+                            }
                         }
                     },
                     nestedChildren: true
+                }
+            },
+            root: {
+                wrapper: {
+                    element: 'div'
                 },
+                label: {
+                    element: null,
+                    component: null
+                },
+                'value-wrapper': {
+                    element: SKIP_WRAPPER,
+                    component: SKIP_WRAPPER
+                },
+                value: {
+                    element: null,
+                    component: null
+                },
+                'children-wrapper': {
+                    element: SKIP_WRAPPER,
+                    component: SKIP_WRAPPER
+                }
+            },
+            definitionMergeOptions: {
             }
-        };
+        }
     }
-};
+}
 
 export {
-    DataRendererComponent
-};
+    DataRendererComponent,
+    KVPairComponent,
+    SKIP_WRAPPER
+}
