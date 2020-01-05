@@ -28,7 +28,7 @@ export default {
             return this.definitionMergeOptions || this.$oarepo.dataRenderer.definitionMergeOptions
         },
         currentSchema () {
-            return this.$oarepo.dataRenderer.schemas[this.schema]
+            return this.$oarepo.dataRenderer.schemas[this.schema || 'inline']
         },
     },
     render (h) {

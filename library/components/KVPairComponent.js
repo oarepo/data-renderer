@@ -60,7 +60,7 @@ const KVPairComponent = {
                 url: this.url,
                 values,
                 pathValues,
-                schema: this.schema,
+                schema: this.currentSchemaCode,
                 currentSchema: this.currentSchema
             }).flat())
         }
@@ -143,7 +143,7 @@ const KVPairComponent = {
                                         definitionMergeOptions: this.definitionMergeOptions,
                                         pathDefinitions: this.pathDefinitions,
                                         url: this.url,
-                                        schema: this.schema,
+                                        schema: this.currentSchemaCode,
                                         nestedChildren: this.nestedChildren,
                                         showEmpty: this.showEmpty,
                                         labelTranslator: this.labelTranslator,
@@ -164,7 +164,7 @@ const KVPairComponent = {
                 classCode = code
             }
             const elDef = def[code]
-            const slot = findPathInDict(options.paths, this.$scopedSlots, code, this.schema)
+            const slot = findPathInDict(options.paths, this.$scopedSlots, code, this.currentSchemaCode)
             if (slot) {
                 return slot(options)
             }
@@ -179,7 +179,7 @@ const KVPairComponent = {
                         class: [
                             ...(elDef.class || []),
                             `iqdr-${classCode}`,
-                            `iqdr-${classCode}-${this.schema}`,
+                            `iqdr-${classCode}-${this.currentSchemaCode}`,
                             ...options.paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
                         ],
                         style: elDef.style,
@@ -198,7 +198,7 @@ const KVPairComponent = {
                             class: [
                                 ...(elDef.class || []),
                                 `iqdr-${classCode}`,
-                                `iqdr-${classCode}-${this.schema}`,
+                                `iqdr-${classCode}-${this.currentSchemaCode}`,
                                 ...options.paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
                             ],
                             style: elDef.style,
@@ -257,8 +257,11 @@ const KVPairComponent = {
         values () {
             return this.pathValues.map(x => x.value)
         },
+        currentSchemaCode () {
+            return this.schema || 'inline'
+        },
         currentSchema () {
-            return this.applyFunctions(this.$oarepo.dataRenderer.schemas[this.schema])
+            return this.applyFunctions(this.$oarepo.dataRenderer.schemas[this.currentSchemaCode])
         },
         currentDef () {
             const pathValues = this.pathValues
@@ -281,7 +284,7 @@ const KVPairComponent = {
                 pathValues.length ? pathValues[0].paths : this.paths,
                 this.pathDefinitions,
                 null,
-                this.schema)
+                this.currentSchemaCode)
 
             if (overridenDefinition === null) {
                 return null
