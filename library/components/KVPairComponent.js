@@ -37,6 +37,7 @@ const KVPairComponent = {
         showEmpty: Boolean,
         labelTranslator: Function,
         definitionTranslator: Function,
+        layoutTranslator: Function,
         dynamic: Boolean
     },
     render (h) {
@@ -50,20 +51,25 @@ const KVPairComponent = {
         const pathValues = this.pathValues
         const values = this.values
         let ret = []
+        const collected = {}
+        const options = {
+            context: this.context,
+            definition: this.definition,
+            data: this.data,
+            vue: this,
+            paths: pathValues.length ? pathValues[0].paths : this.paths,
+            value: values.length === 1 ? values[0] : values,
+            url: this.url,
+            values,
+            pathValues,
+            schema: this.currentSchemaCode,
+            currentSchema: this.currentSchema
+        }
         if (values.length || this.currentShowEmpty) {
-            ret.push(...this.renderWrapper(h, def, {
-                context: this.context,
-                definition: this.definition,
-                data: this.data,
-                vue: this,
-                paths: pathValues.length ? pathValues[0].paths : this.paths,
-                value: values.length === 1 ? values[0] : values,
-                url: this.url,
-                values,
-                pathValues,
-                schema: this.currentSchemaCode,
-                currentSchema: this.currentSchema
-            }).flat())
+            ret.push(...this.renderWrapper(collected, h, def, options).flat())
+        }
+        if (this.currentLayoutTranslator) {
+            this.currentLayoutTranslator(collected, options)
         }
         if (ret.length === 1) {
             return ret[0]
@@ -73,15 +79,15 @@ const KVPairComponent = {
         }, ret)
     },
     methods: {
-        renderWrapper (h, def, options) {
-            return this.renderElement(h, def, 'wrapper', options, this.renderWrapperChildren)
+        renderWrapper (collected, h, def, options) {
+            return this.renderElement(collected, h, def, 'wrapper', options, this.renderWrapperChildren)
         },
-        renderWrapperChildren (h, def, options) {
+        renderWrapperChildren (collected, h, def, options) {
             const ret = []
             let label = def.label.value || def.label.label
             label = this.currentLabelTranslator ? this.currentLabelTranslator(label, options) : label
             if (label) {
-                ret.push(...this.renderElement(h, def, 'label', {
+                ret.push(...this.renderElement(collected, h, def, 'label', {
                     ...options,
                     label: label
                 }, () => {
@@ -91,26 +97,26 @@ const KVPairComponent = {
             if ((this.currentChildrenDef && this.currentNestedChildren) ||
                 (!this.currentChildrenDef && options.values.length>0))
             {
-                ret.push(...this.renderElement(h, def, 'value-wrapper', {
+                ret.push(...this.renderElement(collected, h, def, 'value-wrapper', {
                     ...options
                 }, this.renderValues))
             }
             if (!this.currentNestedChildren) {
-                ret.push(...this.renderChildren(h, def, options))
+                ret.push(...this.renderChildren(collected, h, def, options))
             }
             return ret.flat()
         },
-        renderValues (h, def, options) {
+        renderValues (collected, h, def, options) {
             const ret = []
             if (!this.currentChildrenDef) {
                 ret.push(...options.values.map((value, idx) => {
-                    const renderedValue = this.renderElement(h, def, 'value', {
+                    const renderedValue = this.renderElement(collected, h, def, 'value', {
                         ...options,
                         value: value,
                         valueIndex: idx
                     }, () => isString(value) ? value: JSON.stringify(value))
                     if (def.link) {
-                        return this.renderElement(h, def, 'link-wrapper', {
+                        return this.renderElement(collected, h, def, 'link-wrapper', {
                             ...options,
                             value: value,
                             valueIndex: idx
@@ -120,55 +126,68 @@ const KVPairComponent = {
                 }))
             }
             if (this.currentChildrenDef && this.currentNestedChildren) {
-                ret.push(...this.renderChildren(h, def, options))
+                ret.push(...this.renderChildren(collected, h, def, options))
             }
             return ret.flat()
         },
-        renderChildren (h, def, options) {
+        renderChildren (collected, h, def, options) {
             if (!this.currentChildrenDef) {
                 return []
             }
-            const ret = this.renderElement(h, def, 'children-wrapper', options,
-                (h, def, options) => {
+            const ret = this.renderElement(collected, h, def, 'children-wrapper', options,
+                (collected, h, def, options) => {
+                    if (collected.children === undefined) {
+                        collected.children = []
+                    }
                     return options.pathValues.map(
                         pathValue => this.currentChildrenDef.map(
-                            childDef => h(
-                                KVPairComponent,
-                                {
-                                    props: {
-                                        context: isObject(pathValue.value) ? pathValue.value : this.context,
-                                        data: this.data,
-                                        definition: childDef,
-                                        paths: pathValue.paths,
-                                        jsonPointer: pathValue.jsonPointer,
-                                        definitionMergeOptions: this.definitionMergeOptions,
-                                        pathDefinitions: this.pathDefinitions,
-                                        url: this.url,
-                                        schema: this.currentSchemaCode,
-                                        nestedChildren: this.nestedChildren,
-                                        showEmpty: this.showEmpty,
-                                        labelTranslator: this.labelTranslator,
-                                        dynamic: this.currentDynamic,
-                                        definitionTranslator: this.definitionTranslator
-                                    },
-                                    scopedSlots: this.$scopedSlots,
-                                    slots: this.slots
-                                }
-                            )
+                            childDef => {
+                                const ret = h(
+                                    KVPairComponent,
+                                    {
+                                        props: {
+                                            context: isObject(pathValue.value) ? pathValue.value : this.context,
+                                            data: this.data,
+                                            definition: childDef,
+                                            paths: pathValue.paths,
+                                            jsonPointer: pathValue.jsonPointer,
+                                            definitionMergeOptions: this.definitionMergeOptions,
+                                            pathDefinitions: this.pathDefinitions,
+                                            url: this.url,
+                                            schema: this.currentSchemaCode,
+                                            nestedChildren: this.nestedChildren,
+                                            showEmpty: this.showEmpty,
+                                            labelTranslator: this.labelTranslator,
+                                            dynamic: this.currentDynamic,
+                                            definitionTranslator: this.definitionTranslator,
+                                            layoutTranslator: this.layoutTranslator
+                                        },
+                                        scopedSlots: this.$scopedSlots,
+                                        slots: this.slots
+                                    }
+                                )
+                                collected.children.push(ret)
+                                return ret
+                            }
                         )
                     ).flat()
                 }
             )
             return ret
         },
-        renderElement (h, def, code, options, renderChildren, classCode) {
+        renderElement (collected, h, def, code, options, renderChildren, classCode) {
+            if (collected[code] === undefined) {
+                collected[code] = []
+            }
             if (classCode === undefined) {
                 classCode = code
             }
             const elDef = def[code]
             const slot = findPathInDict(options.paths, this.$scopedSlots, code, this.currentSchemaCode)
             if (slot) {
-                return slot(options)
+                const ret = slot(options)
+                collected[code].push(...ret)
+                return ret
             }
 
             const component = elDef.component
@@ -176,12 +195,11 @@ const KVPairComponent = {
                 return []
             }
             if (component !== undefined && component !== SKIP_WRAPPER) {
-                return [
+                const ret = [
                     h(component, {
                         class: [
                             ...(elDef.class || []),
                             `iqdr-${classCode}`,
-                            `iqdr-${classCode}-${this.currentSchemaCode}`,
                             ...options.paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
                         ],
                         style: elDef.style,
@@ -189,28 +207,31 @@ const KVPairComponent = {
                         props: options
                     })
                 ]
+                collected[code].push(...ret)
+                return ret
             }
             const element = elDef.element
             if (element === null) {
                 return []
             }
             if (element !== undefined && element !== SKIP_WRAPPER) {
-                return [
+                const ret = [
                     h(element, {
                             class: [
                                 ...(elDef.class || []),
                                 `iqdr-${classCode}`,
-                                `iqdr-${classCode}-${this.currentSchemaCode}`,
                                 ...options.paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
                             ],
                             style: elDef.style,
                             attrs: elDef.attrs,
                             props: options
                         },
-                        renderChildren ? renderChildren(h, def, options) : [])
+                        renderChildren ? renderChildren(collected, h, def, options) : [])
                 ]
+                collected[code].push(...ret)
+                return ret
             }
-            return renderChildren ? renderChildren(h, def, options) : []
+            return renderChildren ? renderChildren(collected, h, def, options) : []
         },
         applyFunctions (what, ifneeded) {
             if (ifneeded && !(what instanceof Function)) {
@@ -350,6 +371,9 @@ const KVPairComponent = {
         },
         currentDynamic () {
             return this.getWithDefault('dynamic')
+        },
+        currentLayoutTranslator () {
+            return this.getWithDefault('layoutTranslator', false)
         }
     }
 }

@@ -22,6 +22,7 @@ export default {
             type: [Function, Object]
         },
         definitionTranslator: Function,
+        layoutTranslator: Function,
         definitionMergeOptions: Object     // to be used for deepmerge
     },
     computed: {
@@ -65,7 +66,7 @@ export default {
                             { wrapper: this.currentSchema.root } || {},
                             {
                                 wrapper: {
-                                    class: ['iqdr-root']
+                                    class: ['iqdr-root', `iqdr-root-${this.schema || 'inline'}`]
                                 }
                             },
                             this.root || {}
@@ -84,7 +85,8 @@ export default {
                 showEmpty: this.showEmpty,
                 labelTranslator: this.labelTranslator,
                 dynamic: this.dynamic,
-                definitionTranslator: this.definitionTranslator
+                definitionTranslator: this.definitionTranslator,
+                layoutTranslator: this.layoutTranslator
             },
             scopedSlots: this.$scopedSlots,
             slots: this.slots

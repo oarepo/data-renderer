@@ -16,7 +16,7 @@ describe('DataRendererComponent.vue', () => {
                 definition: []
             }
         })
-        expect(wrapper.html()).to.include('<div class="iqdr-root iqdr-wrapper iqdr-wrapper-inline"></div>')
+        expect(wrapper.html()).to.include('<div class="iqdr-root iqdr-root-inline iqdr-wrapper"></div>')
     })
 
     it('renders simple data', () => {
@@ -38,9 +38,9 @@ describe('DataRendererComponent.vue', () => {
         })
         console.log(html_beautify(wrapper.html()))
         expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-wrapper iqdr-wrapper-inline"><div class="iqdr-wrapper iqdr-wrapper-inline iqdr-path-title">' +
-            '<div class="iqdr-value-wrapper iqdr-value-wrapper-inline iqdr-path-title" style="display: inline;">' +
-            '<div class="iqdr-value iqdr-value-inline iqdr-path-title" style="display: inline;">abc</div></div></div></div>')
+            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title">' +
+            '<div class="iqdr-value-wrapper iqdr-path-title" style="display: inline;">' +
+            '<div class="iqdr-value iqdr-path-title" style="display: inline;">abc</div></div></div></div>')
     })
 
     it('renders dynamic data', () => {
@@ -57,10 +57,10 @@ describe('DataRendererComponent.vue', () => {
         })
         console.log(html_beautify(wrapper.html()))
         expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-wrapper iqdr-wrapper-inline"><div class="iqdr-wrapper iqdr-wrapper-inline iqdr-path-title">' +
-            '<label class="iqdr-label iqdr-label-inline iqdr-path-title">title: </label>' +
-            '<div class="iqdr-value-wrapper iqdr-value-wrapper-inline iqdr-path-title" style="display: inline;">' +
-            '<div class="iqdr-value iqdr-value-inline iqdr-path-title" style="display: inline;">abc</div></div></div></div>')
+            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title">' +
+            '<label class="iqdr-label iqdr-path-title">title: </label>' +
+            '<div class="iqdr-value-wrapper iqdr-path-title" style="display: inline;">' +
+            '<div class="iqdr-value iqdr-path-title" style="display: inline;">abc</div></div></div></div>')
     })
 
     it('renders component', () => {
@@ -89,7 +89,7 @@ describe('DataRendererComponent.vue', () => {
             }
         })
         expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-wrapper iqdr-wrapper-inline"><div class="iqdr-wrapper iqdr-wrapper-inline iqdr-path-title">123</div></div>')
+            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title">123</div></div>')
     })
 
     it('renders dynamic component', () => {
@@ -116,7 +116,7 @@ describe('DataRendererComponent.vue', () => {
             }
         })
         expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-wrapper iqdr-wrapper-inline"><div class="iqdr-wrapper iqdr-wrapper-inline iqdr-path-title">123</div></div>')
+            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title">123</div></div>')
     })
 
     it('renders slots', () => {
@@ -135,7 +135,7 @@ describe('DataRendererComponent.vue', () => {
             }
         })
         expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-wrapper iqdr-wrapper-inline"><div class="wr"></div></div>')
+            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="wr"></div></div>')
     })
 
     it('value slot gets value', () => {
@@ -156,7 +156,7 @@ describe('DataRendererComponent.vue', () => {
             }
         })
         expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-wrapper iqdr-wrapper-inline"><div class="iqdr-wrapper iqdr-wrapper-inline iqdr-path-title"><label class="iqdr-label iqdr-label-inline iqdr-path-title">title: </label><div class="iqdr-value-wrapper iqdr-value-wrapper-inline iqdr-path-title" style="display: inline;">abc</div></div></div>')
+            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title"><label class="iqdr-label iqdr-path-title">title: </label><div class="iqdr-value-wrapper iqdr-path-title" style="display: inline;">abc</div></div></div>')
     })
 
     it('attr gets value', () => {
@@ -189,7 +189,7 @@ describe('DataRendererComponent.vue', () => {
         })
         console.log(html_beautify(wrapper.html()))
         expect(wrapper.html()).to.include(
-            '<img src="abc" width="16" class="iqdr-value iqdr-value-inline iqdr-path-thumbnail" style="display: inline;">')
+            '<img src="abc" width="16" class="iqdr-value iqdr-path-thumbnail" style="display: inline;">')
     })
 
     it('correct label component rendering in pathDefinitions', () => {
@@ -239,7 +239,7 @@ describe('DataRendererComponent.vue', () => {
         })
         console.log(html_beautify(wrapper.html()))
         expect(wrapper.html()).to.include(
-            '<router-link to="http://google.com" class="iqdr-link iqdr-link-inline iqdr-path-creator">')
+            '<router-link to="http://google.com" class="iqdr-link iqdr-path-creator">')
     })
 
     it('renders default link with a class', () => {
@@ -264,7 +264,7 @@ describe('DataRendererComponent.vue', () => {
             }
         })
         expect(wrapper.html()).to.include(
-            '<router-link to="http://google.com" class="test iqdr-link iqdr-link-inline iqdr-path-creator">')
+            '<router-link to="http://google.com" class="test iqdr-link iqdr-path-creator">')
     })
 
     it('renders custom link', () => {
@@ -294,7 +294,7 @@ describe('DataRendererComponent.vue', () => {
         })
         console.log(html_beautify(wrapper.html()))
         expect(wrapper.html()).to.include(
-            '<a href="http://google.com" class="iqdr-link iqdr-link-inline iqdr-path-creator"><div class="iqdr-value iqdr-value-inline iqdr-path-creator" style="display: inline;">abc</div></a>')
+            '<a href="http://google.com" class="iqdr-link iqdr-path-creator"><div class="iqdr-value iqdr-path-creator" style="display: inline;">abc</div></a>')
     })
 
     it('renders correctly table in dynamic mode', () => {
@@ -319,7 +319,9 @@ describe('DataRendererComponent.vue', () => {
             }
         })
         console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('<td class="iqdr-value-wrapper iqdr-value-wrapper-table iqdr-path-location"><table class="iqdr-children-wrapper iqdr-children-wrapper-table iqdr-path-location" style="border-collapse: collapse;">')
+        expect(wrapper.html()).to.include('' +
+            '<td class="iqdr-value-wrapper iqdr-path-location">' +
+            '<table class="iqdr-children-wrapper iqdr-path-location" style="border-collapse: collapse;">')
     })
 
     it('renders string instead of definition', () => {
@@ -392,6 +394,6 @@ describe('DataRendererComponent.vue', () => {
             }
         })
         console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('class="test iqdr-wrapper iqdr-wrapper-inline"')
+        expect(wrapper.html()).to.include('class="test iqdr-wrapper"')
     })
 })

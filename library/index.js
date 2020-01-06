@@ -56,8 +56,6 @@ export default {
                         style: '',
                         attrs: ''
                     },
-                    layoutCallback: () => {
-                    }
                 },
                 block: {
                     wrapper: {
@@ -90,8 +88,6 @@ export default {
                         style: '',
                         attrs: ''
                     },
-                    layoutCallback: () => {
-                    }
                 },
                 flex: {
                     wrapper: {
@@ -126,8 +122,6 @@ export default {
                         style: '',
                         attrs: ''
                     },
-                    layoutCallback: () => {
-                    }
                 },
                 table: {
                     wrapper: {
@@ -159,11 +153,11 @@ export default {
                         style: { 'border-collapse': 'collapse' },
                         attrs: ''
                     },
-                    layoutCallback: (layout) => {
-                        if (!layout.label && layout.valueWrapper) {
-                            layout.valueWrapper[0].data.attrs = {
+                    layoutTranslator: (layout/*, options*/) => {
+                        if (!layout.label && layout['value-wrapper'] && layout['value-wrapper'].length === 1) {
+                            layout['value-wrapper'][0].data.attrs = {
                                 colspan: 2,
-                                ...(layout.valueWrapper[0].data.attrs || {})
+                                ...(layout['value-wrapper'][0].data.attrs || {})
                             }
                         }
                     },

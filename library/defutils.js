@@ -18,12 +18,14 @@ function applyFunctions (funcOrValue, extra /*{context, definition, data, paths,
         if (isObject(funcOrValue)) {
             return Object.getOwnPropertyNames({ ...funcOrValue })
                 .reduce((prev, current) => {
-                    if (current !== 'labelTranslator') {
+                    if (current !== 'labelTranslator' && current !== 'layoutTranslator') {
                         if (current === 'component' || current === 'element') {
                             prev[current] = applyFunctions(funcOrValue[current], extra, false)
                         } else {
                             prev[current] = applyFunctions(funcOrValue[current], extra, recursive)
                         }
+                    } else {
+                        prev[current] = funcOrValue[current]
                     }
                     return prev
                 }, {})
