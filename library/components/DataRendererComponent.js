@@ -21,6 +21,7 @@ export default {
         pathDefinitions: {
             type: [Function, Object]
         },
+        definitionTranslator: Function,
         definitionMergeOptions: Object     // to be used for deepmerge
     },
     computed: {
@@ -82,7 +83,8 @@ export default {
                 nestedChildren: this.nestedChildren,
                 showEmpty: this.showEmpty,
                 labelTranslator: this.labelTranslator,
-                dynamic: this.dynamic
+                dynamic: this.dynamic,
+                definitionTranslator: this.definitionTranslator
             },
             scopedSlots: this.$scopedSlots,
             slots: this.slots

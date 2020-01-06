@@ -373,4 +373,25 @@ describe('DataRendererComponent.vue', () => {
         expect(wrapper.html()).to.include('iqdr-path-aaa')
         expect(wrapper.html()).to.include('iqdr-path-aaa-title')
     })
+
+    it('definitionTranslator', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    title: 'abc'
+                },
+                dynamic: true,
+                definitionTranslator (def/*, options*/) {
+                    def.wrapper.class = ['test']
+                    return def
+                }
+            }
+        })
+        console.log(html_beautify(wrapper.html()))
+        expect(wrapper.html()).to.include('class="test iqdr-wrapper iqdr-wrapper-inline"')
+    })
 })

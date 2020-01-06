@@ -36,6 +36,7 @@ const KVPairComponent = {
         nestedChildren: Boolean,
         showEmpty: Boolean,
         labelTranslator: Function,
+        definitionTranslator: Function,
         dynamic: Boolean
     },
     render (h) {
@@ -147,7 +148,8 @@ const KVPairComponent = {
                                         nestedChildren: this.nestedChildren,
                                         showEmpty: this.showEmpty,
                                         labelTranslator: this.labelTranslator,
-                                        dynamic: this.currentDynamic
+                                        dynamic: this.currentDynamic,
+                                        definitionTranslator: this.definitionTranslator
                                     },
                                     scopedSlots: this.$scopedSlots,
                                     slots: this.slots
@@ -292,6 +294,19 @@ const KVPairComponent = {
             overridenDefinition = this.applyFunctions(overridenDefinition)
             const ret = ((this.definitionMergeOptions || {}).merge || deepmerge.all)(
                 [this.currentSchema, def, (overridenDefinition || {})], this.definitionMergeOptions)
+            if (this.definitionTranslator) {
+                return this.definitionTranslator(
+                    ret,
+                    {
+                        pathValues: this.pathValues,
+                        paths: pathValues.length ? pathValues[0].paths : this.paths,
+                        schema: this.currentSchemaCode,
+                        vue: this,
+                        url: this.url,
+                        values: this.values
+                    }
+                )
+            }
             return ret
         },
         currentChildrenDef () {
