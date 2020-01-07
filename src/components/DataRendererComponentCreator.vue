@@ -1,6 +1,6 @@
 <template lang="pug">
-data-renderer(:data="data" :definition="d1" :url="url"
-    :schema="query.schema" :pathDefinitions="creatorCustomComponent")
+data-renderer(:data="data" :layout="d1" :url="url"
+    :schema="query.schema" :pathLayouts="creatorCustomComponent")
 
 </template>
 
@@ -11,7 +11,7 @@ data-renderer(:data="data" :definition="d1" :url="url"
 const CustomComponent = {
     props: [
         'context',
-        'definition',
+        'layout',
         'data',
         'paths',
         'value',

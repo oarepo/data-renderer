@@ -1,6 +1,6 @@
 import { isString, isObject } from './typeutils'
 
-function applyFunctions (funcOrValue, extra /*{context, definition, data, paths, value, values, pathValues}*/, recursive = true) {
+function applyFunctions (funcOrValue, extra /*{context, layout, data, paths, value, values, pathValues}*/, recursive = true) {
     if (funcOrValue === null || funcOrValue === undefined) {
         return funcOrValue
     }
@@ -18,7 +18,7 @@ function applyFunctions (funcOrValue, extra /*{context, definition, data, paths,
         if (isObject(funcOrValue)) {
             return Object.getOwnPropertyNames({ ...funcOrValue })
                 .reduce((prev, current) => {
-                    if (current !== 'labelTranslator' && current !== 'layoutTranslator') {
+                    if (current !== 'labelTranslator' && current !== 'layoutTranslator' && current !== 'layoutPostProcessor') {
                         if (current === 'component' || current === 'element') {
                             prev[current] = applyFunctions(funcOrValue[current], extra, false)
                         } else {

@@ -40,7 +40,7 @@ describe('KVPairComponent.vue', () => {
         cmp.setProps({
             context: sampleDoc,
             data: sampleDoc,
-            definition: {},
+            layout: {},
             paths: ['p1/p2', 'p2'],
             jsonPointer: 'abc'
         })
@@ -58,7 +58,7 @@ describe('KVPairComponent.vue', () => {
         cmp.setProps({
             context: sampleDoc,
             data: sampleDoc,
-            definition: {
+            layout: {
                 path: 'title'
             },
             paths: ['abc']
@@ -77,7 +77,7 @@ describe('KVPairComponent.vue', () => {
         cmp.setProps({
             context: sampleDoc,
             data: sampleDoc,
-            definition: {
+            layout: {
                 path: 'location.street'
             },
             paths: ['abc']
@@ -96,7 +96,7 @@ describe('KVPairComponent.vue', () => {
         cmp.setProps({
             context: sampleDoc,
             data: sampleDoc,
-            definition: {
+            layout: {
                 path: 'array'
             },
             paths: ['abc']
@@ -120,7 +120,7 @@ describe('KVPairComponent.vue', () => {
         cmp.setProps({
             context: sampleDoc,
             data: sampleDoc,
-            definition: {
+            layout: {
                 path: 'array[*].name'
             },
             paths: ['abc']
@@ -144,7 +144,7 @@ describe('KVPairComponent.vue', () => {
         cmp.setProps({
             context: sampleDoc,
             data: sampleDoc,
-            definition: {
+            layout: {
                 path: 'array[*].subobj'
             },
             paths: ['abc']
@@ -168,7 +168,7 @@ describe('KVPairComponent.vue', () => {
         cmp.setProps({
             context: sampleDoc,
             data: sampleDoc,
-            definition: {
+            layout: {
                 path: 'array[*].subobj.test'
             },
             paths: ['abc']

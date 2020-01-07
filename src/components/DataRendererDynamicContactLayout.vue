@@ -1,6 +1,6 @@
 <template lang="pug">
 data-renderer(:data="data" :url="url" :schema="query.schema"
-    :nestedChildren="true" :pathDefinitions="contactDefinition")
+    :nestedChildren="true" :pathLayouts="contactLayout")
 
 </template>
 
@@ -23,7 +23,7 @@ export default {
                     email: 'mary.black@gmail.com'
                 }
             },
-            contactDefinition: {
+            contactLayout: {
                 'contact': {
                     path: 'contact',
                     label: 'Contact',

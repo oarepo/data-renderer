@@ -1,5 +1,5 @@
 <template lang="pug">
-data-renderer(:data="data" :url="url" :definition="d5"
+data-renderer(:data="data" :url="url" :layout="d5"
     :schema="query.schema" :nestedChildren="true")
 </template>
 

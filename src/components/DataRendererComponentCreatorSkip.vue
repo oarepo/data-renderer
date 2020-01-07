@@ -1,6 +1,6 @@
 <template lang="pug">
-data-renderer(:data="data" :definition="d1" :url="url"
-    :schema="query.schema" :pathDefinitions="creatorSkip")
+data-renderer(:data="data" :layout="d1" :url="url"
+    :schema="query.schema" :pathLayouts="creatorSkip")
 
 
 </template>

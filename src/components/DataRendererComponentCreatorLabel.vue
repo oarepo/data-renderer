@@ -1,6 +1,6 @@
 <template lang="pug">
-data-renderer(:data="data" :definition="d1" :url="url"
-    :schema="query.schema" :pathDefinitions="creatorLabelCustomComponent")
+data-renderer(:data="data" :layout="d1" :url="url"
+    :schema="query.schema" :pathLayouts="creatorLabelCustomComponent")
 
 </template>
 
@@ -10,7 +10,7 @@ data-renderer(:data="data" :definition="d1" :url="url"
 const CustomComponent = {
     props: [
         'context',
-        'definition',
+        'layout',
         'data',
         'paths',
         'value',
@@ -31,7 +31,7 @@ const CustomComponent = {
 const CustomTableComponent = {
     props: [
         'context',
-        'definition',
+        'layout',
         'data',
         'paths',
         'value',

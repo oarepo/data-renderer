@@ -5,7 +5,7 @@ export default {
     name: 'data-renderer',
     props: {
         data: Object,
-        definition: {
+        layout: {
             type: [Array, Object]
         },
         url: String,
@@ -18,27 +18,27 @@ export default {
         },
         labelTranslator: Function,
         dynamic: Boolean,
-        pathDefinitions: {
+        pathLayouts: {
             type: [Function, Object]
         },
-        definitionTranslator: Function,
         layoutTranslator: Function,
-        definitionMergeOptions: Object     // to be used for deepmerge
+        layoutPostProcessor: Function,
+        layoutMergeOptions: Object     // to be used for deepmerge
     },
     computed: {
-        currentDefinitionMergeOptions () {
-            return this.definitionMergeOptions || this.$oarepo.dataRenderer.definitionMergeOptions
+        currentLayoutMergeOptions () {
+            return this.layoutMergeOptions || this.$oarepo.dataRenderer.layoutMergeOptions
         },
         currentSchema () {
             return this.$oarepo.dataRenderer.schemas[this.schema || 'inline']
         },
     },
     render (h) {
-        let definition = this.definition
-        if (definition instanceof Function) {
-            definition = definition({
+        let layout = this.layout
+        if (layout instanceof Function) {
+            layout = layout({
                 context: this.data,
-                definition,
+                layout,
                 data: this.data,
                 paths: [],
                 value: this.data,
@@ -52,15 +52,15 @@ export default {
                 ]
             })
         }
-        if (!Array.isArray(definition) && definition !== undefined) {
-            definition = [definition]
+        if (!Array.isArray(layout) && layout !== undefined) {
+            layout = [layout]
         }
         return h(KVPairComponent, {
             props: {
                 context: this.data,
                 data: this.data,
-                definition: {
-                    ...((this.currentDefinitionMergeOptions || {}).merge || deepmerge.all)(
+                layout: {
+                    ...((this.currentLayoutMergeOptions || {}).merge || deepmerge.all)(
                         [
                             this.$oarepo.dataRenderer.root,
                             { wrapper: this.currentSchema.root } || {},
@@ -70,23 +70,23 @@ export default {
                                 }
                             },
                             this.root || {}
-                        ], this.currentDefinitionMergeOptions
+                        ], this.currentLayoutMergeOptions
                     ),
-                    children: definition,
-                    dynamic: this.dynamic || this.definition === undefined
+                    children: layout,
+                    dynamic: this.dynamic || this.layout === undefined
                 },
                 paths: [],
                 jsonPointer: undefined,
-                definitionMergeOptions: this.currentDefinitionMergeOptions,
-                pathDefinitions: this.pathDefinitions,
+                layoutMergeOptions: this.currentLayoutMergeOptions,
+                pathLayouts: this.pathLayouts,
                 url: this.url,
                 schema: this.schema,
                 nestedChildren: this.nestedChildren,
                 showEmpty: this.showEmpty,
                 labelTranslator: this.labelTranslator,
                 dynamic: this.dynamic,
-                definitionTranslator: this.definitionTranslator,
-                layoutTranslator: this.layoutTranslator
+                layoutTranslator: this.layoutTranslator,
+                layoutPostProcessor: this.layoutPostProcessor
             },
             scopedSlots: this.$scopedSlots,
             slots: this.slots

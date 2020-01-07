@@ -1,5 +1,5 @@
 <template lang="pug">
-data-renderer(:data="data" :definition="d2" :url="url" :schema="query.schema")
+data-renderer(:data="data" :layout="d2" :url="url" :schema="query.schema")
     template(v-slot:value-thumbnail="{value}")
         div
             img(:src="value" style="height: 40px;")

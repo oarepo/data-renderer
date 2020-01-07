@@ -1,5 +1,6 @@
 import DataRendererComponent from './components/DataRendererComponent'
 import KVPairComponent, { SKIP_WRAPPER } from './components/KVPairComponent'
+import { RendererMixin } from './components/mixins'
 
 export default {
     install (Vue, options) {
@@ -153,7 +154,7 @@ export default {
                         style: { 'border-collapse': 'collapse' },
                         attrs: ''
                     },
-                    layoutTranslator: (layout/*, options*/) => {
+                    layoutPostProcessor: (layout/*, options*/) => {
                         if (!layout.label && layout['value-wrapper'] && layout['value-wrapper'].length === 1) {
                             layout['value-wrapper'][0].data.attrs = {
                                 colspan: 2,
@@ -185,7 +186,7 @@ export default {
                     component: SKIP_WRAPPER
                 }
             },
-            definitionMergeOptions: {
+            layoutMergeOptions: {
             }
         }
     }
@@ -194,5 +195,6 @@ export default {
 export {
     DataRendererComponent,
     KVPairComponent,
-    SKIP_WRAPPER
+    SKIP_WRAPPER,
+    RendererMixin
 }

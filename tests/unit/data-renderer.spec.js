@@ -13,7 +13,7 @@ describe('DataRendererComponent.vue', () => {
             localVue,
             propsData: {
                 data: {},
-                definition: []
+                layout: []
             }
         })
         expect(wrapper.html()).to.include('<div class="iqdr-root iqdr-root-inline iqdr-wrapper"></div>')
@@ -29,7 +29,7 @@ describe('DataRendererComponent.vue', () => {
                 data: {
                     title: 'abc'
                 },
-                definition: [
+                layout: [
                     {
                         path: 'title'
                     }
@@ -73,7 +73,7 @@ describe('DataRendererComponent.vue', () => {
                 data: {
                     title: 'abc'
                 },
-                definition: [
+                layout: [
                     {
                         path: 'title',
                         wrapper: {
@@ -102,7 +102,7 @@ describe('DataRendererComponent.vue', () => {
                 data: {
                     title: 'abc'
                 },
-                pathDefinitions: {
+                pathLayouts: {
                     'title': {
                         wrapper: {
                             component: {
@@ -169,7 +169,7 @@ describe('DataRendererComponent.vue', () => {
                 data: {
                     thumbnail: 'abc'
                 },
-                pathDefinitions: {
+                pathLayouts: {
                     thumbnail: {
                         path: 'thumbnail',
                         label: 'Thumbnail',
@@ -192,7 +192,7 @@ describe('DataRendererComponent.vue', () => {
             '<img src="abc" width="16" class="iqdr-value iqdr-path-thumbnail" style="display: inline;">')
     })
 
-    it('correct label component rendering in pathDefinitions', () => {
+    it('correct label component rendering in pathLayouts', () => {
         const localVue = createLocalVue()
         localVue.use(install)
 
@@ -202,7 +202,7 @@ describe('DataRendererComponent.vue', () => {
                 data: {
                     creator: 'abc'
                 },
-                pathDefinitions: {
+                pathLayouts: {
                     creator: {
                         label: {
                             component: {
@@ -229,7 +229,7 @@ describe('DataRendererComponent.vue', () => {
                 data: {
                     creator: 'abc'
                 },
-                pathDefinitions: {
+                pathLayouts: {
                     creator: {
                         link: true
                     }
@@ -252,7 +252,7 @@ describe('DataRendererComponent.vue', () => {
                 data: {
                     creator: 'abc'
                 },
-                pathDefinitions: {
+                pathLayouts: {
                     creator: {
                         'link-wrapper': {
                             class: ['test']
@@ -277,7 +277,7 @@ describe('DataRendererComponent.vue', () => {
                 data: {
                     creator: 'abc'
                 },
-                pathDefinitions: {
+                pathLayouts: {
                     creator: {
                         'link-wrapper': {
                             element: 'a',
@@ -310,7 +310,7 @@ describe('DataRendererComponent.vue', () => {
                         street: '1'
                     }
                 },
-                pathDefinitions: {
+                pathLayouts: {
                     path: 'location',
                     dynamic: true,
                     label: 'Location'
@@ -324,7 +324,29 @@ describe('DataRendererComponent.vue', () => {
             '<table class="iqdr-children-wrapper iqdr-path-location" style="border-collapse: collapse;">')
     })
 
-    it('renders string instead of definition', () => {
+    it('renders table colspan', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    title: 'abc',
+                },
+                layout: [
+                    {
+                        path: 'title'
+                    }
+                ],
+                schema: 'table'
+            }
+        })
+        console.log(html_beautify(wrapper.html()))
+        expect(wrapper.html()).to.include('colspan="2"')
+    })
+
+    it('renders string instead of layout', () => {
         const localVue = createLocalVue()
         localVue.use(install)
 
@@ -334,7 +356,7 @@ describe('DataRendererComponent.vue', () => {
                 data: {
                     title: 'abc'
                 },
-                definition: ['title']
+                layout: ['title']
             }
         })
         expect(wrapper.html()).to.include('abc')
@@ -350,7 +372,7 @@ describe('DataRendererComponent.vue', () => {
                 data: {
                     title: 'abc'
                 },
-                definition: [{ path: 'title', key: 'aaa' }]
+                layout: [{ path: 'title', key: 'aaa' }]
             }
         })
         console.log(html_beautify(wrapper.html()))
@@ -368,7 +390,7 @@ describe('DataRendererComponent.vue', () => {
                 data: {
                     title: 'abc'
                 },
-                definition: [{ key: 'aaa', children: ['title'] }]
+                layout: [{ key: 'aaa', children: ['title'] }]
             }
         })
         console.log(html_beautify(wrapper.html()))
@@ -376,7 +398,7 @@ describe('DataRendererComponent.vue', () => {
         expect(wrapper.html()).to.include('iqdr-path-aaa-title')
     })
 
-    it('definitionTranslator', () => {
+    it('layoutTranslator', () => {
         const localVue = createLocalVue()
         localVue.use(install)
 
@@ -387,7 +409,7 @@ describe('DataRendererComponent.vue', () => {
                     title: 'abc'
                 },
                 dynamic: true,
-                definitionTranslator (def/*, options*/) {
+                layoutTranslator (def/*, options*/) {
                     def.wrapper.class = ['test']
                     return def
                 }

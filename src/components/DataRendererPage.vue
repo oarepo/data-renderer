@@ -65,11 +65,11 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererSlotTreeDefinition.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererSlotTreeLayout.vue"
                         type="a" target="_blank" flat size="x-small") View source
-                    .text-weight-medium Rendered with tree definition
+                    .text-weight-medium Rendered with tree layout
                     q-separator.q-mb-md.q-mt-sm
-                    data-renderer-slot-tree-definition(:query="query")
+                    data-renderer-slot-tree-layout(:query="query")
 
     h6 Supplying custom component
     .row.q-col-gutter-sm
@@ -118,13 +118,13 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererComponentCreatorDefinition.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererComponentCreatorLayout.vue"
                         type="a" target="_blank" flat size="x-small") View source
-                    .text-weight-medium Rendered with custom component in definition
+                    .text-weight-medium Rendered with custom component in layout
                     q-separator.q-mb-md.q-mt-sm
-                    data-renderer-component-creator-definition(:query="query")
+                    data-renderer-component-creator-layout(:query="query")
 
-    h6 Dynamic definition
+    h6 Dynamic layout
     .row.q-col-gutter-sm
         .div.col-4
             .q-card.full-height
@@ -132,7 +132,7 @@ q-page.q-ma-lg
                     q-btn.float-right(icon="launch"
                         href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererDynamic.vue"
                         type="a" target="_blank" flat size="x-small") View source
-                    .text-weight-medium No definition at all
+                    .text-weight-medium No layout at all
                     q-separator.q-mb-md.q-mt-sm
                     data-renderer-dynamic(:query="query")
 
@@ -142,7 +142,7 @@ q-page.q-ma-lg
                     q-btn.float-right(icon="launch"
                         href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererDynamicContact.vue"
                         type="a" target="_blank" flat size="x-small") View source
-                    .text-weight-medium Definition with dynamic contact details
+                    .text-weight-medium Layout with dynamic contact details
                     q-separator.q-mb-md.q-mt-sm
                     data-renderer-dynamic-contact(:query="query")
 
@@ -150,11 +150,11 @@ q-page.q-ma-lg
             .q-card.full-height
                 q-card-section
                     q-btn.float-right(icon="launch"
-                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererDynamicContactDefinition.vue"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererDynamicContactLayout.vue"
                         type="a" target="_blank" flat size="x-small") View source
-                    .text-weight-medium Dynamic definition with custom definition of Contact
+                    .text-weight-medium Dynamic layout with custom layout of Contact
                     q-separator.q-mb-md.q-mt-sm
-                    data-renderer-dynamic-contact-definition(:query="query")
+                    data-renderer-dynamic-contact-layout(:query="query")
 
         .div.col-4
             .q-card.full-height
@@ -162,7 +162,7 @@ q-page.q-ma-lg
                     q-btn.float-right(icon="launch"
                         href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererDynamicNoContact.vue"
                         type="a" target="_blank" flat size="x-small") View source
-                    .text-weight-medium Dynamic definition with removed Contact
+                    .text-weight-medium Dynamic layout with removed Contact
                     q-separator.q-mb-md.q-mt-sm
                     data-renderer-dynamic-no-contact(:query="query")
 
@@ -173,15 +173,15 @@ import DataRendererDefault from './DataRendererDefault';
 import DataRendererSlotThumbnail from './DataRendererSlotThumbnail';
 import DataRendererSlotRootThumbnail from './DataRendererSlotRootThumbnail';
 import DataRendererSlotValueContact from './DataRendererSlotValueContact';
-import DataRendererSlotTreeDefinition from './DataRendererSlotTreeDefinition';
+import DataRendererSlotTreeLayout from './DataRendererSlotTreeLayout';
 import DataRendererComponentCreator from './DataRendererComponentCreator';
 import DataRendererComponentCreatorLabel from './DataRendererComponentCreatorLabel';
 import DataRendererComponentCreatorValue from './DataRendererComponentCreatorValue';
 import DataRendererComponentCreatorSkip from './DataRendererComponentCreatorSkip';
-import DataRendererComponentCreatorDefinition from './DataRendererComponentCreatorDefinition';
+import DataRendererComponentCreatorLayout from './DataRendererComponentCreatorLayout';
 import DataRendererDynamic from './DataRendererDynamic';
 import DataRendererDynamicContact from './DataRendererDynamicContact';
-import DataRendererDynamicContactDefinition from './DataRendererDynamicContactDefinition';
+import DataRendererDynamicContactLayout from './DataRendererDynamicContactLayout';
 import DataRendererDynamicNoContact from './DataRendererDynamicNoContact';
 import DataRendererLink from './DataRendererLink'
 
@@ -191,15 +191,15 @@ export default {
         'data-renderer-slot-thumbnail': DataRendererSlotThumbnail,
         'data-renderer-slot-root-thumbnail': DataRendererSlotRootThumbnail,
         'data-renderer-slot-value-contact': DataRendererSlotValueContact,
-        'data-renderer-slot-tree-definition': DataRendererSlotTreeDefinition,
+        'data-renderer-slot-tree-layout': DataRendererSlotTreeLayout,
         'data-renderer-component-creator': DataRendererComponentCreator,
         'data-renderer-component-creator-label': DataRendererComponentCreatorLabel,
         'data-renderer-component-creator-value': DataRendererComponentCreatorValue,
         'data-renderer-component-creator-skip': DataRendererComponentCreatorSkip,
-        'data-renderer-component-creator-definition': DataRendererComponentCreatorDefinition,
+        'data-renderer-component-creator-layout': DataRendererComponentCreatorLayout,
         'data-renderer-dynamic': DataRendererDynamic,
         'data-renderer-dynamic-contact': DataRendererDynamicContact,
-        'data-renderer-dynamic-contact-definition': DataRendererDynamicContactDefinition,
+        'data-renderer-dynamic-contact-layout': DataRendererDynamicContactLayout,
         'data-renderer-dynamic-no-contact': DataRendererDynamicNoContact,
         'data-renderer-link': DataRendererLink
     },

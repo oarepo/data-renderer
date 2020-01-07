@@ -1,8 +1,34 @@
 <template lang="pug">
-data-renderer(:data="data" :definition="d3" :url="url" :schema="query.schema")
+data-renderer(:data="data" :layout="d4" :url="url"
+    :schema="query.schema")
+
 </template>
 
 <script>
+
+/* eslint no-console:off */
+
+const CustomComponent = {
+    props: [
+        'context',
+        'layout',
+        'data',
+        'paths',
+        'value',
+        'values'
+    ],
+    render(h) {
+        console.log('Custom component props', this.$props);
+        console.log('Custom component attrs', this.$attrs);
+        return h('span', {
+            attrs: {
+                title: 'See console log for details'
+            },
+            class: 'text-red',
+        }, 'This is a custom component');
+    }
+};
+
 export default {
     props: {
         query: Object
@@ -21,7 +47,7 @@ export default {
                     email: 'mary.black@gmail.com'
                 }
             },
-            d3: [
+            d4: [
                 {
                     path: 'title',
                     value: {
@@ -30,7 +56,10 @@ export default {
                 },
                 {
                     path: 'creator',
-                    label: 'Creator'
+                    label: 'Creator',
+                    wrapper: {
+                        component: CustomComponent
+                    }
                 },
                 {
                     path: 'thumbnail',
@@ -38,19 +67,8 @@ export default {
                 },
                 {
                     path: 'contact',
-                    label: 'Contact',
-                    nestedChildren: true,
-                    children: [
-                        {
-                            path: 'email',
-                            label: 'E-mail'
-                        },
-                        {
-                            path: 'phone',
-                            label: 'Phone'
-                        }
-                    ]
-                },
+                    label: 'Contact'
+                }
             ],
         };
     }
