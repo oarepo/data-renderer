@@ -20,7 +20,7 @@ A library for providing simple (but configurable) UI for rendering JSON data
   * [Overriding elements with slots](#overriding-elements-with-slots)
   * [Overriding elements with custom components](#overriding-elements-with-custom-components)
   * [Translating labels](#translating-labels)
-  * [Dynamic definition](#dynamic-definition)
+  * [Dynamic layout](#dynamic-layout)
 
 <!-- tocstop -->
 
@@ -65,7 +65,7 @@ export default async ({ Vue, store, router }) => {
 
 ## What the component does
 
-``DataRendererComponent`` is a component that iterates a tree of definitions and converts the definition
+``DataRendererComponent`` is a component that iterates a layout tree and converts the layout
 into Vuejs component. Without any settings, the created component tree will look like:
 
 ```pug
@@ -78,7 +78,7 @@ wrapper.wrapperClass(:style="wrapperStyle" ...wrapperAttrs)
         // children rendered in here
 ```
 
-This tree is defined via the following definition:
+This tree is defined via the following layout:
 
 ```javascript
 
@@ -91,7 +91,7 @@ elementProperties = {
    visible: true        // set to false to not render the element, just its content        
 }
 
-definition = {
+layout = {
    wrapper: {
        ...elementProperties,
        element: 'div',      
@@ -117,19 +117,19 @@ definition = {
    link: undefined,         // if true, <router-link> will be rendered around the value
    showEmpty: false,        // if true, the element will be rendered even if there is no value 
    nestedChildren: false,   // if true, children are nested inside the valueWrapper element
-   children: []             // any children definitions of this node
+   children: []             // layout of children of this node
 }
 ```
 
-Every property can be a function ``func({context, definition, data, vue, paths, ...})`` where context
+Every property can be a function ``func({context, layout, data, vue, paths, ...})`` where context
 points to the actual parts of data being rendered
 
 ## Usage
 
-To apply this definition, add to template:
+To apply this layout, add to template:
 
 ```pug
-data-renderer(:definition="definition" :data="data" :url="url for a router-link" 
+data-renderer(:layout="layout" :data="data" :url="url for a router-link" 
               schema="block|inline|table|<object with default definition>")
 ```
 
@@ -149,11 +149,11 @@ To render empty html tags (``br``, ``q-separator``, etc.) use ``component`` as w
 
 ### Overriding elements with slots
 
-Each part of the definition can be overridden with a template:
+Each part of the layout can be overridden with a template:
 
 ```pug
-data-renderer(:definition="definition" :data="data" :url="url for a")
-    template(v-slot:value-thumbnail="{context, definition, data, paths, value}")
+data-renderer(:layout="layout" :data="data" :url="url for a")
+    template(v-slot:value-thumbnail="{context, layout, data, paths, value}")
         <img :src="value">
 ```
 
@@ -168,7 +168,7 @@ is json path to the element (without array indices) with '/' replaced by '-'. Fo
 
 Element is one of ``wrapper``, ``label``, ``value-wrapper``, 
 ``value``, ``values``, ``children-wrapper``. 
-All these slots are provided with ``{context, definition, data, paths}``.
+All these slots are provided with ``{context, layout, data, paths}``.
 In addition, ``value-wrapper`` and ``values`` elements are given the array of ``values``.
  ``value`` element is given the current value (and will be called multiple times for each value).
 
@@ -182,18 +182,18 @@ and element ``wrapper`` the resolution will try the following slots:
  of data, the second one would match any path ending with ``people/firstName``.
 
 
-### Overriding parts of definition
+### Overriding parts of layout
 
-It might be useful to be able to override the definition for selected paths. 
-To do this, pass ``:pathDefinitions`` property.
+It might be useful to be able to override the layout for selected paths. 
+To do this, pass ``:pathLayouts`` property.
 
 The value of the property is either:
 
  * object with keys (same as slot names but without the 'element' prefix) 
-   and value the definition of the object at the given path
- * function taking ``({context, definition, data, paths})``  
+   and value the layout of the object at the given path
+ * function taking ``({context, layout, data, paths})``  
    and returning 
-   - the definition
+   - the layout
    - ``null`` if the element should not be rendered at all
    - ``undefined`` to use dynamic rendering on the element
 
@@ -203,7 +203,7 @@ As stated above, the path is given by a jsonpath of the data being rendered. The
 for each rendered node is constructed as follows:
 
 ```javascript
-definition = {
+layout = {
     path: "location",
     children: [
         'street', 'number', 'zipcode'
@@ -215,11 +215,11 @@ The path for the root is ``['location']``. The path for ``street`` is ``['locati
 - i.e. for each of the parent paths, ``'-street'`` is appended to the path and an extra ``street``.
 
 Sometimes it might be useful to override the path. An example might be if we want to render
-the same json value twice, each time with a different presentation. To be able to apply ``pathDefinitions``,
+the same json value twice, each time with a different presentation. To be able to apply ``pathLayouts``,
 specify an extra property ``key`` to replace the path. So:
 
 ```javascript
-definition = {
+layout = {
     path: "location",
     key: "loc1",
     children: [
@@ -233,26 +233,26 @@ would result to ``['loc1-street', 'street']`` paths for ``street``.
 ### Translating labels
 
 A function can be registered to create/translate labels. Set either a global labelTranslator when the module is
-initialized or a ``:labelTranslator`` prop containing function with the following definition:
+initialized or a ``:labelTranslator`` prop containing function with the following layout:
 
-``func({label, context, definition, data, vue, paths, schema})``
+``func({label, context, layout, data, vue, paths, schema})``
 
 and returning the translated label or null if the label should not appear. The default implementation adds ':'
 after the label for ``inline`` schema. 
 
-### Dynamic definition
+### Dynamic layout
 
-There might be cases when the definition of the object is not known in advance and
+There might be cases when the layout of the object is not known in advance and
 the data (or a subtree of data) should be rendered as they are. In these cases
-the definition can be created "on-the-fly".
+the layout can be created "on-the-fly".
 
-To use this feature, either do not pass ``definition`` at all or pass the known
-part of the definition and annotate the elements to be rendered dynamically
-as ``dynamic: true`` (or use the global ``dynamicDefinition`` option or prop).
+To use this feature, either do not pass ``layout`` at all or pass the known
+part of the layout and annotate the elements to be rendered dynamically
+as ``dynamic: true`` (or use the global ``dynamic`` option or prop).
 
 ### Links
 
-To render the value as a link, set the ``link`` property of the definition. 
+To render the value as a link, set the ``link`` property of the layout. 
 Allowed values:
 
   * ``true`` - render a router-link with ``to`` pointing to the passed ``:url`` prop
