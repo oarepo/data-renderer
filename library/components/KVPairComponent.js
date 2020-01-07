@@ -90,12 +90,22 @@ const KVPairComponent = {
             const ret = []
             let label = def.label.value || def.label.label
             label = this.currentLabelTranslator ? this.currentLabelTranslator(label, options) : label
-            if (label) {
+            if (label || (def.icon && def.icon.value)) {
                 ret.push(...this.renderElement(collected, h, def, 'label', {
                     ...options,
                     label: label
                 }, () => {
-                    return label
+                    const rr = []
+                    if (def.icon && def.icon.value) {
+                        rr.push(...this.renderElement(collected, h, def, 'icon', {
+                            ...options,
+                            label: label
+                        }))
+                    }
+                    if (label) {
+                        rr.push(label)
+                    }
+                    return rr
                 }))
             }
             if ((this.currentChildrenDef && this.currentNestedChildren) ||
@@ -178,7 +188,7 @@ const KVPairComponent = {
             )
             return ret
         },
-        applyFunctions (what, ifneeded) {
+        applyFunctions (what, ifneeded, recursive = true) {
             if (ifneeded && !(what instanceof Function)) {
                 return what
             }
@@ -194,7 +204,7 @@ const KVPairComponent = {
                 url: this.url,
                 values,
                 pathValues
-            })
+            }, recursive)
         },
         getWithDefault (propName, applyFunctions = true) {
             const layout = this.currentLayout
@@ -233,7 +243,7 @@ const KVPairComponent = {
         },
         currentLayout () {
             const pathValues = this.pathValues
-            let def = this.applyFunctions(this.layout)
+            let def = this.applyFunctions(this.layout, true, false)
             if (isString(def)) {
                 def = {
                     path: def
@@ -257,9 +267,15 @@ const KVPairComponent = {
             if (overridenLayout === null) {
                 return null
             }
-            overridenLayout = this.applyFunctions(overridenLayout)
-            const ret = ((this.layoutMergeOptions || {}).merge || deepmerge.all)(
-                [this.currentSchema, def, (overridenLayout || {})], this.layoutMergeOptions)
+            overridenLayout = this.applyFunctions(overridenLayout, true, false)
+            const ret = this.applyFunctions(
+                ((this.layoutMergeOptions || {}).merge || deepmerge.all)(
+                    [
+                        this.currentSchema,
+                        def,
+                        (overridenLayout || {})
+                    ], this.layoutMergeOptions)
+            )
             if (this.layoutTranslator) {
                 return this.layoutTranslator(
                     ret,

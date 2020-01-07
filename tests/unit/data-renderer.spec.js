@@ -465,4 +465,37 @@ describe('DataRendererComponent.vue', () => {
         console.log(html_beautify(wrapper.html()))
         expect(wrapper.html()).to.include('https://cis-login.vscht.cz/static/web/logo_small.png')
     })
+
+    it('renders icon', () => {
+        const localVue = createLocalVue()
+        localVue.use(install, {
+            icon: {
+                component: 'q-icon',
+                attrs: {
+                    name: ({layout}) => {
+                        return layout.icon && layout.icon.value
+                    }
+                }
+            }
+        })
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    'title': 'Object 1',
+                },
+                layout: [
+                    {
+                        path: 'title',
+                        icon: {
+                            value: 'file'
+                        }
+                    }
+                ]
+            }
+        })
+        console.log(html_beautify(wrapper.html()))
+        expect(wrapper.html()).to.include('<q-icon name="file" class')
+    })
 })

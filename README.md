@@ -71,6 +71,8 @@ into Vuejs component. Without any settings, the created component tree will look
 ```pug
 wrapper.wrapperClass(:style="wrapperStyle" ...wrapperAttrs)
     label.labelClass(:style="labelStyle" ...labelAttrs)
+      icon.iconClass(:style="iconStyle" ...iconAttrs)
+      | labelValue
     valueWrapper.valueWrapperClass(:style="valueWrapperStyle" ...valueWrapperAttrs)
         value.valueClass(:style="valueStyle" ...valueAttrs) {{ valueOnPath }}
         value.valueClass(:style="valueStyle" ...valueAttrs) {{ valueOnPath }}
@@ -100,6 +102,12 @@ layout = {
        ...elementProperties,
        element: 'label',
        value: 'Label to be shown',
+   },
+   icon: {
+       ...elementProperties,
+       element: null,
+       component: null, // should be provided in library initialization
+       value: 'icon value',
    },
    valueWrapper: {
        ...elementProperties,

@@ -23,6 +23,12 @@ export default {
         if (Vue.prototype.$oarepo === undefined) {
             Vue.prototype.$oarepo = {}
         }
+
+        const icon = options.icon || {
+            element: null,
+            component: null
+        }
+
         Vue.prototype.$oarepo.dataRenderer = {
             ...options,
             schemas: {
@@ -33,6 +39,7 @@ export default {
                     label: {
                         element: 'label'
                     },
+                    icon,
                     'value-wrapper': {
                         element: 'div',
                         style: { display: 'inline' }
@@ -66,6 +73,7 @@ export default {
                         element: 'div',
                         style: { 'vertical-align': 'top' }
                     },
+                    icon,
                     'value-wrapper': {
                         element: 'div',
                         style: { display: 'block' }
@@ -100,6 +108,7 @@ export default {
                         style: { 'vertical-align': 'top' },
                         class: ['col-3']
                     },
+                    icon,
                     'value-wrapper': {
                         element: 'div',
                         style: { display: 'block' },
@@ -132,6 +141,7 @@ export default {
                         element: 'td',
                         style: { 'vertical-align': 'top' }
                     },
+                    icon,
                     'value-wrapper': {
                         element: 'td'
                     },
