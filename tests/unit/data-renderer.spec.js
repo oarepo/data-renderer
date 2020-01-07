@@ -332,7 +332,7 @@ describe('DataRendererComponent.vue', () => {
             localVue,
             propsData: {
                 data: {
-                    title: 'abc',
+                    title: 'abc'
                 },
                 layout: [
                     {
@@ -417,5 +417,52 @@ describe('DataRendererComponent.vue', () => {
         })
         console.log(html_beautify(wrapper.html()))
         expect(wrapper.html()).to.include('class="test iqdr-wrapper"')
+    })
+
+    it('renders correct thumbnail', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    '$schema': 'https://restaurovani.vscht.cz/schemas/draft/krokd/restoration-object-v1.0.0.json',
+                    'id': '1',
+                    'title': 'Object 1',
+                    'thumbnail': 'https://cis-login.vscht.cz/static/web/logo_small.png',
+                    'creator': 'Mary Black',
+                    'location': { 'street': 'Technicka', 'number': '1', 'city': 'Prague', 'zipcode': 19000 }
+                },
+                schema: 'table',
+                layout: [
+                    {
+                        path: 'title',
+                        value: {
+                            class: ['text-weight-medium']
+                        }
+                    },
+                    {
+                        path: 'creator',
+                        label: 'Creator'
+                    },
+                    {
+                        path: 'thumbnail',
+                        label: 'Thumbnail',
+                        value: {
+                            component: 'img',
+                            attrs: {
+                                src: (args) => {
+                                    return args.value
+                                },
+                                width: '16'
+                            }
+                        }
+                    }
+                ]
+            }
+        })
+        console.log(html_beautify(wrapper.html()))
+        expect(wrapper.html()).to.include('https://cis-login.vscht.cz/static/web/logo_small.png')
     })
 })

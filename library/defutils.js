@@ -19,7 +19,7 @@ function applyFunctions (funcOrValue, extra /*{context, layout, data, paths, val
             return Object.getOwnPropertyNames({ ...funcOrValue })
                 .reduce((prev, current) => {
                     if (current !== 'labelTranslator' && current !== 'layoutTranslator' && current !== 'layoutPostProcessor') {
-                        if (current === 'component' || current === 'element') {
+                        if (current === 'component' || current === 'element' || current === 'children') {
                             prev[current] = applyFunctions(funcOrValue[current], extra, false)
                         } else {
                             prev[current] = applyFunctions(funcOrValue[current], extra, recursive)
