@@ -54,7 +54,7 @@ const KVPairComponent = {
         const collected = {}
         const options = {
             context: this.context,
-            definition: this.definition,
+            definition: this.currentDef,
             data: this.data,
             vue: this,
             paths: pathValues.length ? pathValues[0].paths : this.paths,
