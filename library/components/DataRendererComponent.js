@@ -23,7 +23,8 @@ export default {
         },
         layoutTranslator: Function,
         layoutPostProcessor: Function,
-        layoutMergeOptions: Object     // to be used for deepmerge
+        layoutMergeOptions: Object,     // to be used for deepmerge
+        extraProps: Object              // extra props passed to the children
     },
     computed: {
         currentLayoutMergeOptions () {
@@ -86,7 +87,8 @@ export default {
                 labelTranslator: this.labelTranslator,
                 dynamic: this.dynamic,
                 layoutTranslator: this.layoutTranslator,
-                layoutPostProcessor: this.layoutPostProcessor
+                layoutPostProcessor: this.layoutPostProcessor,
+                extraProps: this.extraProps
             },
             scopedSlots: this.$scopedSlots,
             slots: this.slots

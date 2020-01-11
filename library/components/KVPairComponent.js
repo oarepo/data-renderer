@@ -38,7 +38,8 @@ const KVPairComponent = {
         labelTranslator: Function,
         layoutTranslator: Function,
         layoutPostProcessor: Function,
-        dynamic: Boolean
+        dynamic: Boolean,
+        extraProps: Object
     },
     mixins: [
         RendererMixin
@@ -56,6 +57,7 @@ const KVPairComponent = {
         let ret = []
         const collected = {}
         const options = {
+            ...(this.extraProps || {}),
             context: this.context,
             layout: this.currentLayout,
             data: this.data,
@@ -172,7 +174,8 @@ const KVPairComponent = {
                                             labelTranslator: this.labelTranslator,
                                             dynamic: this.currentDynamic,
                                             layoutTranslator: this.layoutTranslator,
-                                            layoutPostProcessor: this.layoutPostProcessor
+                                            layoutPostProcessor: this.layoutPostProcessor,
+                                            extraProps: this.extraProps
                                         },
                                         scopedSlots: this.$scopedSlots,
                                         slots: this.slots

@@ -498,4 +498,38 @@ describe('DataRendererComponent.vue', () => {
         console.log(html_beautify(wrapper.html()))
         expect(wrapper.html()).to.include('<q-icon name="file" class')
     })
+
+    it('passed extra props', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    'title': 'Object 1',
+                },
+                layout: [
+                    {
+                        path: 'title',
+                        value: {
+                            component: {
+                                props: {
+                                    test: String
+                                },
+                                render(h) {
+                                    return h('div', this.test)
+                                }
+                            }
+                        }
+                    }
+                ],
+                extraProps: {
+                    test: 'abc'
+                }
+            }
+        })
+        console.log(html_beautify(wrapper.html()))
+        expect(wrapper.html()).to.include('>abc</')
+    })
 })

@@ -14,13 +14,18 @@ A library for providing simple (but configurable) UI for rendering JSON data
 <!-- toc -->
 
 - [Demo](#demo)
+- [Example](#example)
 - [Installation](#installation)
 - [What the component does](#what-the-component-does)
 - [Usage](#usage)
+  * [Element vs. Component](#element-vs-component)
   * [Overriding elements with slots](#overriding-elements-with-slots)
-  * [Overriding elements with custom components](#overriding-elements-with-custom-components)
+  * [Overriding parts of layout](#overriding-parts-of-layout)
+    + [Path details](#path-details)
   * [Translating labels](#translating-labels)
   * [Dynamic layout](#dynamic-layout)
+  * [Links](#links)
+  * [Passing extra properties to custom components](#passing-extra-properties-to-custom-components)
 
 <!-- tocstop -->
 
@@ -270,3 +275,14 @@ Allowed values:
     Element/component without any default attributes will be generated. It is your responsibility
     to add whatever ``attrs`` you need. Note that if you use ``component``, the rendered value would 
     not get passed into the component, so in most cases ``element`` should be used.
+
+### Passing extra properties to custom components
+
+To pass extra properties to custom components, use the ``extraProps`` object:
+
+```pug
+data-renderer(:data="data" :extraProps="{test: 'abc'}")
+```
+
+The extra properties are passed destructured, so your component would use a property
+called 'test', not 'extraProps.test'.
