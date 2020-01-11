@@ -1,14 +1,17 @@
 import { findPathInDict } from '../defutils'
-import { SKIP_WRAPPER } from './KVPairComponent'
+import { SKIP_WRAPPER } from './const'
 
 const RendererMixin = {
     methods: {
-        renderElement (collected, h, layout, code, options, renderChildren, classCode) {
+        renderElement (collected, h, layout, code, options, renderChildren, classCode, extra) {
             if (collected[code] === undefined) {
                 collected[code] = []
             }
             if (classCode === undefined) {
                 classCode = code
+            }
+            if (extra === undefined) {
+                extra = {}
             }
             const elDef = layout[code]
             const slot = findPathInDict(options.paths, this.$scopedSlots, code, this.currentSchemaCode)
@@ -25,6 +28,7 @@ const RendererMixin = {
             if (component !== undefined && component !== SKIP_WRAPPER) {
                 const ret = [
                     h(component, {
+                        ...extra,
                         class: [
                             ...(elDef.class || []),
                             `iqdr-${classCode}`,
@@ -45,6 +49,7 @@ const RendererMixin = {
             if (element !== undefined && element !== SKIP_WRAPPER) {
                 const ret = [
                     h(element, {
+                            ...extra,
                             class: [
                                 ...(elDef.class || []),
                                 `iqdr-${classCode}`,
@@ -60,8 +65,8 @@ const RendererMixin = {
                 return ret
             }
             return renderChildren ? renderChildren(collected, h, layout, options) : []
-        },
-    },
+        }
+    }
 }
 
 export {

@@ -3,8 +3,7 @@ import { applyFunctions as _applyFunctions, findPathInDict } from '../defutils'
 import { isObject, isString } from '../typeutils'
 import deepmerge from 'deepmerge'
 import { RendererMixin } from './mixins'
-
-const SKIP_WRAPPER = '---skip-wrapper---'
+import { SKIP_WRAPPER } from './const'
 
 const KVPairComponent = {
     props: {
