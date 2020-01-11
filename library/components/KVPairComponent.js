@@ -248,7 +248,10 @@ const KVPairComponent = {
             let def = this.applyFunctions(this.layout, true, false)
             if (isString(def)) {
                 def = {
-                    path: def
+                    path: def,
+                    label: {
+                        value: def.replace(/^\w/, c => c.toUpperCase())
+                    }
                 }
             }
             if (isString(def.label)) {

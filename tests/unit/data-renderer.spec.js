@@ -531,5 +531,21 @@ describe('DataRendererComponent.vue', () => {
         })
         console.log(html_beautify(wrapper.html()))
         expect(wrapper.html()).to.include('>abc</')
+    }),
+    it('renders string definition', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                data: {
+                    'title': 'Object 1',
+                },
+                layout: [ 'title' ]
+            }
+        })
+        console.log(html_beautify(wrapper.html()))
+        expect(wrapper.html()).to.include('>Title: </')
     })
 })

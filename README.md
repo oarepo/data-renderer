@@ -146,6 +146,35 @@ data-renderer(:layout="layout" :data="data" :url="url for a router-link"
               schema="block|inline|table|<object with default definition>")
 ```
 
+### Layout
+
+The ``layout`` element might contain the layout as shown above, or shortcut can be used:
+
+```javascript
+layout = [
+  'title',
+  'creator',
+  { 
+     path: 'location',
+     children: [ ... ]
+  }
+]
+``` 
+
+The string form is equivalent to giving:
+
+```javascript
+layout = [
+    { 
+      path: 'title',
+      label: {
+         value: 'title'
+      }
+    },
+    ...
+]
+```
+
 ### Element vs. Component
 
 The ``elementProperties`` contains two ways for choosing components to be rendered: 
