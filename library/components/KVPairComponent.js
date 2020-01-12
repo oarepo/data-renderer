@@ -110,7 +110,8 @@ const KVPairComponent = {
                 }))
             }
             if ((this.currentChildrenDef && this.currentNestedChildren) ||
-                (!this.currentChildrenDef && options.values.length > 0)) {
+                (!this.currentChildrenDef && (options.values.length > 0 || this.currentShowEmpty)))
+            {
                 ret.push(...this.renderElement(collected, h, def, 'value-wrapper', {
                     ...options
                 }, this.renderValues))

@@ -472,7 +472,7 @@ describe('DataRendererComponent.vue', () => {
             icon: {
                 component: 'q-icon',
                 attrs: {
-                    name: ({layout}) => {
+                    name: ({ layout }) => {
                         return layout.icon && layout.icon.value
                     }
                 }
@@ -483,7 +483,7 @@ describe('DataRendererComponent.vue', () => {
             localVue,
             propsData: {
                 data: {
-                    'title': 'Object 1',
+                    'title': 'Object 1'
                 },
                 layout: [
                     {
@@ -507,7 +507,7 @@ describe('DataRendererComponent.vue', () => {
             localVue,
             propsData: {
                 data: {
-                    'title': 'Object 1',
+                    'title': 'Object 1'
                 },
                 layout: [
                     {
@@ -517,7 +517,7 @@ describe('DataRendererComponent.vue', () => {
                                 props: {
                                     test: String
                                 },
-                                render(h) {
+                                render (h) {
                                     return h('div', this.test)
                                 }
                             }
@@ -532,20 +532,36 @@ describe('DataRendererComponent.vue', () => {
         console.log(html_beautify(wrapper.html()))
         expect(wrapper.html()).to.include('>abc</')
     }),
-    it('renders string definition', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+        it('renders string definition', () => {
+            const localVue = createLocalVue()
+            localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    'title': 'Object 1',
-                },
-                layout: [ 'title' ]
-            }
+            const wrapper = mount(DataRendererComponent, {
+                localVue,
+                propsData: {
+                    data: {
+                        'title': 'Object 1'
+                    },
+                    layout: ['title']
+                }
+            })
+            console.log(html_beautify(wrapper.html()))
+            expect(wrapper.html()).to.include('>Title: </')
+        }),
+
+        it('renders empty wrapper for values', () => {
+            const localVue = createLocalVue()
+            localVue.use(install)
+
+            const wrapper = mount(DataRendererComponent, {
+                localVue,
+                propsData: {
+                    showEmpty: true,
+                    data: {},
+                    layout: ['title']
+                }
+            })
+            console.log(html_beautify(wrapper.html()))
+            expect(wrapper.html()).to.include('iqdr-value-wrapper')
         })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('>Title: </')
-    })
 })
