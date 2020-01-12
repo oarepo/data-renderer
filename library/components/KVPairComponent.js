@@ -4,11 +4,10 @@ import { isObject, isString } from '../typeutils'
 import deepmerge from 'deepmerge'
 import { RendererMixin } from './mixins'
 import { SKIP_WRAPPER } from './const'
-import startCase from 'lodash.startcase'
 
 const KVPairComponent = {
     props: {
-        context: Object,
+        context: [Array, Object],
         data: Object,
         layout: [Object, String],
         paths: {
@@ -82,9 +81,10 @@ const KVPairComponent = {
         if (ret.length === 1) {
             return ret[0]
         }
-        return h('div', {
-            class: ret.length === 0 ? 'iqdr-empty' : `iqdr-multiple-${ret.length}`
-        }, ret)
+        return this.renderElement(collected, h, layout, 'multiple', options, () => ret)
+        // return h('div', {
+        //     class: ret.length === 0 ? 'iqdr-empty' : `iqdr-multiple-${ret.length}`
+        // }, ret)
     },
     methods: {
         renderWrapper (collected, h, def, options) {
@@ -113,8 +113,7 @@ const KVPairComponent = {
                 }))
             }
             if ((this.currentChildrenDef && this.currentNestedChildren) ||
-                (!this.currentChildrenDef && (options.values.length > 0 || this.currentShowEmpty)))
-            {
+                (!this.currentChildrenDef && (options.values.length > 0 || this.currentShowEmpty))) {
                 ret.push(...this.renderElement(collected, h, def, 'value-wrapper', {
                     ...options
                 }, this.renderValues))
@@ -127,17 +126,27 @@ const KVPairComponent = {
         renderValues (collected, h, def, options) {
             const ret = []
             if (!this.currentChildrenDef) {
-                ret.push(...options.values.map((value, idx) => {
-                    const renderedValue = this.renderElement(collected, h, def, 'value', {
-                        ...options,
-                        value: value,
-                        valueIndex: idx
-                    }, () => isString(value) ? value : JSON.stringify(value))
+                ret.push(...(options.pathValues || []).map((pathValue, idx) => {
+                    let renderedValue = []
+                    const value = pathValue.value
+                    if (Array.isArray(value)) {
+                        // render the value as an array.
+                        renderedValue = this.renderKVPair(h,
+                            this.merge(this.currentLayout, this.currentLayout.array_item), pathValue)
+                    } else {
+                        renderedValue = this.renderElement(collected, h, def, 'value', {
+                            ...options,
+                            value: value,
+                            valueIndex: idx,
+                            paths: pathValue.paths
+                        }, () => isString(value) ? value : JSON.stringify(value))
+                    }
                     if (def.link) {
                         return this.renderElement(collected, h, def, 'link-wrapper', {
                             ...options,
                             value: value,
-                            valueIndex: idx
+                            valueIndex: idx,
+                            paths: pathValue.paths
                         }, () => renderedValue, 'link')
                     }
                     return renderedValue
@@ -158,41 +167,62 @@ const KVPairComponent = {
                         collected.children = []
                     }
                     return options.pathValues.map(
-                        pathValue => this.currentChildrenDef.map(
-                            childDef => {
-                                const ret = h(
-                                    KVPairComponent,
-                                    {
-                                        props: {
-                                            context: isObject(pathValue.value) ? pathValue.value : this.context,
-                                            data: this.data,
-                                            layout: childDef,
-                                            paths: pathValue.paths,
-                                            jsonPointer: pathValue.jsonPointer,
-                                            layoutMergeOptions: this.layoutMergeOptions,
-                                            pathLayouts: this.pathLayouts,
-                                            url: this.url,
-                                            schema: this.currentSchemaCode,
-                                            nestedChildren: this.nestedChildren,
-                                            showEmpty: this.showEmpty,
-                                            labelTranslator: this.labelTranslator,
-                                            dynamic: this.currentDynamic,
-                                            layoutTranslator: this.layoutTranslator,
-                                            layoutPostProcessor: this.layoutPostProcessor,
-                                            extraProps: this.extraProps
-                                        },
-                                        scopedSlots: this.$scopedSlots,
-                                        slots: this.slots
+                        pathValue => {
+                            let renderedChildren;
+                            if (Array.isArray(pathValue.value)) {
+                                // the value is an array, so render it recursively
+                                renderedChildren = this.renderKVPair(h,
+                                    this.merge(
+                                        this.currentLayout,
+                                        this.currentLayout.array_item),
+                                    pathValue)
+                            } else {
+                                renderedChildren = this.currentChildrenDef.map(
+                                    childDef => {
+                                        const ret = this.renderKVPair(h, childDef, pathValue)
+                                        collected.children.push(ret)
+                                        return ret
                                     }
                                 )
-                                collected.children.push(ret)
-                                return ret
                             }
-                        )
+                            if (Array.isArray(this.context)) {
+                                // rendering complex items of an array
+                                return this.renderElement(collected, h, def, 'children-arritm-wrapper', options,
+                                    () => renderedChildren)
+                            }
+                            return renderedChildren
+                        }
                     ).flat()
                 }
             )
             return ret
+        },
+        renderKVPair (h, layout, pathValue) {
+            return h(
+                KVPairComponent,
+                {
+                    props: {
+                        context: isObject(pathValue.value) ? pathValue.value : this.context,
+                        data: this.data,
+                        layout: layout,
+                        paths: pathValue.paths,
+                        jsonPointer: pathValue.jsonPointer,
+                        layoutMergeOptions: this.layoutMergeOptions,
+                        pathLayouts: this.pathLayouts,
+                        url: this.url,
+                        schema: this.currentSchemaCode,
+                        nestedChildren: this.nestedChildren,
+                        showEmpty: this.showEmpty,
+                        labelTranslator: this.labelTranslator,
+                        dynamic: this.currentDynamic,
+                        layoutTranslator: this.layoutTranslator,
+                        layoutPostProcessor: this.layoutPostProcessor,
+                        extraProps: this.extraProps
+                    },
+                    scopedSlots: this.$scopedSlots,
+                    slots: this.slots
+                }
+            )
         },
         applyFunctions (what, ifneeded, recursive = true) {
             if (ifneeded && !(what instanceof Function)) {
@@ -231,6 +261,9 @@ const KVPairComponent = {
             }
             return applyFunctions ?
                 this.applyFunctions(this.$oarepo.dataRenderer[propName], true) : this.$oarepo.dataRenderer[propName]
+        },
+        merge (...what) {
+            return ((this.layoutMergeOptions || {}).merge || deepmerge.all)(what, this.layoutMergeOptions)
         }
     },
     computed: {
@@ -257,7 +290,7 @@ const KVPairComponent = {
                 def = {
                     path: def,
                     label: {
-                        value: startCase(def)
+                        value: def
                     }
                 }
             }
@@ -281,12 +314,11 @@ const KVPairComponent = {
             }
             overridenLayout = this.applyFunctions(overridenLayout, true, false)
             const ret = this.applyFunctions(
-                ((this.layoutMergeOptions || {}).merge || deepmerge.all)(
-                    [
-                        this.currentSchema,
-                        def,
-                        (overridenLayout || {})
-                    ], this.layoutMergeOptions)
+                this.merge(
+                    this.currentSchema,
+                    def,
+                    (overridenLayout || {})
+                )
             )
             if (this.layoutTranslator) {
                 return this.layoutTranslator(

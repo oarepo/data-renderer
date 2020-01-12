@@ -71,6 +71,36 @@ q-page.q-ma-lg
                     q-separator.q-mb-md.q-mt-sm
                     data-renderer-slot-tree-layout(:query="query")
 
+        .div.col-4
+            .q-card.full-height
+                q-card-section
+                    q-btn.float-right(icon="launch"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererSimpleArray.vue"
+                        type="a" target="_blank" flat size="x-small") View source
+                    .text-weight-medium Simple array
+                    q-separator.q-mb-md.q-mt-sm
+                    data-renderer-simple-array(:query="query")
+
+        .div.col-4
+            .q-card.full-height
+                q-card-section
+                    q-btn.float-right(icon="launch"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererComplexArray.vue"
+                        type="a" target="_blank" flat size="x-small") View source
+                    .text-weight-medium Complex array
+                    q-separator.q-mb-md.q-mt-sm
+                    data-renderer-complex-array(:query="query")
+
+        .div.col-4
+            .q-card.full-height
+                q-card-section
+                    q-btn.float-right(icon="launch"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererComplexDynamicArray.vue"
+                        type="a" target="_blank" flat size="x-small") View source
+                    .text-weight-medium Complex dynamic array
+                    q-separator.q-mb-md.q-mt-sm
+                    data-renderer-complex-dynamic-array(:query="query")
+
     h6 Supplying custom component
     .row.q-col-gutter-sm
         .div.col-4
@@ -184,6 +214,9 @@ import DataRendererDynamicContact from './DataRendererDynamicContact';
 import DataRendererDynamicContactLayout from './DataRendererDynamicContactLayout';
 import DataRendererDynamicNoContact from './DataRendererDynamicNoContact';
 import DataRendererLink from './DataRendererLink'
+import DataRendererSimpleArray from './DataRendererSimpleArray'
+import DataRendererComplexArray from './DataRendererComplexArray'
+import DataRendererComplexDynamicArray from './DataRendererComplexDynamicArray'
 
 export default {
     components: {
@@ -201,7 +234,10 @@ export default {
         'data-renderer-dynamic-contact': DataRendererDynamicContact,
         'data-renderer-dynamic-contact-layout': DataRendererDynamicContactLayout,
         'data-renderer-dynamic-no-contact': DataRendererDynamicNoContact,
-        'data-renderer-link': DataRendererLink
+        'data-renderer-link': DataRendererLink,
+        'data-renderer-simple-array': DataRendererSimpleArray,
+        'data-renderer-complex-array': DataRendererComplexArray,
+        'data-renderer-complex-dynamic-array': DataRendererComplexDynamicArray
     },
     props: {
         query: Object

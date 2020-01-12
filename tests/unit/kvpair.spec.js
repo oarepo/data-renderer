@@ -103,14 +103,27 @@ describe('KVPairComponent.vue', () => {
         })
         expect(cmp.vm.pathValues).to.eql([
             {
-                value: sampleDoc.array[0],
-                jsonPointer: '/array/0',
-                paths: ['abc/array', 'array'],
-            },
-            {
-                value: sampleDoc.array[1],
-                jsonPointer: '/array/1',
-                paths: ['abc/array', 'array'],
+                "jsonPointer": "/array",
+                "paths": [
+                    "abc/array",
+                    "array"
+                ],
+                "value": [
+                    {
+                        "idx": 1,
+                        "name": "first",
+                        "subobj": {
+                            "test": 1
+                        }
+                    },
+                    {
+                        "idx": 2,
+                        "name": "second",
+                        "subobj": {
+                            "test": 2
+                        }
+                    }
+                ]
             }
         ])
     })
@@ -129,12 +142,12 @@ describe('KVPairComponent.vue', () => {
             {
                 value: sampleDoc.array[0].name,
                 jsonPointer: '/array/0/name',
-                paths: ['abc/array/name', 'array/name', 'name']
+                paths: ['abc/array/arritm/name', 'array/arritm/name', 'arritm/name', 'name']
             },
             {
                 value: sampleDoc.array[1].name,
                 jsonPointer: '/array/1/name',
-                paths: ['abc/array/name', 'array/name', 'name']
+                paths: ['abc/array/arritm/name', 'array/arritm/name', 'arritm/name', 'name']
             }
         ])
     })
@@ -153,12 +166,12 @@ describe('KVPairComponent.vue', () => {
             {
                 value: sampleDoc.array[0].subobj,
                 jsonPointer: '/array/0/subobj',
-                paths: ['abc/array/subobj', 'array/subobj', 'subobj']
+                paths: ['abc/array/arritm/subobj', 'array/arritm/subobj', 'arritm/subobj', 'subobj']
             },
             {
                 value: sampleDoc.array[1].subobj,
                 jsonPointer: '/array/1/subobj',
-                paths: ['abc/array/subobj', 'array/subobj', 'subobj']
+                paths: ['abc/array/arritm/subobj', 'array/arritm/subobj', 'arritm/subobj', 'subobj']
             }
         ])
     })
@@ -177,12 +190,12 @@ describe('KVPairComponent.vue', () => {
             {
                 value: sampleDoc.array[0].subobj.test,
                 jsonPointer: '/array/0/subobj/test',
-                paths: ['abc/array/subobj/test', 'array/subobj/test', 'subobj/test', 'test']
+                paths: ['abc/array/arritm/subobj/test', 'array/arritm/subobj/test', 'arritm/subobj/test', 'subobj/test', 'test']
             },
             {
                 value: sampleDoc.array[1].subobj.test,
                 jsonPointer: '/array/1/subobj/test',
-                paths: ['abc/array/subobj/test', 'array/subobj/test', 'subobj/test', 'test']
+                paths: ['abc/array/arritm/subobj/test', 'array/arritm/subobj/test', 'arritm/subobj/test', 'subobj/test', 'test']
             }
         ])
     })
@@ -209,6 +222,14 @@ describe('KVPairComponent.vue', () => {
                 path: 'empty'
             }
         })
-        expect(cmp.vm.pathValues).to.eql([])
+        expect(cmp.vm.pathValues).to.eql([
+            {
+                "jsonPointer": "/empty",
+                "paths": [
+                    "empty"
+                ],
+                "value": []
+            }
+        ])
     })
 })
