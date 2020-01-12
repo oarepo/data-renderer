@@ -68,7 +68,8 @@ const KVPairComponent = {
             values,
             pathValues,
             schema: this.currentSchemaCode,
-            currentSchema: this.currentSchema
+            currentSchema: this.currentSchema,
+            parentJSONPointer: this.jsonPointer
         }
         if (values.length || this.currentShowEmpty) {
             ret.push(...this.renderWrapper(collected, h, layout, options).flat())
