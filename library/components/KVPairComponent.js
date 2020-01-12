@@ -4,6 +4,7 @@ import { isObject, isString } from '../typeutils'
 import deepmerge from 'deepmerge'
 import { RendererMixin } from './mixins'
 import { SKIP_WRAPPER } from './const'
+import startCase from 'lodash.startcase'
 
 const KVPairComponent = {
     props: {
@@ -252,7 +253,7 @@ const KVPairComponent = {
                 def = {
                     path: def,
                     label: {
-                        value: def.replace(/^\w/, c => c.toUpperCase())
+                        value: startCase(def)
                     }
                 }
             }

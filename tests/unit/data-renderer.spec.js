@@ -532,6 +532,7 @@ describe('DataRendererComponent.vue', () => {
         console.log(html_beautify(wrapper.html()))
         expect(wrapper.html()).to.include('>abc</')
     }),
+
         it('renders string definition', () => {
             const localVue = createLocalVue()
             localVue.use(install)
@@ -547,6 +548,23 @@ describe('DataRendererComponent.vue', () => {
             })
             console.log(html_beautify(wrapper.html()))
             expect(wrapper.html()).to.include('>Title: </')
+        }),
+
+        it('renders label for string definition', () => {
+            const localVue = createLocalVue()
+            localVue.use(install)
+
+            const wrapper = mount(DataRendererComponent, {
+                localVue,
+                propsData: {
+                    data: {
+                        'titleWithMultipleWords': 'Object 1'
+                    },
+                    layout: ['titleWithMultipleWords']
+                }
+            })
+            console.log(html_beautify(wrapper.html()))
+            expect(wrapper.html()).to.include('>Title With Multiple Words: </')
         }),
 
         it('renders empty wrapper for values', () => {
