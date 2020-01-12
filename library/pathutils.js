@@ -2,7 +2,7 @@ import { JSONPath } from 'jsonpath-plus'
 
 function decomposePointer (pointer) {
     pointer = pointer.split('/')
-    return pointer.filter(x => !!x && !x.match(/^[0-9]$/))
+    return pointer.filter(x => x !== '').map(x=>x.replace(/^[0-9]$/, 'arritm'))
 }
 
 function evaluatePath (jsonPath, context, jsonPointer, paths, key) {
@@ -27,17 +27,6 @@ function evaluatePath (jsonPath, context, jsonPointer, paths, key) {
     if (values.length === 0) {
         return undefined
     }
-    // if the result of values is an array of arrays, return as if [*] was at the end
-    values = values.map(val => {
-        if (Array.isArray(val.value)) {
-            return val.value.map((x, idx) => ({
-                pointer: `${val.pointer}/${idx}`,
-                value: x
-            }))
-        } else {
-            return val
-        }
-    }).flat()
     return values.map(value => {
         const decomposedPointer = decomposePointer(value.pointer)
         const pointerWithoutArrays = decomposedPointer.join('/')

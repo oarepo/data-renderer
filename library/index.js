@@ -1,6 +1,7 @@
 import DataRendererComponent from './components/DataRendererComponent'
 import KVPairComponent, { SKIP_WRAPPER } from './components/KVPairComponent'
 import { RendererMixin } from './components/mixins'
+import startCase from 'lodash.startcase'
 
 export default {
     install (Vue, options) {
@@ -10,6 +11,7 @@ export default {
                 if (!label) {
                     return label
                 }
+                label = startCase(label)
                 if (options.schema === 'inline' && label) {
                     return `${label}: `
                 }
@@ -58,12 +60,59 @@ export default {
                             to: (options) => options.url
                         }
                     },
+                    multiple: {
+                        element: 'div',
+                        style: {display: 'inline-table'},
+                        class: [],
+                        attrs: {}
+                    },
+                    'children-arritm-wrapper': {
+                        element: 'div',
+                        component: SKIP_WRAPPER,
+                        style: {display: 'block'},
+                        class: [],
+                        attrs: {}
+                    },
                     root: {
                         element: 'div',
                         class: '',
                         style: '',
                         attrs: ''
                     },
+                    array_item: {
+                        path: '*',
+                        wrapper: {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        label: {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER,
+                            value: null
+                        },
+                        icon: {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        'value-wrapper': {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        value: {
+                            element: 'div',
+                            style: {display: 'table-row'},
+                        },
+                        'children-wrapper': {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        'link-wrapper': {
+                            element: 'router-link',
+                            attrs: {
+                                to: (options) => options.url
+                            }
+                        },
+                    }
                 },
                 block: {
                     wrapper: {
@@ -91,12 +140,59 @@ export default {
                             to: (options) => options.url
                         }
                     },
+                    'children-arritm-wrapper': {
+                        element: 'div',
+                        component: SKIP_WRAPPER,
+                        style: {display: 'block'},
+                        class: [],
+                        attrs: {}
+                    },
+                    multiple: {
+                        element: 'div',
+                        style: {display: 'inline-table'},
+                        class: [],
+                        attrs: {}
+                    },
                     root: {
                         element: 'div',
                         class: '',
                         style: '',
                         attrs: ''
                     },
+                    array_item: {
+                        path: '*',
+                        wrapper: {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        label: {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER,
+                            value: null
+                        },
+                        icon: {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        'value-wrapper': {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        value: {
+                            element: 'div',
+                            style: {display: 'table-row'},
+                        },
+                        'children-wrapper': {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        'link-wrapper': {
+                            element: 'router-link',
+                            attrs: {
+                                to: (options) => options.url
+                            }
+                        },
+                    }
                 },
                 flex: {
                     wrapper: {
@@ -126,12 +222,59 @@ export default {
                             to: (options) => options.url
                         }
                     },
+                    'children-arritm-wrapper': {
+                        element: 'div',
+                        component: SKIP_WRAPPER,
+                        style: {display: 'block'},
+                        class: [],
+                        attrs: {}
+                    },
+                    multiple: {
+                        element: 'div',
+                        style: {display: 'inline-table'},
+                        class: [],
+                        attrs: {}
+                    },
                     root: {
                         element: 'div',
                         class: '',
                         style: '',
                         attrs: ''
                     },
+                    array_item: {
+                        path: '*',
+                        wrapper: {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        label: {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER,
+                            value: null
+                        },
+                        icon: {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        'value-wrapper': {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        value: {
+                            element: 'div',
+                            style: {display: 'table-row'},
+                        },
+                        'children-wrapper': {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        'link-wrapper': {
+                            element: 'router-link',
+                            attrs: {
+                                to: (options) => options.url
+                            }
+                        },
+                    }
                 },
                 table: {
                     wrapper: {
@@ -158,11 +301,58 @@ export default {
                             to: (options) => options.url
                         }
                     },
+                    'children-arritm-wrapper': {
+                        element: 'div',
+                        component: SKIP_WRAPPER,
+                        style: {display: 'block'},
+                        class: [],
+                        attrs: {}
+                    },
+                    multiple: {
+                        element: 'div',
+                        style: {display: 'inline-table'},
+                        class: [],
+                        attrs: {}
+                    },
                     root: {
                         element: 'table',
                         class: '',
                         style: { 'border-collapse': 'collapse' },
                         attrs: ''
+                    },
+                    array_item: {
+                        path: '*',
+                        wrapper: {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        label: {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER,
+                            value: null
+                        },
+                        icon: {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        'value-wrapper': {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        value: {
+                            element: 'div',
+                            style: {display: 'table-row'},
+                        },
+                        'children-wrapper': {
+                            component: SKIP_WRAPPER,
+                            element: SKIP_WRAPPER
+                        },
+                        'link-wrapper': {
+                            element: 'router-link',
+                            attrs: {
+                                to: (options) => options.url
+                            }
+                        },
                     },
                     layoutPostProcessor: (layout/*, options*/) => {
                         if (!layout.label && layout['value-wrapper'] && layout['value-wrapper'].length === 1) {
