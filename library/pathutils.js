@@ -22,7 +22,10 @@ function evaluatePath (jsonPath, context, jsonPointer, paths, key) {
     }
     let values = JSONPath({ path: jsonPath, json: context, resultType: 'all', flatten: true })
     if (!values) {
-        return []
+        return undefined
+    }
+    if (values.length === 0) {
+        return undefined
     }
     // if the result of values is an array of arrays, return as if [*] was at the end
     values = values.map(val => {

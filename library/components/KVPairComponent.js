@@ -45,6 +45,7 @@ const KVPairComponent = {
     mixins: [
         RendererMixin
     ],
+    name: 'DataRendererKVPair',
     render (h) {
         if (this.layout === undefined) {
             return h('div')
@@ -63,7 +64,7 @@ const KVPairComponent = {
             layout: this.currentLayout,
             data: this.data,
             vue: this,
-            paths: pathValues.length ? pathValues[0].paths : this.paths,
+            paths: (pathValues && pathValues.length) ? pathValues[0].paths : this.paths,
             value: values.length === 1 ? values[0] : values,
             url: this.url,
             values,
@@ -204,7 +205,7 @@ const KVPairComponent = {
                 layout: this.layout,
                 data: this.data,
                 vue: this,
-                paths: pathValues.length ? pathValues[0].paths : this.paths,
+                paths: (pathValues && pathValues.length) ? pathValues[0].paths : this.paths,
                 value: values.length === 1 ? values[0] : values,
                 url: this.url,
                 values,
@@ -238,6 +239,9 @@ const KVPairComponent = {
                 this.context, this.jsonPointer, this.paths, this.layout.key)
         },
         values () {
+            if (!this.pathValues) {
+                return []
+            }
             return this.pathValues.map(x => x.value)
         },
         currentSchemaCode () {
@@ -267,7 +271,7 @@ const KVPairComponent = {
             }
 
             let overridenLayout = findPathInDict(
-                pathValues.length ? pathValues[0].paths : this.paths,
+                (pathValues && pathValues.length) ? pathValues[0].paths : this.paths,
                 this.pathLayouts,
                 null,
                 this.currentSchemaCode)
@@ -289,7 +293,7 @@ const KVPairComponent = {
                     ret,
                     {
                         pathValues: this.pathValues,
-                        paths: pathValues.length ? pathValues[0].paths : this.paths,
+                        paths: (pathValues && pathValues.length) ? pathValues[0].paths : this.paths,
                         schema: this.currentSchemaCode,
                         vue: this,
                         url: this.url,

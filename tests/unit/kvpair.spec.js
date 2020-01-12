@@ -186,4 +186,29 @@ describe('KVPairComponent.vue', () => {
             }
         ])
     })
+
+    it('paths for non-present item', () => {
+
+        cmp.setProps({
+            context: sampleDoc,
+            data: sampleDoc,
+            layout: {
+                path: 'nonpresent'
+            }
+        })
+        expect(cmp.vm.pathValues).to.eql(undefined)
+    })
+
+
+    it('paths for empty array item', () => {
+
+        cmp.setProps({
+            context: {empty: []},
+            data: {empty: []},
+            layout: {
+                path: 'empty'
+            }
+        })
+        expect(cmp.vm.pathValues).to.eql([])
+    })
 })
