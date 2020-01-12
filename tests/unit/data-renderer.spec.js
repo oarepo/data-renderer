@@ -58,7 +58,7 @@ describe('DataRendererComponent.vue', () => {
         console.log(html_beautify(wrapper.html()))
         expect(wrapper.html()).to.include(
             '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title">' +
-            '<label class="iqdr-label iqdr-path-title">title: </label>' +
+            '<label class="iqdr-label iqdr-path-title">Title: </label>' +
             '<div class="iqdr-value-wrapper iqdr-path-title" style="display: inline;">' +
             '<div class="iqdr-value iqdr-path-title" style="display: inline;">abc</div></div></div></div>')
     })
@@ -156,7 +156,7 @@ describe('DataRendererComponent.vue', () => {
             }
         })
         expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title"><label class="iqdr-label iqdr-path-title">title: </label><div class="iqdr-value-wrapper iqdr-path-title" style="display: inline;">abc</div></div></div>')
+            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title"><label class="iqdr-label iqdr-path-title">Title: </label><div class="iqdr-value-wrapper iqdr-path-title" style="display: inline;">abc</div></div></div>')
     })
 
     it('attr gets value', () => {
