@@ -138,7 +138,8 @@ const KVPairComponent = {
                             ...options,
                             value: value,
                             valueIndex: idx,
-                            paths: pathValue.paths
+                            paths: pathValue.paths,
+                            jsonPointer: pathValue.jsonPointer,
                         }, () => isString(value) ? value : JSON.stringify(value))
                     }
                     if (def.link) {
