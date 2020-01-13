@@ -582,4 +582,34 @@ describe('DataRendererComponent.vue', () => {
             console.log(html_beautify(wrapper.html()))
             expect(wrapper.html()).to.include('iqdr-value-wrapper')
         })
+
+
+    it('renders undefined array', () => {
+        const localVue = createLocalVue()
+        localVue.use(install)
+
+        const wrapper = mount(DataRendererComponent, {
+            localVue,
+            propsData: {
+                showEmpty: true,
+                data: {},
+                layout: ['keywords'],
+                pathLayouts: {
+                    'keywords': {
+                        array: true,
+                        wrapper: {
+                            attrs: {
+                                test: (options) => {
+                                    expect(options.layout.array).to.eql(true)
+                                    return options.layout.array ? 'isArray' : 'noArray'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        console.log(html_beautify(wrapper.html()))
+        expect(wrapper.html()).to.include('isArray')
+    })
 })

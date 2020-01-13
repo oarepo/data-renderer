@@ -5,15 +5,30 @@ function decomposePointer (pointer) {
     return pointer.filter(x => x !== '').map(x=>x.replace(/^[0-9]$/, 'arritm'))
 }
 
+function addPointerToPaths (paths, key, pointer) {
+    if (pointer === undefined) {
+        return [
+            ...(paths || []).map(x => `${x}/${key}`),
+            key
+        ]
+    }
+    const decomposedPointer = decomposePointer(pointer)
+    const pointerWithoutArrays = decomposedPointer.join('/')
+    return [
+        ...(paths || []).map(x => `${x}/${key || pointerWithoutArrays}`),
+        ...(
+            key ? [key] : decomposedPointer.reduce((arr, path) => {
+                return [...arr.map(x => `${x}/${path}`), path]
+            }, []))
+    ]
+}
+
 function evaluatePath (jsonPath, context, jsonPointer, paths, key) {
     if (!jsonPath) {
         if (key) {
             return [{
                 jsonPointer: jsonPointer,
-                paths: [
-                    ...(paths || []).map(x => `${x}/${key}`),
-                    key
-                ],
+                paths: addPointerToPaths(paths, key),
                 value: context
             }]
         } else {
@@ -28,23 +43,15 @@ function evaluatePath (jsonPath, context, jsonPointer, paths, key) {
         return undefined
     }
     return values.map(value => {
-        const decomposedPointer = decomposePointer(value.pointer)
-        const pointerWithoutArrays = decomposedPointer.join('/')
-        const _paths = [
-            ...(paths || []).map(x => `${x}/${key || pointerWithoutArrays}`),
-            ...(
-                key ? [key] : decomposedPointer.reduce((arr, path) => {
-                    return [...arr.map(x => `${x}/${path}`), path]
-                }, []))
-        ]
         return {
             jsonPointer: `${jsonPointer}${value.pointer}`,
-            paths: _paths,
+            paths: addPointerToPaths(paths, key, value.pointer),
             value: value.value
         }
     })
 }
 
 export {
-    evaluatePath
+    evaluatePath,
+    addPointerToPaths
 }

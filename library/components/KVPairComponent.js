@@ -1,4 +1,4 @@
-import { evaluatePath } from '../pathutils'
+import { addPointerToPaths, evaluatePath } from '../pathutils'
 import { applyFunctions as _applyFunctions, findPathInDict } from '../defutils'
 import { isObject, isString } from '../typeutils'
 import deepmerge from 'deepmerge'
@@ -225,7 +225,7 @@ const KVPairComponent = {
                 }
             )
         },
-        applyFunctions (what, ifneeded, recursive = true) {
+        applyFunctions (what, ifneeded, recursive = true, layout=undefined) {
             if (ifneeded && !(what instanceof Function)) {
                 return what
             }
@@ -233,7 +233,7 @@ const KVPairComponent = {
             const values = this.values
             return _applyFunctions(what, {
                 context: this.context,
-                layout: this.layout,
+                layout: layout || this.layout,
                 data: this.data,
                 vue: this,
                 paths: (pathValues && pathValues.length) ? pathValues[0].paths : this.paths,
@@ -248,20 +248,20 @@ const KVPairComponent = {
             if (layout === undefined) {
                 return false
             }
-            let tnc = applyFunctions ? this.applyFunctions(layout[propName], true) : layout[propName]
+            let tnc = applyFunctions ? this.applyFunctions(layout[propName], true, true, layout) : layout[propName]
             if (tnc !== undefined) {
                 return tnc
             }
-            tnc = applyFunctions ? this.applyFunctions(this[propName], true) : this[propName]
+            tnc = applyFunctions ? this.applyFunctions(this[propName], true, true, layout) : this[propName]
             if (tnc !== undefined) {
                 return tnc
             }
-            tnc = applyFunctions ? this.applyFunctions(this.currentSchema[propName], true) : this.currentSchema[propName]
+            tnc = applyFunctions ? this.applyFunctions(this.currentSchema[propName], true, true, layout) : this.currentSchema[propName]
             if (tnc !== undefined) {
                 return tnc
             }
             return applyFunctions ?
-                this.applyFunctions(this.$oarepo.dataRenderer[propName], true) : this.$oarepo.dataRenderer[propName]
+                this.applyFunctions(this.$oarepo.dataRenderer[propName], true, true, layout) : this.$oarepo.dataRenderer[propName]
         },
         merge (...what) {
             return ((this.layoutMergeOptions || {}).merge || deepmerge.all)(what, this.layoutMergeOptions)
@@ -304,8 +304,15 @@ const KVPairComponent = {
                 }
             }
 
+            let overridenPath;
+            if (pathValues && pathValues.length) {
+                overridenPath = pathValues[0].paths
+            } else {
+                overridenPath = addPointerToPaths (this.paths, def.key, def.path)
+            }
+
             let overridenLayout = findPathInDict(
-                (pathValues && pathValues.length) ? pathValues[0].paths : this.paths,
+                overridenPath,
                 this.pathLayouts,
                 null,
                 this.currentSchemaCode)
@@ -314,12 +321,13 @@ const KVPairComponent = {
                 return null
             }
             overridenLayout = this.applyFunctions(overridenLayout, true, false)
+            const mergedLayout = this.merge(
+                this.currentSchema,
+                def,
+                (overridenLayout || {})
+            )
             const ret = this.applyFunctions(
-                this.merge(
-                    this.currentSchema,
-                    def,
-                    (overridenLayout || {})
-                )
+                mergedLayout, false, true, mergedLayout
             )
             if (this.layoutTranslator) {
                 return this.layoutTranslator(
