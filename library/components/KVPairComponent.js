@@ -241,7 +241,9 @@ const KVPairComponent = {
                 url: this.url,
                 values,
                 pathValues
-            }, recursive)
+            }, recursive,
+                this.$oarepo.dataRenderer.singleTranslationLayoutValues,
+                this.$oarepo.dataRenderer.untranslatedLayoutValues)
         },
         getWithDefault (propName, applyFunctions = true) {
             const layout = this.currentLayout

@@ -17,6 +17,14 @@ export default {
                 }
                 return label
             },
+            untranslatedLayoutValues: [
+                'labelTranslator',
+                'layoutTranslator',
+                'layoutPostProcessor'
+            ],
+            singleTranslationLayoutValues: [
+                'component', 'element', 'children'
+            ],
             ...options
         }
 
@@ -341,7 +349,7 @@ export default {
                         },
                         value: {
                             element: 'div',
-                            style: {display: 'table-row'},
+                            style: {display: 'block'},
                         },
                         'children-wrapper': {
                             component: SKIP_WRAPPER,

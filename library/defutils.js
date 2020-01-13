@@ -1,6 +1,7 @@
 import { isString, isObject } from './typeutils'
 
-function applyFunctions (funcOrValue, extra /*{context, layout, data, paths, value, values, pathValues}*/, recursive = true) {
+function applyFunctions (funcOrValue, extra /*{context, layout, data, paths, value, values, pathValues}*/,
+                         recursive = true, translatedOnce, untranslated) {
     if (funcOrValue === null || funcOrValue === undefined) {
         return funcOrValue
     }
@@ -13,16 +14,16 @@ function applyFunctions (funcOrValue, extra /*{context, layout, data, paths, val
     }
     if (recursive) {
         if (Array.isArray(funcOrValue)) {
-            return funcOrValue.map(x => applyFunctions(x, extra, recursive))
+            return funcOrValue.map(x => applyFunctions(x, extra, recursive, translatedOnce, untranslated))
         }
         if (isObject(funcOrValue)) {
             return Object.getOwnPropertyNames({ ...funcOrValue })
                 .reduce((prev, current) => {
-                    if (current !== 'labelTranslator' && current !== 'layoutTranslator' && current !== 'layoutPostProcessor') {
-                        if (current === 'component' || current === 'element' || current === 'children') {
-                            prev[current] = applyFunctions(funcOrValue[current], extra, false)
+                    if (!untranslated.includes(current)) { // current !== 'labelTranslator' && current !== 'layoutTranslator' && current !== 'layoutPostProcessor') {
+                        if (translatedOnce.includes(current)) { // current === 'component' || current === 'element' || current === 'children') {
+                            prev[current] = applyFunctions(funcOrValue[current], extra, false, translatedOnce, untranslated)
                         } else {
-                            prev[current] = applyFunctions(funcOrValue[current], extra, recursive)
+                            prev[current] = applyFunctions(funcOrValue[current], extra, recursive, translatedOnce, untranslated)
                         }
                     } else {
                         prev[current] = funcOrValue[current]
