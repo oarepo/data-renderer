@@ -1,7 +1,19 @@
 import { isString, isObject } from './typeutils'
 
+function f (decorated) {
+    if (decorated === undefined) {
+        // used as a decorator
+        return (inner) => f(inner)
+    }
+    const ret = function (...args) {
+        return decorated(...args)
+    }
+    ret._dataRendererApply = true
+    return ret
+}
+
 function applyFunctions (funcOrValue, extra /*{context, layout, data, paths, value, values, pathValues}*/,
-                         recursive = true, translatedOnce, untranslated) {
+                         recursive = true) {
     if (funcOrValue === null || funcOrValue === undefined) {
         return funcOrValue
     }
@@ -9,25 +21,24 @@ function applyFunctions (funcOrValue, extra /*{context, layout, data, paths, val
         return funcOrValue
     }
     if (funcOrValue instanceof Function) {
-        // the result of a function is supposed to be resolved, so do not resolve again
-        return funcOrValue(extra)
+        if (funcOrValue._dataRendererApply) {
+            // the result of a function is supposed to be resolved, so do not resolve again
+            return funcOrValue(extra)
+        } else {
+            return funcOrValue
+        }
     }
+
     if (recursive) {
         if (Array.isArray(funcOrValue)) {
-            return funcOrValue.map(x => applyFunctions(x, extra, recursive, translatedOnce, untranslated))
+            return funcOrValue.map(x => applyFunctions(x, extra, recursive))
         }
         if (isObject(funcOrValue)) {
-            return Object.getOwnPropertyNames({ ...funcOrValue })
+            return Object.getOwnPropertyNames(funcOrValue)
                 .reduce((prev, current) => {
-                    if (!untranslated.includes(current)) { // current !== 'labelTranslator' && current !== 'layoutTranslator' && current !== 'layoutPostProcessor') {
-                        if (translatedOnce.includes(current)) { // current === 'component' || current === 'element' || current === 'children') {
-                            prev[current] = applyFunctions(funcOrValue[current], extra, false, translatedOnce, untranslated)
-                        } else {
-                            prev[current] = applyFunctions(funcOrValue[current], extra, recursive, translatedOnce, untranslated)
-                        }
-                    } else {
-                        prev[current] = funcOrValue[current]
-                    }
+                    prev[current] = applyFunctions(funcOrValue[current], extra,
+                        // do not recurse children, they should be evaluated when their kvpair is rendererd
+                        recursive && current !== 'children')
                     return prev
                 }, {})
         }
@@ -70,6 +81,7 @@ function findPathInDict (paths, mapper, element, schemaCode) {
 }
 
 export {
+    f,
     applyFunctions,
     findPathInDict
 }

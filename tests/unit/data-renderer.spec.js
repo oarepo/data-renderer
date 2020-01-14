@@ -1,7 +1,8 @@
 import { expect } from 'chai'
 import { /* shallowMount, */ mount, createLocalVue } from '@vue/test-utils'
-import install, { DataRendererComponent } from '@oarepo/data-renderer'
+import install, { DataRendererComponent, f } from '@oarepo/data-renderer'
 import { html_beautify } from 'js-beautify'
+
 
 describe('DataRendererComponent.vue', () => {
 
@@ -176,10 +177,10 @@ describe('DataRendererComponent.vue', () => {
                         value: {
                             component: 'img',
                             attrs: {
-                                src: (args) => {
+                                src: f((args) => {
                                     expect(Object.keys(args)).to.contain('value')
                                     return args.value
-                                },
+                                }),
                                 width: '16'
                             }
                         }
@@ -282,7 +283,7 @@ describe('DataRendererComponent.vue', () => {
                         'link-wrapper': {
                             element: 'a',
                             attrs: {
-                                href: ({ url }) => url,
+                                href: f(({ url }) => url),
                                 to: null
                             }
                         },
@@ -452,9 +453,9 @@ describe('DataRendererComponent.vue', () => {
                         value: {
                             component: 'img',
                             attrs: {
-                                src: (args) => {
+                                src: f((args) => {
                                     return args.value
-                                },
+                                }),
                                 width: '16'
                             }
                         }
@@ -472,9 +473,9 @@ describe('DataRendererComponent.vue', () => {
             icon: {
                 component: 'q-icon',
                 attrs: {
-                    name: ({ layout }) => {
+                    name: f(({ layout }) => {
                         return layout.icon && layout.icon.value
-                    }
+                    })
                 }
             }
         })
@@ -621,7 +622,7 @@ describe('DataRendererComponent.vue', () => {
             propsData: {
                 showEmpty: true,
                 data: {},
-                layout: ['keywords'],
+                layout: ['keywords']
             }
         })
         console.log(html_beautify(wrapper.html()))
