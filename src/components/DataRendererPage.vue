@@ -101,6 +101,16 @@ q-page.q-ma-lg
                     q-separator.q-mb-md.q-mt-sm
                     data-renderer-complex-dynamic-array(:query="query")
 
+        .div.col-4
+            .q-card.full-height
+                q-card-section
+                    q-btn.float-right(icon="launch"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererRootChildren.vue"
+                        type="a" target="_blank" flat size="x-small") View source
+                    .text-weight-medium Render root children
+                    q-separator.q-mb-md.q-mt-sm
+                    data-renderer-root-children(:query="query")
+
     h6 Supplying custom component
     .row.q-col-gutter-sm
         .div.col-4
@@ -199,45 +209,29 @@ q-page.q-ma-lg
 </template>
 
 <script>
-import DataRendererDefault from './DataRendererDefault';
-import DataRendererSlotThumbnail from './DataRendererSlotThumbnail';
-import DataRendererSlotRootThumbnail from './DataRendererSlotRootThumbnail';
-import DataRendererSlotValueContact from './DataRendererSlotValueContact';
-import DataRendererSlotTreeLayout from './DataRendererSlotTreeLayout';
-import DataRendererComponentCreator from './DataRendererComponentCreator';
-import DataRendererComponentCreatorLabel from './DataRendererComponentCreatorLabel';
-import DataRendererComponentCreatorValue from './DataRendererComponentCreatorValue';
-import DataRendererComponentCreatorSkip from './DataRendererComponentCreatorSkip';
-import DataRendererComponentCreatorLayout from './DataRendererComponentCreatorLayout';
-import DataRendererDynamic from './DataRendererDynamic';
-import DataRendererDynamicContact from './DataRendererDynamicContact';
-import DataRendererDynamicContactLayout from './DataRendererDynamicContactLayout';
-import DataRendererDynamicNoContact from './DataRendererDynamicNoContact';
-import DataRendererLink from './DataRendererLink'
-import DataRendererSimpleArray from './DataRendererSimpleArray'
-import DataRendererComplexArray from './DataRendererComplexArray'
-import DataRendererComplexDynamicArray from './DataRendererComplexDynamicArray'
+    import DataRendererComplexArray from './DataRendererComplexArray'
 
-export default {
+    export default {
     components: {
-        'data-renderer-default': DataRendererDefault,
-        'data-renderer-slot-thumbnail': DataRendererSlotThumbnail,
-        'data-renderer-slot-root-thumbnail': DataRendererSlotRootThumbnail,
-        'data-renderer-slot-value-contact': DataRendererSlotValueContact,
-        'data-renderer-slot-tree-layout': DataRendererSlotTreeLayout,
-        'data-renderer-component-creator': DataRendererComponentCreator,
-        'data-renderer-component-creator-label': DataRendererComponentCreatorLabel,
-        'data-renderer-component-creator-value': DataRendererComponentCreatorValue,
-        'data-renderer-component-creator-skip': DataRendererComponentCreatorSkip,
-        'data-renderer-component-creator-layout': DataRendererComponentCreatorLayout,
-        'data-renderer-dynamic': DataRendererDynamic,
-        'data-renderer-dynamic-contact': DataRendererDynamicContact,
-        'data-renderer-dynamic-contact-layout': DataRendererDynamicContactLayout,
-        'data-renderer-dynamic-no-contact': DataRendererDynamicNoContact,
-        'data-renderer-link': DataRendererLink,
-        'data-renderer-simple-array': DataRendererSimpleArray,
-        'data-renderer-complex-array': DataRendererComplexArray,
-        'data-renderer-complex-dynamic-array': DataRendererComplexDynamicArray
+        // 'data-renderer-default': DataRendererDefault,
+        // 'data-renderer-slot-thumbnail': DataRendererSlotThumbnail,
+        // 'data-renderer-slot-root-thumbnail': DataRendererSlotRootThumbnail,
+        // 'data-renderer-slot-value-contact': DataRendererSlotValueContact,
+        // 'data-renderer-slot-tree-layout': DataRendererSlotTreeLayout,
+        // 'data-renderer-component-creator': DataRendererComponentCreator,
+        // 'data-renderer-component-creator-label': DataRendererComponentCreatorLabel,
+        // 'data-renderer-component-creator-value': DataRendererComponentCreatorValue,
+        // 'data-renderer-component-creator-skip': DataRendererComponentCreatorSkip,
+        // 'data-renderer-component-creator-layout': DataRendererComponentCreatorLayout,
+        // 'data-renderer-dynamic': DataRendererDynamic,
+        // 'data-renderer-dynamic-contact': DataRendererDynamicContact,
+        // 'data-renderer-dynamic-contact-layout': DataRendererDynamicContactLayout,
+        // 'data-renderer-dynamic-no-contact': DataRendererDynamicNoContact,
+        // 'data-renderer-link': DataRendererLink,
+        // 'data-renderer-simple-array': DataRendererSimpleArray,
+        'data-renderer-complex-array': DataRendererComplexArray
+        // 'data-renderer-complex-dynamic-array': DataRendererComplexDynamicArray,
+        // 'data-renderer-root-children': DataRendererRootChildren
     },
     props: {
         query: Object

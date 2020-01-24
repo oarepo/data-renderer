@@ -1,11 +1,11 @@
-import { JSONPath } from 'jsonpath-plus'
+import {JSONPath} from 'jsonpath-plus'
 
-function decomposePointer (pointer) {
+function decomposePointer(pointer) {
     pointer = pointer.split('/')
-    return pointer.filter(x => x !== '').map(x=>x.replace(/^[0-9]$/, 'arritm'))
+    return pointer.filter(x => x !== '').map(x => x.replace(/^[0-9]$/, 'arritm'))
 }
 
-function addPointerToPaths (paths, key, pointer) {
+function addPointerToPaths(paths, key, pointer) {
     if (pointer === undefined) {
         return [
             ...(paths || []).map(x => `${x}/${key}`),
@@ -23,7 +23,7 @@ function addPointerToPaths (paths, key, pointer) {
     ]
 }
 
-function evaluatePath (jsonPath, context, jsonPointer, paths, key) {
+function evaluatePath(jsonPath, context, jsonPointer, paths, key) {
     if (!jsonPath) {
         if (key) {
             return [{
@@ -32,23 +32,25 @@ function evaluatePath (jsonPath, context, jsonPointer, paths, key) {
                 value: context
             }]
         } else {
-            return [{ jsonPointer: jsonPointer, paths: paths, value: context }]
+            return [{jsonPointer: jsonPointer, paths: paths, value: context}]
         }
     }
-    let values = JSONPath({ path: jsonPath, json: context, resultType: 'all', flatten: true })
+    let values = JSONPath({path: jsonPath, json: context, resultType: 'all', flatten: true})
     if (!values) {
         return undefined
     }
     if (values.length === 0) {
         return undefined
     }
-    return values.map(value => {
+    const ret = values.map(value => {
         return {
             jsonPointer: `${jsonPointer}${value.pointer}`,
             paths: addPointerToPaths(paths, key, value.pointer),
             value: value.value
         }
     })
+    console.log('ret', jsonPath, ret)
+    return ret
 }
 
 export {

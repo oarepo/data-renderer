@@ -1,9 +1,9 @@
-import { addPointerToPaths, evaluatePath } from '../pathutils'
-import { applyFunctions as _applyFunctions, findPathInDict } from '../defutils'
-import { isObject, isString } from '../typeutils'
+import {addPointerToPaths, evaluatePath} from '../pathutils'
+import {applyFunctions as _applyFunctions, findPathInDict} from '../defutils'
+import {isObject, isString} from '../typeutils'
 import deepmerge from 'deepmerge'
-import { RendererMixin } from './mixins'
-import { SKIP_WRAPPER } from './const'
+import {RendererMixin} from './mixins'
+import {SKIP_WRAPPER} from './const'
 
 const KVPairComponent = {
     props: {
@@ -45,7 +45,7 @@ const KVPairComponent = {
         RendererMixin
     ],
     name: 'DataRendererKVPair',
-    render (h) {
+    render(h) {
         if (this.layout === undefined) {
             return h('div')
         }
@@ -87,10 +87,10 @@ const KVPairComponent = {
         // }, ret)
     },
     methods: {
-        renderWrapper (collected, h, def, options) {
+        renderWrapper(collected, h, def, options) {
             return this.renderElement(collected, h, def, 'wrapper', options, this.renderWrapperChildren)
         },
-        renderWrapperChildren (collected, h, def, options) {
+        renderWrapperChildren(collected, h, def, options) {
             const ret = []
             let label = def.label.value || def.label.label
             label = this.currentLabelTranslator ? this.currentLabelTranslator(label, options) : label
@@ -112,6 +112,7 @@ const KVPairComponent = {
                     return rr
                 }))
             }
+            console.log('fdsafa', options.values)
             if ((this.currentChildrenDef && this.currentNestedChildren) ||
                 (!this.currentChildrenDef && (options.values.length > 0 || this.currentShowEmpty))) {
                 ret.push(...this.renderElement(collected, h, def, 'value-wrapper', {
@@ -123,19 +124,26 @@ const KVPairComponent = {
             }
             return ret.flat()
         },
-        renderValues (collected, h, def, options) {
+        renderValues(collected, h, def, options) {
             const ret = []
             if (!this.currentChildrenDef) {
+                console.log('yyyy', this.pathValues)
                 ret.push(...(options.pathValues || []).map((pathValue, idx) => {
                     let renderedValue = []
                     const value = pathValue.value
+                    const valueDef = {...options.layout}
+                    if (Array.isArray(this.context) && valueDef.path === '*') {
+                        valueDef.path = idx.toString()
+                    }
                     if (Array.isArray(value)) {
+                        const itemLayout = this.merge(this.currentLayout, this.currentLayout.array_item)
                         // render the value as an array.
-                        renderedValue = this.renderKVPair(h,
-                            this.merge(this.currentLayout, this.currentLayout.array_item), pathValue)
+                        renderedValue = this.renderKVPair(h, itemLayout, pathValue)
                     } else {
-                        renderedValue = this.renderElement(collected, h, def, 'value', {
+                        console.log('xxxx', pathValue, valueDef)
+                        renderedValue = this.renderElement(collected, h, valueDef, 'value', {
                             ...options,
+                            layout: valueDef,
                             value: value,
                             valueIndex: idx,
                             paths: pathValue.paths,
@@ -143,7 +151,7 @@ const KVPairComponent = {
                         }, () => isString(value) ? value : JSON.stringify(value))
                     }
                     if (def.link) {
-                        return this.renderElement(collected, h, def, 'link-wrapper', {
+                        return this.renderElement(collected, h, valueDef, 'link-wrapper', {
                             ...options,
                             value: value,
                             valueIndex: idx,
@@ -158,7 +166,7 @@ const KVPairComponent = {
             }
             return ret.flat()
         },
-        renderChildren (collected, h, def, options) {
+        renderChildren(collected, h, def, options) {
             if (!this.currentChildrenDef) {
                 return []
             }
@@ -168,14 +176,18 @@ const KVPairComponent = {
                         collected.children = []
                     }
                     return options.pathValues.map(
-                        pathValue => {
+                        (pathValue) => {
                             let renderedChildren;
-                            if (Array.isArray(pathValue.value)) {
+                            if (Array.isArray(this.context) ) {
+                                renderedChildren = [this.renderKVPair(h, {...this.currentLayout, path: ''}, pathValue)]
+                            } else if (Array.isArray(pathValue.value)) {
                                 // the value is an array, so render it recursively
+                                const itemLayout = this.merge(
+                                    this.currentLayout,
+                                    this.currentLayout.array_item)
+                                console.log('itemLayout', itemLayout, options.pathValues)
                                 renderedChildren = this.renderKVPair(h,
-                                    this.merge(
-                                        this.currentLayout,
-                                        this.currentLayout.array_item),
+                                    itemLayout,
                                     pathValue)
                             } else {
                                 renderedChildren = this.currentChildrenDef.map(
@@ -198,7 +210,7 @@ const KVPairComponent = {
             )
             return ret
         },
-        renderKVPair (h, layout, pathValue) {
+        renderKVPair(h, layout, pathValue) {
             return h(
                 KVPairComponent,
                 {
@@ -225,27 +237,27 @@ const KVPairComponent = {
                 }
             )
         },
-        applyFunctions (what, ifneeded, recursive = true, layout=undefined) {
+        applyFunctions(what, ifneeded, recursive = true, layout = undefined) {
             if (ifneeded && !(what instanceof Function)) {
                 return what
             }
             const pathValues = this.pathValues
             const values = this.values
             return _applyFunctions(what, {
-                context: this.context,
-                layout: layout || this.layout,
-                data: this.data,
-                vue: this,
-                paths: (pathValues && pathValues.length) ? pathValues[0].paths : this.paths,
-                value: values.length === 1 ? values[0] : values,
-                url: this.url,
-                values,
-                pathValues
-            }, recursive,
+                    context: this.context,
+                    layout: layout || this.layout,
+                    data: this.data,
+                    vue: this,
+                    paths: (pathValues && pathValues.length) ? pathValues[0].paths : this.paths,
+                    value: values.length === 1 ? values[0] : values,
+                    url: this.url,
+                    values,
+                    pathValues
+                }, recursive,
                 this.$oarepo.dataRenderer.singleTranslationLayoutValues,
                 this.$oarepo.dataRenderer.untranslatedLayoutValues)
         },
-        getWithDefault (propName, applyFunctions = true) {
+        getWithDefault(propName, applyFunctions = true) {
             const layout = this.currentLayout
             if (layout === undefined) {
                 return false
@@ -265,28 +277,30 @@ const KVPairComponent = {
             return applyFunctions ?
                 this.applyFunctions(this.$oarepo.dataRenderer[propName], true, true, layout) : this.$oarepo.dataRenderer[propName]
         },
-        merge (...what) {
+        merge(...what) {
             return ((this.layoutMergeOptions || {}).merge || deepmerge.all)(what, this.layoutMergeOptions)
         }
     },
     computed: {
-        pathValues () {
-            return evaluatePath(isString(this.layout) ? this.layout : this.layout.path,
+        pathValues() {
+            const res = evaluatePath(isString(this.layout) ? this.layout : this.layout.path,
                 this.context, this.jsonPointer, this.paths, this.layout.key)
+            console.log('res', res)
+            return res
         },
-        values () {
+        values() {
             if (!this.pathValues) {
                 return []
             }
             return this.pathValues.map(x => x.value)
         },
-        currentSchemaCode () {
+        currentSchemaCode() {
             return this.schema || 'inline'
         },
-        currentSchema () {
+        currentSchema() {
             return this.applyFunctions(this.$oarepo.dataRenderer.schemas[this.currentSchemaCode])
         },
-        currentLayout () {
+        currentLayout() {
             const pathValues = this.pathValues
             let def = this.applyFunctions(this.layout, true, false)
             if (isString(def)) {
@@ -310,7 +324,7 @@ const KVPairComponent = {
             if (pathValues && pathValues.length) {
                 overridenPath = pathValues[0].paths
             } else {
-                overridenPath = addPointerToPaths (this.paths, def.key, def.path)
+                overridenPath = addPointerToPaths(this.paths, def.key, def.path)
             }
 
             let overridenLayout = findPathInDict(
@@ -346,7 +360,7 @@ const KVPairComponent = {
             }
             return ret
         },
-        currentChildrenDef () {
+        currentChildrenDef() {
             const def = this.currentLayout
             if (!def) {
                 return undefined
@@ -355,6 +369,9 @@ const KVPairComponent = {
                 return def.children
             }
             if (!this.currentDynamic) {
+                return undefined
+            }
+            if (!this.pathValues) {
                 return undefined
             }
             let children = {}
@@ -376,23 +393,23 @@ const KVPairComponent = {
                 return undefined
             }
         },
-        currentNestedChildren () {
+        currentNestedChildren() {
             return this.getWithDefault('nestedChildren')
         },
-        currentShowEmpty () {
+        currentShowEmpty() {
             return this.getWithDefault('showEmpty')
         },
-        currentLabelTranslator () {
+        currentLabelTranslator() {
             return this.getWithDefault('labelTranslator', false)
         },
-        currentDynamic () {
+        currentDynamic() {
             return this.getWithDefault('dynamic')
         },
-        currentLayoutPostProcessor () {
+        currentLayoutPostProcessor() {
             return this.getWithDefault('layoutPostProcessor', false)
         }
     }
 }
 
 export default KVPairComponent
-export { SKIP_WRAPPER }
+export {SKIP_WRAPPER}

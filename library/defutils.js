@@ -34,7 +34,7 @@ function applyFunctions (funcOrValue, extra /*{context, layout, data, paths, val
             return funcOrValue.map(x => applyFunctions(x, extra, recursive))
         }
         if (isObject(funcOrValue)) {
-            return Object.getOwnPropertyNames(funcOrValue)
+            return Object.getOwnPropertyNames(funcOrValue).filter(x => (!x.startsWith('__')))
                 .reduce((prev, current) => {
                     prev[current] = applyFunctions(funcOrValue[current], extra,
                         // do not recurse children, they should be evaluated when their kvpair is rendererd
