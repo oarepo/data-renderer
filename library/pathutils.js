@@ -49,7 +49,6 @@ function evaluatePath(jsonPath, context, jsonPointer, paths, key) {
             value: value.value
         }
     })
-    console.log('ret', jsonPath, ret)
     return ret
 }
 
