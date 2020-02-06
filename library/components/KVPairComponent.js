@@ -112,7 +112,6 @@ const KVPairComponent = {
                     return rr
                 }))
             }
-            console.log('fdsafa', options.values)
             if ((this.currentChildrenDef && this.currentNestedChildren) ||
                 (!this.currentChildrenDef && (options.values.length > 0 || this.currentShowEmpty))) {
                 ret.push(...this.renderElement(collected, h, def, 'value-wrapper', {
@@ -127,7 +126,6 @@ const KVPairComponent = {
         renderValues(collected, h, def, options) {
             const ret = []
             if (!this.currentChildrenDef) {
-                console.log('yyyy', this.pathValues)
                 ret.push(...(options.pathValues || []).map((pathValue, idx) => {
                     let renderedValue = []
                     const value = pathValue.value
@@ -140,7 +138,6 @@ const KVPairComponent = {
                         // render the value as an array.
                         renderedValue = this.renderKVPair(h, itemLayout, pathValue)
                     } else {
-                        console.log('xxxx', pathValue, valueDef)
                         renderedValue = this.renderElement(collected, h, valueDef, 'value', {
                             ...options,
                             layout: valueDef,
@@ -185,7 +182,6 @@ const KVPairComponent = {
                                 const itemLayout = this.merge(
                                     this.currentLayout,
                                     this.currentLayout.array_item)
-                                console.log('itemLayout', itemLayout, options.pathValues)
                                 renderedChildren = this.renderKVPair(h,
                                     itemLayout,
                                     pathValue)
@@ -285,7 +281,6 @@ const KVPairComponent = {
         pathValues() {
             const res = evaluatePath(isString(this.layout) ? this.layout : this.layout.path,
                 this.context, this.jsonPointer, this.paths, this.layout.key)
-            console.log('res', res)
             return res
         },
         values() {

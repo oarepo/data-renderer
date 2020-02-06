@@ -111,6 +111,16 @@ q-page.q-ma-lg
                     q-separator.q-mb-md.q-mt-sm
                     data-renderer-root-children(:query="query")
 
+        .div.col-4
+            .q-card.full-height
+                q-card-section
+                    q-btn.float-right(icon="launch"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererNoChildrenArray.vue"
+                        type="a" target="_blank" flat size="x-small") View source
+                    .text-weight-medium Render array with no children
+                    q-separator.q-mb-md.q-mt-sm
+                    data-renderer-no-children-array(:query="query")
+
     h6 Supplying custom component
     .row.q-col-gutter-sm
         .div.col-4
@@ -228,6 +238,7 @@ q-page.q-ma-lg
     import DataRendererComplexArray from './DataRendererComplexArray'
     import DataRendererComplexDynamicArray from './DataRendererComplexDynamicArray'
     import DataRendererRootChildren from "./DataRendererRootChildren";
+    import DataRendererNoChildrenArray from "./DataRendererNoChildrenArray";
 
     export default {
     components: {
@@ -249,7 +260,8 @@ q-page.q-ma-lg
         'data-renderer-simple-array': DataRendererSimpleArray,
         'data-renderer-complex-array': DataRendererComplexArray,
         'data-renderer-complex-dynamic-array': DataRendererComplexDynamicArray,
-        'data-renderer-root-children': DataRendererRootChildren
+        'data-renderer-root-children': DataRendererRootChildren,
+        'data-renderer-no-children-array': DataRendererNoChildrenArray
     },
     props: {
         query: Object
