@@ -2,6 +2,7 @@ import DataRendererComponent from './components/DataRendererComponent'
 import KVPairComponent, { SKIP_WRAPPER } from './components/KVPairComponent'
 import { RendererMixin } from './components/mixins'
 import startCase from 'lodash.startcase'
+import { f } from './defutils'
 
 export default {
     install (Vue, options) {
@@ -57,7 +58,7 @@ export default {
                     'link-wrapper': {
                         element: 'router-link',
                         attrs: {
-                            to: (options) => options.url
+                            to: f((options) => options.url)
                         }
                     },
                     multiple: {
@@ -109,7 +110,7 @@ export default {
                         'link-wrapper': {
                             element: 'router-link',
                             attrs: {
-                                to: (options) => options.url
+                                to: f((options) => options.url)
                             }
                         },
                     }
@@ -137,7 +138,7 @@ export default {
                     'link-wrapper': {
                         element: 'router-link',
                         attrs: {
-                            to: (options) => options.url
+                            to: f((options) => options.url)
                         }
                     },
                     'children-arritm-wrapper': {
@@ -189,7 +190,7 @@ export default {
                         'link-wrapper': {
                             element: 'router-link',
                             attrs: {
-                                to: (options) => options.url
+                                to: f((options) => options.url)
                             }
                         },
                     }
@@ -219,7 +220,7 @@ export default {
                     'link-wrapper': {
                         element: 'router-link',
                         attrs: {
-                            to: (options) => options.url
+                            to: f((options) => options.url)
                         }
                     },
                     'children-arritm-wrapper': {
@@ -271,7 +272,7 @@ export default {
                         'link-wrapper': {
                             element: 'router-link',
                             attrs: {
-                                to: (options) => options.url
+                                to: f((options) => options.url)
                             }
                         },
                     }
@@ -298,7 +299,7 @@ export default {
                     'link-wrapper': {
                         element: 'router-link',
                         attrs: {
-                            to: (options) => options.url
+                            to: f((options) => options.url)
                         }
                     },
                     'children-arritm-wrapper': {
@@ -341,7 +342,7 @@ export default {
                         },
                         value: {
                             element: 'div',
-                            style: {display: 'table-row'},
+                            style: {display: 'block'},
                         },
                         'children-wrapper': {
                             component: SKIP_WRAPPER,
@@ -350,7 +351,7 @@ export default {
                         'link-wrapper': {
                             element: 'router-link',
                             attrs: {
-                                to: (options) => options.url
+                                to: f((options) => options.url)
                             }
                         },
                     },
@@ -396,5 +397,6 @@ export {
     DataRendererComponent,
     KVPairComponent,
     SKIP_WRAPPER,
-    RendererMixin
+    RendererMixin,
+    f
 }

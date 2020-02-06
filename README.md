@@ -135,7 +135,24 @@ layout = {
 ```
 
 Every property can be a function ``func({context, layout, data, vue, paths, ...})`` where context
-points to the actual parts of data being rendered
+points to the actual parts of data being rendered. To use the function, wrap it inside ``f``:
+
+```javascript
+import { f } from '@oarepo/data-renderer'
+
+{
+    path: 'thumbnail',
+    value: {
+        component: 'img',
+        attrs: {
+            src: f(({value}) => {
+                return value
+            }),
+            width: '16'
+        }
+    }
+}
+```
 
 ## Usage
 
@@ -233,7 +250,7 @@ The value of the property is either:
 
  * object with keys (same as slot names but without the 'element' prefix) 
    and value the layout of the object at the given path
- * function taking ``({context, layout, data, paths})``  
+ * function wrapped in ``f`` (see above) taking ``({context, layout, data, paths})``  
    and returning 
    - the layout
    - ``null`` if the element should not be rendered at all

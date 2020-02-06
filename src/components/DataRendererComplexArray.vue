@@ -25,6 +25,18 @@ export default {
                     {
                         phone: '+421000000000',
                         email: 'mary.black1@gmail.com'
+                    },
+                    {
+                        phone: '+421000000000',
+                        email: 'mary.black1@gmail.com'
+                    },
+                    {
+                        phone: '+421000000000',
+                        email: 'mary.black1@gmail.com'
+                    },
+                    {
+                        phone: '+421000000000',
+                        email: 'mary.black1@gmail.com'
                     }
                 ]
             },
