@@ -121,6 +121,19 @@ q-page.q-ma-lg
                     q-separator.q-mb-md.q-mt-sm
                     data-renderer-no-children-array(:query="query")
 
+        .div.col-4
+            .q-card.full-height
+                q-card-section
+                    q-btn.float-right(icon="launch"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererRequiredObjectWithProps.vue"
+                        type="a" target="_blank" flat size="x-small") View source
+                    .text-weight-medium Required object with properties in layout and empty data
+                    q-separator.q-mb-md.q-mt-sm
+                    data-renderer-required-object-with-props(:query="query")
+
+
+
+
     h6 Supplying custom component
     .row.q-col-gutter-sm
         .div.col-4
@@ -239,6 +252,7 @@ q-page.q-ma-lg
     import DataRendererComplexDynamicArray from './DataRendererComplexDynamicArray'
     import DataRendererRootChildren from "./DataRendererRootChildren";
     import DataRendererNoChildrenArray from "./DataRendererNoChildrenArray";
+    import DataRendererRequiredObjectWithProps from "./DataRendererRequiredObjectWithProps";
 
     export default {
     components: {
@@ -261,7 +275,8 @@ q-page.q-ma-lg
         'data-renderer-complex-array': DataRendererComplexArray,
         'data-renderer-complex-dynamic-array': DataRendererComplexDynamicArray,
         'data-renderer-root-children': DataRendererRootChildren,
-        'data-renderer-no-children-array': DataRendererNoChildrenArray
+        'data-renderer-no-children-array': DataRendererNoChildrenArray,
+        'data-renderer-required-object-with-props': DataRendererRequiredObjectWithProps
     },
     props: {
         query: Object
