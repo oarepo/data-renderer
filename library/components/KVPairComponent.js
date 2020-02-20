@@ -172,9 +172,11 @@ const KVPairComponent = {
                     if (collected.children === undefined) {
                         collected.children = []
                     }
+                    if (!options.pathValues) {
+                        return []
+                    }
                     return options.pathValues.map(
                         (pathValue) => {
-                            console.log('map', pathValue, Object.keys(pathValue.value))
                             let renderedChildren;
                             if (Array.isArray(this.context)) {
                                 renderedChildren = [this.renderKVPair(h, {...this.currentLayout, path: ''}, pathValue)]
@@ -208,32 +210,11 @@ const KVPairComponent = {
             return ret
         },
         renderKVPair(h, layout, pathValue) {
-            // console.log('rKV', isObject(pathValue.value), pathValue.value, this.context)
-            // console.log(Object.keys(this.context).length)
-            console.log(layout, layout.path, pathValue, 'context', this.context)
-            if (Object.keys(pathValue.value).length === 0 && Object.keys(this.context).length === 0) {
-                console.log('if')
-                pathValue.value[layout.path] = {}
-            }
-            // let bla
-            // if (isObject(pathValue.value) && Object.keys(pathValue.value).length !== 0) {
-            //     console.log('if')
-            //     bla = pathValue.value
-            // } else if (Object.keys(this.context).length !== 0) {
-            //     console.log('else if')
-            //     bla = this.context
-            // } else {
-            //     console.log('else')
-            //     bla = {}
-            //     bla[layout.path] = {}
-            // }
             return h(
                 KVPairComponent,
                 {
                     props: {
                         context: isObject(pathValue.value) ? pathValue.value : this.context,
-                        // context: (isObject(pathValue.value) && Object.keys(pathValue.value).length !== 0) ? pathValue.value : (Object.keys(this.context).length !== 0 ? this.context : blabla),
-                        // context: bla,
                         data: this.data,
                         layout: layout,
                         paths: pathValue.paths,

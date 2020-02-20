@@ -14,6 +14,7 @@ export default {
             d1: [
                 {
                     "path": "parent",
+                    "label": "parent",
                     "children": [
                         {
                             "label": "child-1",
