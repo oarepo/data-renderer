@@ -172,10 +172,13 @@ const KVPairComponent = {
                     if (collected.children === undefined) {
                         collected.children = []
                     }
+                    if (!options.pathValues) {
+                        return []
+                    }
                     return options.pathValues.map(
                         (pathValue) => {
                             let renderedChildren;
-                            if (Array.isArray(this.context) ) {
+                            if (Array.isArray(this.context)) {
                                 renderedChildren = [this.renderKVPair(h, {...this.currentLayout, path: ''}, pathValue)]
                             } else if (Array.isArray(pathValue.value)) {
                                 // the value is an array, so render it recursively
