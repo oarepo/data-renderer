@@ -8,6 +8,13 @@ export default {
     install (Vue, options) {
 
         options = {
+            booleanTranslator: function (value/*, options*/) {
+                if (value) {
+                    return 'true'
+                } else {
+                    return 'false'
+                }
+            },
             labelTranslator: function (label, options) {
                 if (!label) {
                     return label

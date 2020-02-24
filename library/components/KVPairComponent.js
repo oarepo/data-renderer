@@ -1,6 +1,6 @@
 import {addPointerToPaths, evaluatePath} from '../pathutils'
 import {applyFunctions as _applyFunctions, findPathInDict} from '../defutils'
-import {isObject, isString} from '../typeutils'
+import {isBool, isObject, isString} from '../typeutils'
 import deepmerge from 'deepmerge'
 import {RendererMixin} from './mixins'
 import {SKIP_WRAPPER} from './const'
@@ -36,6 +36,7 @@ const KVPairComponent = {
         nestedChildren: Boolean,
         showEmpty: Boolean,
         labelTranslator: Function,
+        booleanTranslator: Function,
         layoutTranslator: Function,
         layoutPostProcessor: Function,
         dynamic: Boolean,
@@ -145,7 +146,7 @@ const KVPairComponent = {
                             valueIndex: idx,
                             paths: pathValue.paths,
                             jsonPointer: pathValue.jsonPointer,
-                        }, () => isString(value) ? value : JSON.stringify(value))
+                        }, () => isString(value) || isBool(value) ? value : JSON.stringify(value))
                     }
                     if (def.link) {
                         return this.renderElement(collected, h, valueDef, 'link-wrapper', {
