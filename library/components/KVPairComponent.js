@@ -1,6 +1,6 @@
 import {addPointerToPaths, evaluatePath} from '../pathutils'
 import {applyFunctions as _applyFunctions, findPathInDict} from '../defutils'
-import {isBool, isObject, isString} from '../typeutils'
+import {isObject, isString} from '../typeutils'
 import deepmerge from 'deepmerge'
 import {RendererMixin} from './mixins'
 import {SKIP_WRAPPER} from './const'
@@ -138,6 +138,15 @@ const KVPairComponent = {
                         const itemLayout = this.merge(this.currentLayout, this.currentLayout.array_item)
                         // render the value as an array.
                         renderedValue = this.renderKVPair(h, itemLayout, pathValue)
+                    } else if (Boolean(value) === value) {
+                        renderedValue = this.renderElement(collected, h, valueDef, 'value', {
+                            ...options,
+                            layout: valueDef,
+                            value: value,
+                            valueIndex: idx,
+                            paths: pathValue.paths,
+                            jsonPointer: pathValue.jsonPointer,
+                        }, () => this.currentBooleanTranslator(value))
                     } else {
                         renderedValue = this.renderElement(collected, h, valueDef, 'value', {
                             ...options,
