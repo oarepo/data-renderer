@@ -146,7 +146,7 @@ const KVPairComponent = {
                             valueIndex: idx,
                             paths: pathValue.paths,
                             jsonPointer: pathValue.jsonPointer,
-                        }, () => isString(value) || isBool(value) ? value : JSON.stringify(value))
+                        }, () => isString(value) ? value : JSON.stringify(value))
                     }
                     if (def.link) {
                         return this.renderElement(collected, h, valueDef, 'link-wrapper', {
@@ -227,6 +227,8 @@ const KVPairComponent = {
                         nestedChildren: this.nestedChildren,
                         showEmpty: this.showEmpty,
                         labelTranslator: this.labelTranslator,
+                        booleanTranslator: this.booleanTranslator,
+                        // labelTranslator: isBool(pathValue.value) ? this.booleanTranslator : this.labelTranslator,
                         dynamic: this.currentDynamic,
                         layoutTranslator: this.layoutTranslator,
                         layoutPostProcessor: this.layoutPostProcessor,
@@ -400,6 +402,9 @@ const KVPairComponent = {
         },
         currentLabelTranslator() {
             return this.getWithDefault('labelTranslator', false)
+        },
+        currentBooleanTranslator() {
+            return this.getWithDefault('booleanTranslator', false)
         },
         currentDynamic() {
             return this.getWithDefault('dynamic')
