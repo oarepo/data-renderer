@@ -131,8 +131,15 @@ q-page.q-ma-lg
                     q-separator.q-mb-md.q-mt-sm
                     data-renderer-required-object-with-props(:query="query")
 
-
-
+        .div.col-4
+            .q-card.full-height
+                q-card-section
+                    q-btn.float-right(icon="launch"
+                        href="https://github.com/oarepo/data-renderer/blob/master/src/components/DataRendererBoolean.vue"
+                        type="a" target="_blank" flat size="x-small") View source
+                    .text-weight-medium Render boolean value
+                    q-separator.q-mb-md.q-mt-sm
+                    data-renderer-boolean(:query="query")
 
     h6 Supplying custom component
     .row.q-col-gutter-sm
@@ -253,9 +260,11 @@ q-page.q-ma-lg
     import DataRendererRootChildren from "./DataRendererRootChildren";
     import DataRendererNoChildrenArray from "./DataRendererNoChildrenArray";
     import DataRendererRequiredObjectWithProps from "./DataRendererRequiredObjectWithProps";
+    import DataRendererBoolean from "./DataRendererBoolean";
 
     export default {
     components: {
+        'data-renderer-boolean': DataRendererBoolean,
         'data-renderer-default': DataRendererDefault,
         'data-renderer-slot-thumbnail': DataRendererSlotThumbnail,
         'data-renderer-slot-root-thumbnail': DataRendererSlotRootThumbnail,

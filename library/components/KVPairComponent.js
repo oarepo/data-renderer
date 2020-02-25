@@ -36,6 +36,7 @@ const KVPairComponent = {
         nestedChildren: Boolean,
         showEmpty: Boolean,
         labelTranslator: Function,
+        booleanTranslator: Function,
         layoutTranslator: Function,
         layoutPostProcessor: Function,
         dynamic: Boolean,
@@ -138,6 +139,12 @@ const KVPairComponent = {
                         // render the value as an array.
                         renderedValue = this.renderKVPair(h, itemLayout, pathValue)
                     } else {
+                        let valueGetter
+                        if (Boolean(value) === value) {
+                            valueGetter = () => this.currentBooleanTranslator(value)
+                        } else {
+                            valueGetter = () => isString(value) ? value : JSON.stringify(value)
+                        }
                         renderedValue = this.renderElement(collected, h, valueDef, 'value', {
                             ...options,
                             layout: valueDef,
@@ -145,7 +152,7 @@ const KVPairComponent = {
                             valueIndex: idx,
                             paths: pathValue.paths,
                             jsonPointer: pathValue.jsonPointer,
-                        }, () => isString(value) ? value : JSON.stringify(value))
+                        }, valueGetter)
                     }
                     if (def.link) {
                         return this.renderElement(collected, h, valueDef, 'link-wrapper', {
@@ -226,6 +233,7 @@ const KVPairComponent = {
                         nestedChildren: this.nestedChildren,
                         showEmpty: this.showEmpty,
                         labelTranslator: this.labelTranslator,
+                        booleanTranslator: this.booleanTranslator,
                         dynamic: this.currentDynamic,
                         layoutTranslator: this.layoutTranslator,
                         layoutPostProcessor: this.layoutPostProcessor,
@@ -399,6 +407,9 @@ const KVPairComponent = {
         },
         currentLabelTranslator() {
             return this.getWithDefault('labelTranslator', false)
+        },
+        currentBooleanTranslator() {
+            return this.getWithDefault('booleanTranslator', false)
         },
         currentDynamic() {
             return this.getWithDefault('dynamic')

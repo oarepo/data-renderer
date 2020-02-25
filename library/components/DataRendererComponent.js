@@ -16,6 +16,7 @@ export default {
             type: String,
             default: 'inline'
         },
+        booleanTranslator: Function,
         labelTranslator: Function,
         dynamic: Boolean,
         pathLayouts: {
@@ -84,6 +85,7 @@ export default {
                 schema: this.schema,
                 nestedChildren: this.nestedChildren,
                 showEmpty: this.showEmpty,
+                booleanTranslator: this.booleanTranslator,
                 labelTranslator: this.labelTranslator,
                 dynamic: this.dynamic,
                 layoutTranslator: this.layoutTranslator,
