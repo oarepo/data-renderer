@@ -138,16 +138,13 @@ const KVPairComponent = {
                         const itemLayout = this.merge(this.currentLayout, this.currentLayout.array_item)
                         // render the value as an array.
                         renderedValue = this.renderKVPair(h, itemLayout, pathValue)
-                    } else if (Boolean(value) === value) {
-                        renderedValue = this.renderElement(collected, h, valueDef, 'value', {
-                            ...options,
-                            layout: valueDef,
-                            value: value,
-                            valueIndex: idx,
-                            paths: pathValue.paths,
-                            jsonPointer: pathValue.jsonPointer,
-                        }, () => this.currentBooleanTranslator(value))
                     } else {
+                        let valueGetter
+                        if (Boolean(value) === value) {
+                            valueGetter = () => this.currentBooleanTranslator(value)
+                        } else {
+                            valueGetter = () => isString(value) ? value : JSON.stringify(value)
+                        }
                         renderedValue = this.renderElement(collected, h, valueDef, 'value', {
                             ...options,
                             layout: valueDef,
@@ -155,7 +152,7 @@ const KVPairComponent = {
                             valueIndex: idx,
                             paths: pathValue.paths,
                             jsonPointer: pathValue.jsonPointer,
-                        }, () => isString(value) ? value : JSON.stringify(value))
+                        }, valueGetter)
                     }
                     if (def.link) {
                         return this.renderElement(collected, h, valueDef, 'link-wrapper', {
@@ -237,7 +234,6 @@ const KVPairComponent = {
                         showEmpty: this.showEmpty,
                         labelTranslator: this.labelTranslator,
                         booleanTranslator: this.booleanTranslator,
-                        // labelTranslator: isBool(pathValue.value) ? this.booleanTranslator : this.labelTranslator,
                         dynamic: this.currentDynamic,
                         layoutTranslator: this.layoutTranslator,
                         layoutPostProcessor: this.layoutPostProcessor,
