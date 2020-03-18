@@ -6,10 +6,9 @@ json=$(realpath $(dirname $0)/node_modules/.bin/json)
 bili=$(realpath $(dirname $0)/node_modules/.bin/bili)
 
 rm -rf dist
-cd library 
+cd library
 $bili -c bili.config.js --plugins.vue --format esm ./index.js
-mv dist/index.esm.js dist/oarepo-data-renderer.esm.js 
+mv dist/index.esm.js dist/oarepo-data-renderer.esm.js
 cat ../package.json | $json -e "delete this.scripts; delete this.devDependencies; delete this.dependencies" >dist/package.json
-cp ../README.md dist 
+cp ../README.md dist
 mv dist ..
-

@@ -1,21 +1,21 @@
 <template lang="pug">
   div
-    data-renderer(:data="record" :layout="layout" :url="url" :schema="query.schema")
+    data-renderer(:data="record" :layout="layout" :schema="query.schema")
 </template>
 
 <script>
 
 export default {
-  name: 'data-renderer-link-demo',
+  name: 'data-renderer-object-demo',
   props: {
     query: Object
   },
   data: function () {
     return {
-      url: '/link-test',
       record: {
         object: {
-          a: '1'
+          a: '1',
+          b: null
         }
       },
       layout: {
@@ -34,15 +34,12 @@ export default {
                 prop: 'a',
                 label: {
                   label: 'AAA'
-                },
-                link: {
-                  element: 'a',
-                  style: {
-                    'color': 'red'
-                  },
-                  attrs: {
-                    href: ({url}) => url
-                  }
+                }
+              },
+              {
+                prop: 'b',
+                label: {
+                  label: 'BBB'
                 }
               }]
           }]

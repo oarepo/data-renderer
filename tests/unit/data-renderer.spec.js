@@ -1,631 +1,410 @@
 import { expect } from 'chai'
 import { /* shallowMount, */ mount, createLocalVue } from '@vue/test-utils'
-import install, { DataRendererComponent, f } from '@oarepo/data-renderer'
+import install, { DataRendererComponent } from '@oarepo/data-renderer-2'
 import { html_beautify } from 'js-beautify'
-
+import ObjectComponent from '../../library/components/ObjectComponent'
+import ArrayComponent from '../../library/components/ArrayComponent'
+import UndefinedComponent from '../../library/components/primitive/UndefinedComponent'
+import BooleanComponent from '../../library/components/primitive/BooleanComponent'
+import NumberComponent from '../../library/components/primitive/NumberComponent'
+import StringComponent from '../../library/components/primitive/StringComponent'
+import { f } from '../../library'
 
 describe('DataRendererComponent.vue', () => {
 
-    it('renders empty data', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders empty data', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {},
-                layout: []
-            }
-        })
-        expect(wrapper.html()).to.include('<div class="iqdr-root iqdr-root-inline iqdr-wrapper"></div>')
+    const wrapper = mount(DataRendererComponent, {
+      localVue,
+      propsData: {
+        data: {},
+        layout: {}
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include('<div class="iqdr-childrenWrapper" style="display: inline-table;"></div>')
+  })
 
-    it('renders simple data', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders simple data', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    title: 'abc'
-                },
-                layout: [
-                    {
-                        path: 'title'
-                    }
-                ]
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title">' +
-            '<div class="iqdr-value-wrapper iqdr-path-title" style="display: inline;">' +
-            '<div class="iqdr-value iqdr-path-title" style="display: inline;">abc</div></div></div></div>')
+    const wrapper = mount(DataRendererComponent, {
+      localVue,
+      propsData: {
+        data: {
+          title: 'abc'
+        },
+        layout: {}
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include(
+      '<div class="iqdr-childrenWrapper" style="display: inline-table;">\n' +
+      '  <div class="iqdr-wrapper iqdr-path-title"><label class="iqdr-label iqdr-path-title">Title: </label><span class="iqdr-value iqdr-path-title">abc</span></div>\n' +
+      '</div>')
+  })
 
-    it('renders dynamic data', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders simple array', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    title: 'abc'
-                }
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title">' +
-            '<label class="iqdr-label iqdr-path-title">Title: </label>' +
-            '<div class="iqdr-value-wrapper iqdr-path-title" style="display: inline;">' +
-            '<div class="iqdr-value iqdr-path-title" style="display: inline;">abc</div></div></div></div>')
+    const wrapper = mount(DataRendererComponent, {
+      localVue,
+      propsData: {
+        data: {
+          array: [1, 2, 3]
+        },
+        layout: {}
+      }
     })
+    console.log(html_beautify(wrapper.html()))
+    expect(wrapper.html()).to.include(
+      '<div class="iqdr-childrenWrapper" style="display: inline-table;">\n' +
+      '  <div class="iqdr-wrapper iqdr-path-array"><label class="iqdr-label iqdr-path-array">Array: </label>\n' +
+      '    <div class="iqdr-arrayWrapper iqdr-path-array" style="display: inline-table;">\n' +
+      '      <div class="iqdr-wrapper iqdr-path-array"><span class="iqdr-value iqdr-path-array">1</span></div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-array"><span class="iqdr-value iqdr-path-array">2</span></div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-array"><span class="iqdr-value iqdr-path-array">3</span></div>\n' +
+      '    </div>\n' +
+      '  </div>\n' +
+      '</div>')
+  })
 
-    it('renders component', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders object with layout', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    title: 'abc'
+    const wrapper = mount(DataRendererComponent, {
+      localVue,
+      propsData: {
+        data: {
+          object: { a: 1, b: 2 }
+        },
+        layout: {
+          showEmpty: true,
+          childrenWrapper: {
+            element: 'div'
+          },
+          children: [
+            {
+              prop: 'object',
+              label: {
+                label: 'Object label'
+              },
+              children: [
+                {
+                  prop: 'a',
+                  label: {
+                    label: 'A'
+                  }
                 },
-                layout: [
-                    {
-                        path: 'title',
-                        wrapper: {
-                            component: {
-                                render (h) {
-                                    console.log(arguments.length)
-                                    return h('div', '123')
-                                }
-                            }
-                        }
-                    }
-                ]
-            }
-        })
-        expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title">123</div></div>')
+                {
+                  prop: 'b',
+                  label: {
+                    label: 'B'
+                  }
+                }]
+            }]
+        }
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include(
+      '<div class="iqdr-childrenWrapper" style="display: inline-table;">\n' +
+      '  <div class="iqdr-wrapper iqdr-path-object"><label class="iqdr-label iqdr-path-object">Object Label: </label>\n' +
+      '    <div class="iqdr-childrenWrapper iqdr-path-object" style="display: inline-table;">\n' +
+      '      <div class="iqdr-wrapper iqdr-path-object-a iqdr-path-a"><label class="iqdr-label iqdr-path-object-a iqdr-path-a">A: </label><span class="iqdr-value iqdr-path-object-a iqdr-path-a">1</span></div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-object-b iqdr-path-b"><label class="iqdr-label iqdr-path-object-b iqdr-path-b">B: </label><span class="iqdr-value iqdr-path-object-b iqdr-path-b">2</span></div>\n' +
+      '    </div>\n' +
+      '  </div>\n' +
+      '</div>')
+  })
 
-    it('renders dynamic component', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders array data', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    title: 'abc'
-                },
-                pathLayouts: {
-                    'title': {
-                        wrapper: {
-                            component: {
-                                render (h) {
-                                    return h('div', '123')
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        })
-        expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title">123</div></div>')
+    const wrapper = mount(DataRendererComponent, {
+      localVue,
+      propsData: {
+        data: {
+          object: { a: 1, b: 2 }
+        },
+        layout: {}
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include(
+      '<div class="iqdr-childrenWrapper" style="display: inline-table;">\n')
+  })
 
-    it('renders slots', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders object component', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    title: 'abc'
-                }
-            },
-            scopedSlots: {
-                'wrapper-title': '<div class="wr" />'
-            }
-        })
-        expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="wr"></div></div>')
+    const wrapper = mount(ObjectComponent, {
+      localVue,
+      propsData: {
+        value: {
+          object: { a: 1, b: 2 }
+        },
+        paths: [],
+        layout: {}
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include(
+      '<div class="iqdr-childrenWrapper" style="display: inline-table;">\n' +
+      '  <div class="iqdr-wrapper iqdr-path-object"><label class="iqdr-label iqdr-path-object">Object: </label>\n' +
+      '    <div class="iqdr-childrenWrapper iqdr-path-object" style="display: inline-table;">\n' +
+      '      <div class="iqdr-wrapper iqdr-path-object-a iqdr-path-a"><label class="iqdr-label iqdr-path-object-a iqdr-path-a">A: </label><span class="iqdr-value iqdr-path-object-a iqdr-path-a">1</span></div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-object-b iqdr-path-b"><label class="iqdr-label iqdr-path-object-b iqdr-path-b">B: </label><span class="iqdr-value iqdr-path-object-b iqdr-path-b">2</span></div>\n' +
+      '    </div>\n' +
+      '  </div>\n' +
+      '</div>')
+  })
 
-    it('value slot gets value', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders array component', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    title: 'abc'
-                }
-            },
-            scopedSlots: {
-                'value-title': (props) => {
-                    return `${props.value}`
-                }
-            }
-        })
-        expect(wrapper.html()).to.include(
-            '<div class="iqdr-root iqdr-root-inline iqdr-wrapper"><div class="iqdr-wrapper iqdr-path-title"><label class="iqdr-label iqdr-path-title">Title: </label><div class="iqdr-value-wrapper iqdr-path-title" style="display: inline;">abc</div></div></div>')
+    const wrapper = mount(ArrayComponent, {
+      localVue,
+      propsData: {
+        value: [1, 2, 3],
+        paths: [],
+        layout: {}
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include(
+      '<div class="iqdr-arrayWrapper" style="display: inline-table;">\n' +
+      '  <div class="iqdr-wrapper"><span class="iqdr-value">1</span></div>\n' +
+      '  <div class="iqdr-wrapper"><span class="iqdr-value">2</span></div>\n' +
+      '  <div class="iqdr-wrapper"><span class="iqdr-value">3</span></div>\n' +
+      '</div>')
+  })
 
-    it('attr gets value', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders string component', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    thumbnail: 'abc'
-                },
-                pathLayouts: {
-                    thumbnail: {
-                        path: 'thumbnail',
-                        label: 'Thumbnail',
-                        value: {
-                            component: 'img',
-                            attrs: {
-                                src: f((args) => {
-                                    expect(Object.keys(args)).to.contain('value')
-                                    return args.value
-                                }),
-                                width: '16'
-                            }
-                        }
-                    }
-                }
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include(
-            '<img src="abc" width="16" class="iqdr-value iqdr-path-thumbnail" style="display: inline;">')
+    const wrapper = mount(StringComponent, {
+      localVue,
+      propsData: {
+        value: 'string',
+        paths: [],
+        layout: {}
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include(
+      '<span class="iqdr-value">string</span>')
+  })
 
-    it('correct label component rendering in pathLayouts', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders number component', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    creator: 'abc'
-                },
-                pathLayouts: {
-                    creator: {
-                        label: {
-                            component: {
-                                render (h) {
-                                    return h('span', '**label**')
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        })
-        expect(wrapper.html()).to.include(
-            '**label**')
+    const wrapper = mount(NumberComponent, {
+      localVue,
+      propsData: {
+        value: 1,
+        paths: [],
+        layout: {}
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include(
+      '<span class="iqdr-value">1</span>')
+  })
 
-    it('renders default link', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders boolean component', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    creator: 'abc'
-                },
-                pathLayouts: {
-                    creator: {
-                        link: true
-                    }
-                },
-                url: 'http://google.com'
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include(
-            '<router-link to="http://google.com" class="iqdr-link iqdr-path-creator">')
+    const wrapper = mount(BooleanComponent, {
+      localVue,
+      propsData: {
+        value: true,
+        paths: [],
+        layout: {}
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include(
+      '<span class="iqdr-value">true</span>')
+  })
 
-    it('renders default link with a class', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders undefined component', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    creator: 'abc'
-                },
-                pathLayouts: {
-                    creator: {
-                        'link-wrapper': {
-                            class: ['test']
-                        },
-                        link: true
-                    }
-                },
-                url: 'http://google.com'
-            }
-        })
-        expect(wrapper.html()).to.include(
-            '<router-link to="http://google.com" class="test iqdr-link iqdr-path-creator">')
+    const wrapper = mount(UndefinedComponent, {
+      localVue,
+      propsData: {
+        value: null,
+        paths: [],
+        layout: {}
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include(
+      '<span class="iqdr-value">---</span>')
+  })
 
-    it('renders custom link', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders custom html element', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    creator: 'abc'
-                },
-                pathLayouts: {
-                    creator: {
-                        'link-wrapper': {
-                            element: 'a',
-                            attrs: {
-                                href: f(({ url }) => url),
-                                to: null
-                            }
-                        },
-                        link: true
-                    }
-                },
-                url: 'http://google.com'
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include(
-            '<a href="http://google.com" class="iqdr-link iqdr-path-creator"><div class="iqdr-value iqdr-path-creator" style="display: inline;">abc</div></a>')
-    })
-
-    it('renders correctly table in dynamic mode', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
-
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    title: 'abc',
-                    location: {
-                        street: '1'
-                    }
-                },
-                pathLayouts: {
-                    path: 'location',
-                    dynamic: true,
-                    label: 'Location'
-                },
-                schema: 'table'
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('' +
-            '<td class="iqdr-value-wrapper iqdr-path-location">' +
-            '<table class="iqdr-children-wrapper iqdr-path-location" style="border-collapse: collapse;">')
-    })
-
-    it('renders table colspan', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
-
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    title: 'abc'
-                },
-                layout: [
-                    {
-                        path: 'title'
-                    }
-                ],
-                schema: 'table'
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('colspan="2"')
-    })
-
-    it('renders string instead of layout', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
-
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    title: 'abc'
-                },
-                layout: ['title']
-            }
-        })
-        expect(wrapper.html()).to.include('abc')
-    })
-
-    it('custom path', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
-
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    title: 'abc'
-                },
-                layout: [{ path: 'title', key: 'aaa' }]
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('iqdr-path-aaa')
-        expect(wrapper.html()).to.not.include('iqdr-path-title')
-    })
-
-    it('custom path on collection', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
-
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    title: 'abc'
-                },
-                layout: [{ key: 'aaa', children: ['title'] }]
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('iqdr-path-aaa')
-        expect(wrapper.html()).to.include('iqdr-path-aaa-title')
-    })
-
-    it('layoutTranslator', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
-
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    title: 'abc'
-                },
-                dynamic: true,
-                layoutTranslator (def/*, options*/) {
-                    def.wrapper.class = ['test']
-                    return def
-                }
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('class="test iqdr-wrapper"')
-    })
-
-    it('renders correct thumbnail', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
-
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    '$schema': 'https://restaurovani.vscht.cz/schemas/draft/krokd/restoration-object-v1.0.0.json',
-                    'id': '1',
-                    'title': 'Object 1',
-                    'thumbnail': 'https://cis-login.vscht.cz/static/web/logo_small.png',
-                    'creator': 'Mary Black',
-                    'location': { 'street': 'Technicka', 'number': '1', 'city': 'Prague', 'zipcode': 19000 }
-                },
-                schema: 'table',
-                layout: [
-                    {
-                        path: 'title',
-                        value: {
-                            class: ['text-weight-medium']
-                        }
-                    },
-                    {
-                        path: 'creator',
-                        label: 'Creator'
-                    },
-                    {
-                        path: 'thumbnail',
-                        label: 'Thumbnail',
-                        value: {
-                            component: 'img',
-                            attrs: {
-                                src: f((args) => {
-                                    return args.value
-                                }),
-                                width: '16'
-                            }
-                        }
-                    }
-                ]
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('https://cis-login.vscht.cz/static/web/logo_small.png')
-    })
-
-    it('renders icon', () => {
-        const localVue = createLocalVue()
-        localVue.use(install, {
-            icon: {
-                component: 'q-icon',
+    const wrapper = mount(DataRendererComponent, {
+      localVue,
+      propsData: {
+        data: { image: 'https://cis-login.vscht.cz/static/web/logo_small.png' },
+        paths: [],
+        layout: {
+          showEmpty: true,
+          childrenWrapper: {
+            element: 'div'
+          },
+          children: [
+            {
+              prop: 'image',
+              label: {
+                label: 'Image'
+              },
+              value: {
+                element: 'img',
                 attrs: {
-                    name: f(({ layout }) => {
-                        return layout.icon && layout.icon.value
-                    })
+                  src: f(({value}) => {
+                    return value
+                  }),
+                  width: '32'
                 }
-            }
-        })
-
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    'title': 'Object 1'
-                },
-                layout: [
-                    {
-                        path: 'title',
-                        icon: {
-                            value: 'file'
-                        }
-                    }
-                ]
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('<q-icon name="file" class')
+              }
+            }]
+        }
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include(
+      '<div class="iqdr-childrenWrapper" style="display: inline-table;" paths="">\n' +
+      '  <div class="iqdr-wrapper iqdr-path-image"><label class="iqdr-label iqdr-path-image">Image: </label><img src="https://cis-login.vscht.cz/static/web/logo_small.png" width="32" class="iqdr-value iqdr-path-image"></div>\n' +
+      '</div>')
+  })
 
-    it('passed extra props', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('creates dynamic layout for objects and renders complex array', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                data: {
-                    'title': 'Object 1'
-                },
-                layout: [
-                    {
-                        path: 'title',
-                        value: {
-                            component: {
-                                props: {
-                                    test: String
-                                },
-                                render (h) {
-                                    return h('div', this.test)
-                                }
-                            }
-                        }
-                    }
-                ],
-                extraProps: {
-                    test: 'abc'
+    const wrapper = mount(DataRendererComponent, {
+      localVue,
+      propsData: {
+        data: { array: [{ a: 1 }, { b: 2 }, { c: 3 }] },
+        paths: [],
+        layout: {
+          showEmpty: true,
+          arrayWrapper: {
+            element: 'div'
+          },
+          children: [
+            {
+              prop: 'array',
+              label: {
+                label: 'Array label'
+              },
+              item: {
+                label: {
+                  label: 'Item label'
                 }
+              }
             }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('>abc</')
-    }),
-
-        it('renders string definition', () => {
-            const localVue = createLocalVue()
-            localVue.use(install)
-
-            const wrapper = mount(DataRendererComponent, {
-                localVue,
-                propsData: {
-                    data: {
-                        'title': 'Object 1'
-                    },
-                    layout: ['title']
-                }
-            })
-            console.log(html_beautify(wrapper.html()))
-            expect(wrapper.html()).to.include('>Title: </')
-        }),
-
-        it('renders label for string definition', () => {
-            const localVue = createLocalVue()
-            localVue.use(install)
-
-            const wrapper = mount(DataRendererComponent, {
-                localVue,
-                propsData: {
-                    data: {
-                        'titleWithMultipleWords': 'Object 1'
-                    },
-                    layout: ['titleWithMultipleWords']
-                }
-            })
-            console.log(html_beautify(wrapper.html()))
-            expect(wrapper.html()).to.include('>Title With Multiple Words: </')
-        }),
-
-        it('renders empty wrapper for values', () => {
-            const localVue = createLocalVue()
-            localVue.use(install)
-
-            const wrapper = mount(DataRendererComponent, {
-                localVue,
-                propsData: {
-                    showEmpty: true,
-                    data: {},
-                    layout: ['title']
-                }
-            })
-            console.log(html_beautify(wrapper.html()))
-            expect(wrapper.html()).to.include('iqdr-value-wrapper')
-        })
-
-    it('renders undefined array', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
-
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                showEmpty: true,
-                data: {},
-                layout: ['keywords'],
-                pathLayouts: {
-                    'keywords': {
-                        array: true,
-                        wrapper: {
-                            attrs: {
-                                test: (options) => {
-                                    expect(options.layout.array).to.eql(true)
-                                    return options.layout.array ? 'isArray' : 'noArray'
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('isArray')
+          ]
+        }
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include(
+      '<div class="iqdr-childrenWrapper" style="display: inline-table;" paths="">\n' +
+      '  <div class="iqdr-wrapper iqdr-path-array"><label class="iqdr-label iqdr-path-array">Array Label: </label>\n' +
+      '    <div class="iqdr-arrayWrapper iqdr-path-array" style="display: inline-table;">\n' +
+      '      <div class="iqdr-wrapper iqdr-path-array"><label class="iqdr-label iqdr-path-array">Item Label: </label>\n' +
+      '        <div class="iqdr-childrenWrapper iqdr-path-array" style="display: inline-table;">\n' +
+      '          <div class="iqdr-wrapper iqdr-path-array-a iqdr-path-a"><label class="iqdr-label iqdr-path-array-a iqdr-path-a">A: </label><span class="iqdr-value iqdr-path-array-a iqdr-path-a">1</span></div>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-array"><label class="iqdr-label iqdr-path-array">Item Label: </label>\n' +
+      '        <div class="iqdr-childrenWrapper iqdr-path-array" style="display: inline-table;">\n' +
+      '          <div class="iqdr-wrapper iqdr-path-array-b iqdr-path-b"><label class="iqdr-label iqdr-path-array-b iqdr-path-b">B: </label><span class="iqdr-value iqdr-path-array-b iqdr-path-b">2</span></div>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-array"><label class="iqdr-label iqdr-path-array">Item Label: </label>\n' +
+      '        <div class="iqdr-childrenWrapper iqdr-path-array" style="display: inline-table;">\n' +
+      '          <div class="iqdr-wrapper iqdr-path-array-c iqdr-path-c"><label class="iqdr-label iqdr-path-array-c iqdr-path-c">C: </label><span class="iqdr-value iqdr-path-array-c iqdr-path-c">3</span></div>\n' +
+      '        </div>\n' +
+      '      </div>\n' +
+      '    </div>\n' +
+      '  </div>\n' +
+      '</div>')
+  })
 
-    it('renders undefined item', () => {
-        const localVue = createLocalVue()
-        localVue.use(install)
+  it('renders object with pathlayout', () => {
+    const localVue = createLocalVue()
+    localVue.use(install)
 
-        const wrapper = mount(DataRendererComponent, {
-            localVue,
-            propsData: {
-                showEmpty: true,
-                data: {},
-                layout: ['keywords']
+    const wrapper = mount(DataRendererComponent, {
+      localVue,
+      propsData: {
+        data: {
+          object: {
+            a: '1',
+            b: null
+          }
+        },
+        layout: { showEmpty: true },
+        pathLayouts: {
+          object: {
+            label: {
+              label: 'label'
             }
-        })
-        console.log(html_beautify(wrapper.html()))
-        expect(wrapper.html()).to.include('<div class="iqdr-value-wrapper" style="display: inline;"></div>')
+          },
+          a: {
+            element: 'div',
+            label: {
+              element: 'span',
+              label: 'aa',
+              class: ['text-red']
+            },
+            value: {
+              class: ['text-red']
+            }
+          },
+          b: {
+            element: 'span',
+            label: {
+              element: 'label',
+              label: 'bb',
+              class: ['text-blue']
+            },
+            value: {
+              class: ['text-blue']
+            }
+          }
+        }
+      }
     })
+    console.log(wrapper.html())
+    expect(wrapper.html()).to.include(
+      '<div class="iqdr-childrenWrapper" style="display: inline-table;">\n' +
+      '  <div class="iqdr-wrapper iqdr-path-object"><label class="iqdr-label iqdr-path-object">Label: </label>\n' +
+      '    <div class="iqdr-childrenWrapper iqdr-path-object" style="display: inline-table;">\n' +
+      '      <div class="iqdr-wrapper iqdr-path-object-a iqdr-path-a"><span class="text-red iqdr-label iqdr-path-object-a iqdr-path-a">Aa: </span><span class="text-red iqdr-value iqdr-path-object-a iqdr-path-a">1</span></div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-object-b iqdr-path-b"><label class="text-blue iqdr-label iqdr-path-object-b iqdr-path-b">Bb: </label><span class="text-blue iqdr-value iqdr-path-object-b iqdr-path-b">---</span></div>\n' +
+      '    </div>\n' +
+      '  </div>\n' +
+      '</div>')
+  })
 })

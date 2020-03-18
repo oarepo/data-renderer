@@ -1,74 +1,95 @@
-import { findPathInDict } from '../defutils'
-import { SKIP_WRAPPER } from './const'
+import deepmerge from 'deepmerge'
+import { applyFunctions } from '../layoututils'
 
 const RendererMixin = {
-    methods: {
-        renderElement (collected, h, layout, code, options, renderChildren, classCode, extra) {
-            if (collected[code] === undefined) {
-                collected[code] = []
-            }
-            if (classCode === undefined) {
-                classCode = code
-            }
-            if (extra === undefined) {
-                extra = {}
-            }
-            const elDef = layout[code]
-            const slot = findPathInDict(options.paths, this.$scopedSlots, code, this.currentSchemaCode)
-            if (slot) {
-                const ret = slot(options)
-                collected[code].push(...ret)
-                return ret
-            }
-
-            const component = elDef.component
-            if (component === null) {
-                return []
-            }
-            if (component !== undefined && component !== SKIP_WRAPPER) {
-                const ret = [
-                    h(component, {
-                        ...extra,
-                        class: [
-                            ...(elDef.class || []),
-                            `iqdr-${classCode}`,
-                            ...options.paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
-                        ],
-                        style: elDef.style,
-                        attrs: elDef.attrs,
-                        props: options
-                    })
-                ]
-                collected[code].push(...ret)
-                return ret
-            }
-            const element = elDef.element
-            if (element === null) {
-                return []
-            }
-            if (element !== undefined && element !== SKIP_WRAPPER) {
-                const ret = [
-                    h(element, {
-                            ...extra,
-                            class: [
-                                ...(elDef.class || []),
-                                `iqdr-${classCode}`,
-                                ...options.paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
-                            ],
-                            style: elDef.style,
-                            attrs: elDef.attrs,
-                            props: options
-                        },
-                        renderChildren ? renderChildren(collected, h, layout, options) : [])
-                ]
-                collected[code].push(...ret)
-                return ret
-            }
-            return renderChildren ? renderChildren(collected, h, layout, options) : []
+  props: {
+    schema: {
+      type: String,
+      default: 'inline'
+    },
+    layout: Object,
+    pathLayouts: Object
+  },
+  methods: {
+    renderBefore (h, before) {
+      return h(before)
+    },
+    renderAfter (h, after) {
+      return h(after)
+    },
+    getLayout (code, extra) {
+      const schema = this.schema
+      const localLayout = this.currentLayout[code] || {}
+      const globalLayout = this.$oarepo.dataRenderer.layouts[schema][code]
+      const pathLayout = this.getPathLayout(this.paths, code)
+      const merged = (this.$oarepo.dataRenderer.merge || deepmerge.all)([globalLayout, localLayout, pathLayout], this.$oarepo.dataRenderer.layoutMergeOptions)
+      return applyFunctions(merged, extra)
+    },
+    getPathLayout (paths, code) {
+      let pathLayout = {}
+      if (this.pathLayouts === undefined) {
+        return pathLayout
+      }
+      for (let i=0; i < paths.length; i++) {
+        const p = this.pathLayouts[paths[i]]
+        if (p && p[code] !== undefined) {
+          pathLayout = p[code]
         }
+      }
+      return pathLayout
+    },
+    renderElement (h, elDef, options, paths, renderChildren, classCode, extra) {
+      const component = elDef.component
+      if (component === null) {
+        return []
+      }
+      if (component !== undefined) {
+        const ret = [
+          h(component, {
+            ...extra,
+            class: [
+              ...(elDef.class || []),
+              `iqdr-${classCode}`,
+              ...paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
+            ],
+            style: elDef.style,
+            attrs: elDef.attrs,
+            props: options
+          })
+        ]
+        return ret
+      }
+      const element = elDef.element
+      if (element === null) {
+        return []
+      }
+      if (element !== undefined) {
+        const ret = [
+          h(element, {
+              ...extra,
+              class: [
+                ...(elDef.class || []),
+                `iqdr-${classCode}`,
+                ...paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
+              ],
+              style: elDef.style,
+              attrs: elDef.attrs,
+              props: options
+            },
+            renderChildren ? renderChildren() : [])
+        ]
+        return ret
+      }
+      return renderChildren ? renderChildren() : []
     }
+  },
+  computed: {
+    currentLayout () {
+      return this.layout || {}
+    }
+  }
 }
 
 export {
-    RendererMixin
+  RendererMixin
 }
