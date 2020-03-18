@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { /* shallowMount, */ mount, createLocalVue } from '@vue/test-utils'
-import install, { DataRendererComponent } from '@oarepo/data-renderer-2'
+import install, { DataRendererComponent } from '@oarepo/data-renderer'
 import { html_beautify } from 'js-beautify'
 import ObjectComponent from '../../library/components/ObjectComponent'
 import ArrayComponent from '../../library/components/ArrayComponent'
