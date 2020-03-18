@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+- 11
+stages:
+  - prepare
+  - name: deploy
+    if: tag IS present
+jobs:
+  include:
+    - stage: prepare
+      script: yarn build && yarn test:unit
+    - stage: deploy
+      before_install:
+        - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+      script: "yarn build && npm publish --access public dist/"
