@@ -1,4 +1,4 @@
-# data-renderer-2
+# data-renderer
 
 ## Project setup
 ```

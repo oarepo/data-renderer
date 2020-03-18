@@ -8,7 +8,7 @@ module.exports = {
     }
   },
   configureWebpack (cfg) {
-    cfg.resolve.alias['@oarepo/data-renderer-2'] =
+    cfg.resolve.alias['@oarepo/data-renderer'] =
       path.join(__dirname, 'library/index.js')
   },
   transpileDependencies: [

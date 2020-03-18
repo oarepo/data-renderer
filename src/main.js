@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import './quasar'
-import DataRenderer2 from '@oarepo/data-renderer-2'
+import DataRenderer from '@oarepo/data-renderer'
 import VueQuerySynchronizer from '@oarepo/vue-query-synchronizer'
 import router from './router'
 
@@ -12,7 +12,7 @@ Vue.use(VueQuerySynchronizer, {
   router
 })
 
-Vue.use(DataRenderer2, {})
+Vue.use(DataRenderer, {})
 
 new Vue({
   router,
