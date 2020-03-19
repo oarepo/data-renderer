@@ -20,7 +20,7 @@ export default {
           value: context,
           paths: [],
           schema: this.schema,
-          layout: this.layout,
+          layout: this.layout || {},
           pathLayouts: this.pathLayouts
         }
       })
@@ -30,7 +30,7 @@ export default {
           value: context,
           paths: [],
           schema: this.schema,
-          layout: this.layout,
+          layout: this.layout || {},
           pathLayouts: this.pathLayouts
         }
       })
