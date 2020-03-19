@@ -204,12 +204,10 @@ layout = {
         {prop: 'zipcode'}
     ]
 }
-```
+``` 
 
 The path for the root is ``['location']``. The path for ``street`` is ``['location-street', 'street']`` 
 - i.e. for each of the parent paths, ``'-street'`` is appended to the path and an extra ``street``.
-
-would result to ``['loc1-street', 'street']`` paths for ``street``. 
 
 ### Translating labels
 
