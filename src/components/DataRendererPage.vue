@@ -50,7 +50,7 @@ q-page.q-ma-lg
     .div.col-4
       .q-card.full-height
         q-card-section
-          .text-weight-medium Render image element based on value
+          .text-weight-medium Render custom element as value
           q-separator.q-mb-md.q-mt-sm
           data-renderer-custom-value-demo(:query="query")
 

@@ -158,6 +158,48 @@ layout = {
 }
 ```
 
+### Rendering children
+
+Array and object children can be defined in ``layout``. The array or object itself is placed inside ``children`` in ``layout`` and may contain another array of ``children``. 
+
+```vue
+data: {
+        object: {}
+      },
+layout: {
+        showEmpty: true,
+        childrenWrapper: {
+          element: 'div'
+        },
+        children: [
+          {
+            prop: 'object',
+            label: {
+              label: 'Object label'
+            },
+            children: [
+              {
+                prop: 'a',
+                label: {
+                  label: 'AAA'
+                }
+              },
+              {
+                prop: 'b',
+                label: {
+                  label: 'BBB'
+                }
+              },
+              {
+                prop: 'c',
+                label: {
+                  label: 'CCC'
+                }
+              }]
+          }]
+      }
+```
+
 ### Overriding parts of layout
 
 It might be useful to be able to override the layout for selected paths. 
@@ -223,11 +265,15 @@ If no layout was specified for the object, it is created dynamically from the da
 To render the value as a link, define ``a`` html tag and href attribute in pathLayouts.
 
 ```vue
+import { f } from '@oarepo/data-renderer'
+
 a: {
           value: {
             element: 'a',
             attrs: {
-              href: 'url'
+              href: f(({url}) => {
+                         return url
+                     })
               })
             }
           }

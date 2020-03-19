@@ -26,17 +26,16 @@ const RendererMixin = {
       return applyFunctions(merged, extra)
     },
     getPathLayout (paths, code) {
-      let pathLayout = {}
       if (this.pathLayouts === undefined) {
-        return pathLayout
+        return {}
       }
       for (let i=0; i < paths.length; i++) {
         const p = this.pathLayouts[paths[i]]
         if (p && p[code] !== undefined) {
-          pathLayout = p[code]
+          return p[code]
         }
       }
-      return pathLayout
+      return {}
     },
     renderElement (h, elDef, options, paths, renderChildren, classCode, extra) {
       const component = elDef.component
