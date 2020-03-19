@@ -10,7 +10,7 @@ const routes = [
     path: '/',
     name: 'home',
     component: DataRendererPage,
-    props: query(['schema'])
+    props: query([{ name: 'schema', defaultValue: 'inline' }])
   }
 ]
 

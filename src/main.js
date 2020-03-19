@@ -8,13 +8,13 @@ import router from './router'
 Vue.config.productionTip = false
 
 Vue.use(VueQuerySynchronizer, {
-    passUnknownProperties: true,
-    router
+  passUnknownProperties: true,
+  router
 })
 
 Vue.use(DataRenderer, {})
 
 new Vue({
-    router,
-    render: h => h(App)
+  router,
+  render: h => h(App)
 }).$mount('#app')

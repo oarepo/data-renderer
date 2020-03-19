@@ -1,17 +1,17 @@
 <template lang="pug">
-q-layout(view='lHh Lpr lFf')
-  q-header.glossy(elevated='')
-    q-toolbar
-      q-toolbar-title
-        | @oarepo/data-renderer
-  q-page-container
-    router-view
+  q-layout(view='lHh Lpr lFf')
+    q-header.glossy(elevated='')
+      q-toolbar
+        q-toolbar-title
+          | @oarepo/data-renderer
+    q-page-container
+      router-view
 </template>
 
 <script>
 
 export default {
-  name: 'app',
+  name: 'app'
 }
 </script>
 

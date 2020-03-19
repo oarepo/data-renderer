@@ -1,62 +1,40 @@
 <template lang="pug">
-    data-renderer(:data="data" :layout="d1" :url="url" :schema="query.schema")
+  div
+    data-renderer(:data="record" :pathLayouts="pathLayouts" :schema="query.schema")
 </template>
 
 <script>
+
+import {f} from "../../library";
+
 export default {
-    props: {
-        query: Object
-    },
-    data: function () {
-        return {
-            url: '/link-test',
-            data: {
-                '$schema': 'https://restaurovani.vscht.cz/schemas/draft/krokd/restoration-object-v1.0.0.json',
-                'id': '1',
-                'title': 'Object 1',
-                'thumbnail': 'https://cis-login.vscht.cz/static/web/logo_small.png',
-                'creator': 'Mary Black',
-                'contact': {
-                    phone: '+420123123123',
-                    email: 'mary.black@gmail.com'
-                }
-            },
-            d1: [
-                {
-                    path: 'title',
-                    link: true,
-                    value: {
-                        class: ['text-h6']
-                    }
-                },
-                {
-                    path: 'creator',
-                    label: 'Creator',
-                    link: {
-                        style: {
-                            'text-decoration': 'none'
-                        }
-                    }
-                },
-                {
-                    path: 'thumbnail',
-                    label: 'Thumbnail'
-                },
-                {
-                    path: 'contact',
-                    label: 'Contact',
-                    link: {
-                        element: 'a',
-                        style: {
-                            'color': 'red'
-                        },
-                        attrs: {
-                            href: ({url}) => url
-                        }
-                    }
-                }
-            ],
-        };
+  name: 'data-renderer-link-demo',
+  props: {
+    query: Object
+  },
+  data: function () {
+    return {
+      url: '/link-test',
+      record: {
+        object: {
+          a: 'https://cis-login.vscht.cz/static/web/logo_small.png'
+        }
+      },
+      pathLayouts: {
+        a: {
+          value: {
+            element: 'a',
+            attrs: {
+              href: f(({value}) => {
+                return value
+              })
+            }
+          }
+        }
+      }
     }
-};
+  }
+}
 </script>
+<style scoped lang="stylus">
+</style>
