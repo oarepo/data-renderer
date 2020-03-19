@@ -1,9 +1,11 @@
 <template lang="pug">
   div
-    data-renderer(:data="record" :layout="layout" :url="url" :schema="query.schema")
+    data-renderer(:data="record" :pathLayouts="pathLayouts" :schema="query.schema")
 </template>
 
 <script>
+
+import {f} from "../../library";
 
 export default {
   name: 'data-renderer-link-demo',
@@ -15,37 +17,20 @@ export default {
       url: '/link-test',
       record: {
         object: {
-          a: '1'
+          a: 'https://cis-login.vscht.cz/static/web/logo_small.png'
         }
       },
-      layout: {
-        showEmpty: true,
-        childrenWrapper: {
-          element: 'div'
-        },
-        children: [
-          {
-            prop: 'object',
-            label: {
-              label: 'Object label'
-            },
-            children: [
-              {
-                prop: 'a',
-                label: {
-                  label: 'AAA'
-                },
-                link: {
-                  element: 'a',
-                  style: {
-                    'color': 'red'
-                  },
-                  attrs: {
-                    href: ({url}) => url
-                  }
-                }
-              }]
-          }]
+      pathLayouts: {
+        a: {
+          value: {
+            element: 'a',
+            attrs: {
+              href: f(({value}) => {
+                return value
+              })
+            }
+          }
+        }
       }
     }
   }
