@@ -141,29 +141,22 @@ data-renderer(:layout="layout" :data="data"
               schema="block|inline|table|<object with default definition>")
 ```
 
-Names of slots are in the form ``<element>-<path>``. 
+### Layout
 
-``path`` 
+The ``layout`` element might contain the layout as shown above, or shortcut can be used:
 
-is json path to the element (without array indices) with '/' replaced by '-'. For example, for path
-``authors[0]/firstName``, the path would be ``authors-firstName``.   
-
-``element`` 
-
-Element is one of ``wrapper``, ``label``, 
-``value``, ``childrenWrapper``. 
-All these slots are provided with ``{context, layout, data, paths}``.
- ``value`` element is given the current value (and will be called multiple times for each value).
-
-When slots are matched, the best matching slot is used. For example, jsonpath ``people[0]/firstName``
-and element ``wrapper`` the resolution will try the following slots:
- * ``-wrapper-people-firstName``
- * ``wrapper-people-firstName``
- * ``wrapper-firstName``
- 
- The difference between the first two is that the first one matches only ``people/firstName`` in the root
- of data, the second one would match any path ending with ``people/firstName``.
-
+```javascript
+layout = {
+    title: {
+        label: {
+            value: 'Title label'
+        }
+    },
+    location: {
+        children: [ ... ]
+    }
+}
+```
 
 ### Overriding parts of layout
 
@@ -219,11 +212,11 @@ initialized or a ``:labelTranslator`` prop containing function with the followin
 and returning the translated label or null if the label should not appear. The default implementation adds ':'
 after the label for ``inline`` schema. 
 
-Using the same logic, boolean values can be translated with ``:booleanTranslator``
+Using the same logic, boolean values can be translated with ``:booleanTranslator``.
 
 ### Dynamic layout
 
-If there is no layout for the object, it is created dynamically from the data passed to data-renderer.
+If no layout was specified for the object, it is created dynamically from the data passed to data-renderer.
 
 ### Links
 
