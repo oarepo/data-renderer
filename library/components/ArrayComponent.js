@@ -19,6 +19,7 @@ export default {
         schema: this.schema,
         layout: layout,
         pathLayouts: this.pathLayouts,
+        rendererComponents: this.rendererComponents,
         vue: this
       })
     }
@@ -35,7 +36,8 @@ export default {
             schema: this.schema,
             layout: itemLayout,
             paths: this.paths,
-            pathLayouts: this.pathLayouts
+            pathLayouts: this.pathLayouts,
+            rendererComponents: this.rendererComponents
           },
           scopedSlots: this.$scopedSlots,
           slots: this.slots

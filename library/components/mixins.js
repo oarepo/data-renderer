@@ -8,7 +8,8 @@ const RendererMixin = {
       default: 'inline'
     },
     layout: Object,
-    pathLayouts: Object
+    pathLayouts: Object,
+    rendererComponents: Object
   },
   methods: {
     renderBefore (h, before) {

@@ -10,7 +10,8 @@ export default {
     },
     layout: Object,
     data: Object,
-    pathLayouts: Object
+    pathLayouts: Object,
+    rendererComponents: Object
   },
   render (h) {
     const context = this.data
@@ -21,7 +22,8 @@ export default {
           paths: [],
           schema: this.schema,
           layout: this.layout || {},
-          pathLayouts: this.pathLayouts
+          pathLayouts: this.pathLayouts,
+          rendererComponents: this.rendererComponents || {}
         }
       })
     } else {
@@ -31,7 +33,8 @@ export default {
           paths: [],
           schema: this.schema,
           layout: this.layout || {},
-          pathLayouts: this.pathLayouts
+          pathLayouts: this.pathLayouts,
+          rendererComponents: this.rendererComponents || {}
         }
       })
     }
