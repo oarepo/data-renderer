@@ -174,7 +174,8 @@ describe('DataRendererComponent.vue', () => {
           object: { a: 1, b: 2 }
         },
         paths: [],
-        layout: {}
+        layout: {},
+        rendererComponents: {}
       }
     })
     console.log(wrapper.html())
@@ -202,7 +203,8 @@ describe('DataRendererComponent.vue', () => {
       propsData: {
         value: [1, 2, 3],
         paths: [],
-        layout: {}
+        layout: {},
+        rendererComponents: {}
       }
     })
     console.log(wrapper.html())
