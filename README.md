@@ -23,7 +23,8 @@ A library for providing simple (but configurable) UI for rendering JSON data
   * [Translating labels](#translating-labels)
   * [Dynamic layout](#dynamic-layout)
   * [Links](#links)
-  * [Custom components](#rendering-custom-components-before-and-after-values)
+  * [Before and after data](#rendering-components-before-and-after-rendered-data)
+  * [Based on value type](#rendering-custom-components-based-on-type-of-value)
 
 <!-- tocstop -->
 
@@ -203,7 +204,7 @@ layout: {
 ### Overriding parts of layout
 
 It might be useful to be able to override the layout for selected paths. 
-To do this, pass ``:pathLayouts`` property.
+To do this, pass ``:path-layouts`` property.
 
 The value of the property is:
 
@@ -280,6 +281,26 @@ a: {
         }
 ```
 
-### Rendering custom components before and after values
+### Rendering components before and after rendered data
 
 To render custom component before or after rendered data, register component in layout, e.g.: ``before: CustomComponent``, ``after: CustomComponent``
+
+### Rendering custom components based on type of value
+
+Custom components can be used based on type of value, when passed to ``:renderer-components`` property.
+
+```pug
+data-renderer(:layout="layout" :data="data" renderer-components="rendererComponents")
+```
+```vue
+data: {
+        a: 'aaa',
+        b: 1,
+        c: 'bbb',
+        d: true
+      }
+
+rendererComponents: {
+        string: CustomComponent
+      }
+```

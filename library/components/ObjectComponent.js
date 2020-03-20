@@ -17,6 +17,7 @@ export default {
         paths: this.paths,
         schema: this.schema,
         layout: layout,
+        rendererComponents: this.rendererComponents,
         vue: this
       })
     }
@@ -41,7 +42,8 @@ export default {
               showEmpty
             },
             paths: [...this.paths.map(path => `${path}/${prop}`), prop],
-            pathLayouts: this.pathLayouts
+            pathLayouts: this.pathLayouts,
+            rendererComponents: this.rendererComponents
           },
           scopedSlots: this.$scopedSlots,
           slots: this.slots

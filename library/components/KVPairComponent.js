@@ -1,10 +1,4 @@
-import { RendererMixin } from './mixins'
-import StringComponent from './primitive/StringComponent'
-import NumberComponent from './primitive/NumberComponent'
-import BooleanComponent from './primitive/BooleanComponent'
-import ArrayComponent from './ArrayComponent'
-import ObjectComponent from './ObjectComponent'
-import UndefinedComponent from './primitive/UndefinedComponent'
+import {RendererMixin} from './mixins'
 
 const KVPairComponent = {
   name: 'DataRendererKVPair',
@@ -24,19 +18,21 @@ const KVPairComponent = {
     },
     getChildComponent (value) {
       const valueType = Object.prototype.toString.call(value)
+      let type
       if (valueType === '[object String]') {
-        return StringComponent
+        type = 'string'
       } else if (valueType === '[object Number]') {
-        return NumberComponent
+        type = 'number'
       } else if (valueType === '[object Boolean]') {
-        return BooleanComponent
+        type = 'boolean'
       } else if (valueType === '[object Array]') {
-        return ArrayComponent
+        type = 'array'
       } else if (valueType === '[object Object]') {
-        return ObjectComponent
+        type = 'object'
       } else {
-        return UndefinedComponent
+        type = 'undefined'
       }
+      return this.rendererComponents[type] || this.$oarepo.dataRenderer.rendererComponents[type]
     },
     renderChildren (h, value, extra) {
       const ret = []
@@ -51,7 +47,8 @@ const KVPairComponent = {
           schema: this.schema,
           layout: this.layout,
           paths: this.paths,
-          pathLayouts: this.pathLayouts
+          pathLayouts: this.pathLayouts,
+          rendererComponents: this.rendererComponents
         },
         scopedSlots: this.$scopedSlots,
         slots: this.slots

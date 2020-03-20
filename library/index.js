@@ -2,6 +2,12 @@ import DataRendererComponent from './components/DataRendererComponent'
 import { createDynamicArrayLayout, createDynamicObjectLayout } from './dynamiclayouts'
 import startCase from 'lodash.startcase'
 import { f } from './layoututils'
+import StringComponent from "./components/primitive/StringComponent";
+import NumberComponent from "./components/primitive/NumberComponent";
+import BooleanComponent from "./components/primitive/BooleanComponent";
+import UndefinedComponent from "./components/primitive/UndefinedComponent";
+import ArrayComponent from "./components/ArrayComponent";
+import ObjectComponent from "./components/ObjectComponent";
 
 export default {
   install (Vue, options) {
@@ -126,6 +132,14 @@ export default {
         }
       },
       layoutMergeOptions: {},
+      rendererComponents: {
+        string: StringComponent,
+        number: NumberComponent,
+        boolean: BooleanComponent,
+        undefined: UndefinedComponent,
+        array: ArrayComponent,
+        object: ObjectComponent
+      },
       createDynamicObjectLayout,
       createDynamicArrayLayout,
       ...options
