@@ -11,7 +11,8 @@ export default {
     layout: Object,
     data: Object,
     pathLayouts: Object,
-    rendererComponents: Object
+    rendererComponents: Object,
+    extraProps: Object
   },
   render (h) {
     const context = this.data
@@ -23,7 +24,8 @@ export default {
           schema: this.schema,
           layout: this.layout || {},
           pathLayouts: this.pathLayouts,
-          rendererComponents: this.rendererComponents || {}
+          rendererComponents: this.rendererComponents || {},
+          extraProps: this.extraProps
         }
       })
     } else {
@@ -34,7 +36,8 @@ export default {
           schema: this.schema,
           layout: this.layout || {},
           pathLayouts: this.pathLayouts,
-          rendererComponents: this.rendererComponents || {}
+          rendererComponents: this.rendererComponents || {},
+          extraProps: this.extraProps
         }
       })
     }

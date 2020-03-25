@@ -9,7 +9,8 @@ const RendererMixin = {
     },
     layout: Object,
     pathLayouts: Object,
-    rendererComponents: Object
+    rendererComponents: Object,
+    extraProps: Object
   },
   methods: {
     renderBefore (h, before) {
