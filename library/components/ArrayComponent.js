@@ -35,7 +35,8 @@ export default {
             prop: index,
             schema: this.schema,
             layout: itemLayout,
-            paths: this.paths,
+            // paths: this.paths,
+            paths: [...this.paths.map(path => `${path}/${index}`), `${index}`],
             pathLayouts: this.pathLayouts,
             rendererComponents: this.rendererComponents,
             extraProps: this.extraProps

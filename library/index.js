@@ -150,5 +150,11 @@ export default {
 
 export {
   DataRendererComponent,
-  f
+  f,
+  StringComponent,
+  NumberComponent,
+  BooleanComponent,
+  UndefinedComponent,
+  ArrayComponent,
+  ObjectComponent
 }
