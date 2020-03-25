@@ -17,7 +17,6 @@ export default {
         paths: this.paths,
         schema: this.schema,
         layout: layout,
-        rendererComponents: this.rendererComponents,
         vue: this
       })
     }
@@ -39,6 +38,15 @@ export default {
       }
       const renderedItems = childrenLayouts.map(childLayout => {
         const prop = childLayout.prop
+        const dynamicLayout = {
+          ...this.$oarepo.dataRenderer.createDynamicObjectPropLayout({
+            value: prop,
+            schema: this.schema,
+            vue: this
+          }),
+          ...childLayout,
+          showEmpty
+        }
         if ((this.value[prop] === null || this.value[prop] === undefined) && !showEmpty) {
           return
         }
@@ -47,15 +55,7 @@ export default {
             context: this.value,
             prop: prop,
             schema: this.schema,
-            layout: {
-              ...this.$oarepo.dataRenderer.createDynamicObjectPropLayout({
-                value: prop,
-                schema: this.schema,
-                vue: this
-              }),
-              ...childLayout,
-              showEmpty
-            },
+            layout: dynamicLayout,
             paths: [...this.paths.map(path => `${path}/${prop}`), prop],
             pathLayouts: this.pathLayouts,
             rendererComponents: this.rendererComponents,
