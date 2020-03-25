@@ -66,14 +66,14 @@ describe('DataRendererComponent.vue', () => {
       '<div class="iqdr-childrenWrapper" style="margin-left: 30px;">\n' +
       '  <div class="iqdr-wrapper iqdr-path-array"><label class="iqdr-label iqdr-path-array">Array: </label>\n' +
       '    <div class="iqdr-arrayWrapper iqdr-path-array" style="display: inline-table;">\n' +
-      '      <div class="iqdr-wrapper iqdr-path-array">\n' +
-      '        <div class="iqdr-value iqdr-path-array" style="display: inline;">1</div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-array-0 iqdr-path-0">\n' +
+      '        <div class="iqdr-value iqdr-path-array-0 iqdr-path-0" style="display: inline;">1</div>\n' +
       '      </div>\n' +
-      '      <div class="iqdr-wrapper iqdr-path-array">\n' +
-      '        <div class="iqdr-value iqdr-path-array" style="display: inline;">2</div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-array-1 iqdr-path-1">\n' +
+      '        <div class="iqdr-value iqdr-path-array-1 iqdr-path-1" style="display: inline;">2</div>\n' +
       '      </div>\n' +
-      '      <div class="iqdr-wrapper iqdr-path-array">\n' +
-      '        <div class="iqdr-value iqdr-path-array" style="display: inline;">3</div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-array-2 iqdr-path-2">\n' +
+      '        <div class="iqdr-value iqdr-path-array-2 iqdr-path-2" style="display: inline;">3</div>\n' +
       '      </div>\n' +
       '    </div>\n' +
       '  </div>\n' +
@@ -210,14 +210,14 @@ describe('DataRendererComponent.vue', () => {
     console.log(wrapper.html())
     expect(wrapper.html()).to.include(
       '<div class="iqdr-arrayWrapper" style="display: inline-table;">\n' +
-      '  <div class="iqdr-wrapper">\n' +
-      '    <div class="iqdr-value" style="display: inline;">1</div>\n' +
+      '  <div class="iqdr-wrapper iqdr-path-0">\n' +
+      '    <div class="iqdr-value iqdr-path-0" style="display: inline;">1</div>\n' +
       '  </div>\n' +
-      '  <div class="iqdr-wrapper">\n' +
-      '    <div class="iqdr-value" style="display: inline;">2</div>\n' +
+      '  <div class="iqdr-wrapper iqdr-path-1">\n' +
+      '    <div class="iqdr-value iqdr-path-1" style="display: inline;">2</div>\n' +
       '  </div>\n' +
-      '  <div class="iqdr-wrapper">\n' +
-      '    <div class="iqdr-value" style="display: inline;">3</div>\n' +
+      '  <div class="iqdr-wrapper iqdr-path-2">\n' +
+      '    <div class="iqdr-value iqdr-path-2" style="display: inline;">3</div>\n' +
       '  </div>\n' +
       '</div>')
   })
@@ -365,24 +365,24 @@ describe('DataRendererComponent.vue', () => {
       '<div class="iqdr-childrenWrapper" style="margin-left: 30px;" paths="">\n' +
       '  <div class="iqdr-wrapper iqdr-path-array"><label class="iqdr-label iqdr-path-array">Array Label: </label>\n' +
       '    <div class="iqdr-arrayWrapper iqdr-path-array" style="display: inline-table;">\n' +
-      '      <div class="iqdr-wrapper iqdr-path-array"><label class="iqdr-label iqdr-path-array">Item Label: </label>\n' +
-      '        <div class="iqdr-childrenWrapper iqdr-path-array" style="margin-left: 30px;">\n' +
-      '          <div class="iqdr-wrapper iqdr-path-array-a iqdr-path-a"><label class="iqdr-label iqdr-path-array-a iqdr-path-a">A: </label>\n' +
-      '            <div class="iqdr-value iqdr-path-array-a iqdr-path-a" style="display: inline;">1</div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-array-0 iqdr-path-0"><label class="iqdr-label iqdr-path-array-0 iqdr-path-0">Item Label: </label>\n' +
+      '        <div class="iqdr-childrenWrapper iqdr-path-array-0 iqdr-path-0" style="margin-left: 30px;">\n' +
+      '          <div class="iqdr-wrapper iqdr-path-array-0/a iqdr-path-0-a iqdr-path-a"><label class="iqdr-label iqdr-path-array-0/a iqdr-path-0-a iqdr-path-a">A: </label>\n' +
+      '            <div class="iqdr-value iqdr-path-array-0/a iqdr-path-0-a iqdr-path-a" style="display: inline;">1</div>\n' +
       '          </div>\n' +
       '        </div>\n' +
       '      </div>\n' +
-      '      <div class="iqdr-wrapper iqdr-path-array"><label class="iqdr-label iqdr-path-array">Item Label: </label>\n' +
-      '        <div class="iqdr-childrenWrapper iqdr-path-array" style="margin-left: 30px;">\n' +
-      '          <div class="iqdr-wrapper iqdr-path-array-b iqdr-path-b"><label class="iqdr-label iqdr-path-array-b iqdr-path-b">B: </label>\n' +
-      '            <div class="iqdr-value iqdr-path-array-b iqdr-path-b" style="display: inline;">2</div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-array-1 iqdr-path-1"><label class="iqdr-label iqdr-path-array-1 iqdr-path-1">Item Label: </label>\n' +
+      '        <div class="iqdr-childrenWrapper iqdr-path-array-1 iqdr-path-1" style="margin-left: 30px;">\n' +
+      '          <div class="iqdr-wrapper iqdr-path-array-1/b iqdr-path-1-b iqdr-path-b"><label class="iqdr-label iqdr-path-array-1/b iqdr-path-1-b iqdr-path-b">B: </label>\n' +
+      '            <div class="iqdr-value iqdr-path-array-1/b iqdr-path-1-b iqdr-path-b" style="display: inline;">2</div>\n' +
       '          </div>\n' +
       '        </div>\n' +
       '      </div>\n' +
-      '      <div class="iqdr-wrapper iqdr-path-array"><label class="iqdr-label iqdr-path-array">Item Label: </label>\n' +
-      '        <div class="iqdr-childrenWrapper iqdr-path-array" style="margin-left: 30px;">\n' +
-      '          <div class="iqdr-wrapper iqdr-path-array-c iqdr-path-c"><label class="iqdr-label iqdr-path-array-c iqdr-path-c">C: </label>\n' +
-      '            <div class="iqdr-value iqdr-path-array-c iqdr-path-c" style="display: inline;">3</div>\n' +
+      '      <div class="iqdr-wrapper iqdr-path-array-2 iqdr-path-2"><label class="iqdr-label iqdr-path-array-2 iqdr-path-2">Item Label: </label>\n' +
+      '        <div class="iqdr-childrenWrapper iqdr-path-array-2 iqdr-path-2" style="margin-left: 30px;">\n' +
+      '          <div class="iqdr-wrapper iqdr-path-array-2/c iqdr-path-2-c iqdr-path-c"><label class="iqdr-label iqdr-path-array-2/c iqdr-path-2-c iqdr-path-c">C: </label>\n' +
+      '            <div class="iqdr-value iqdr-path-array-2/c iqdr-path-2-c iqdr-path-c" style="display: inline;">3</div>\n' +
       '          </div>\n' +
       '        </div>\n' +
       '      </div>\n' +
