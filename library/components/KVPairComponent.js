@@ -29,6 +29,10 @@ const KVPairComponent = {
         type = 'array'
       } else if (valueType === '[object Object]') {
         type = 'object'
+      } else if (this.layout.children !== undefined) {
+        type = 'object'
+      } else if (this.layout.item !== undefined) {
+        type = 'array'
       } else {
         type = 'undefined'
       }

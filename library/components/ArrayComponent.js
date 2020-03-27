@@ -11,10 +11,11 @@ export default {
   },
   render (h) {
     const layout = this.currentLayout
+    const value = this.value ? this.value : []
     let itemLayout = layout.item
     if (itemLayout === undefined) {
       itemLayout = this.$oarepo.dataRenderer.createDynamicArrayLayout({
-        value: this.value,
+        value: value,
         paths: this.paths,
         schema: this.schema,
         layout: layout,
@@ -25,16 +26,16 @@ export default {
     }
     itemLayout.showEmpty = layout.showEmpty || this.$oarepo.dataRenderer.layouts[this.schema].showEmpty
     return this.renderElement(h, this.getLayout('arrayWrapper', this.$props), this.$props, this.paths, () => {
-      if (!this.value) {
+      if (!value) {
         return []
       }
-      return range(this.value.length).map(index => {
+      return range(value.length).map(index => {
         return h(KVPairComponent, {
           props: {
-            context: this.value,
+            context: value,
             prop: index,
             schema: this.schema,
-            layout: itemLayout,
+            layout: {...this.$oarepo.dataRenderer.layouts[this.schema], ...itemLayout},
             // paths: this.paths,
             paths: [...this.paths.map(path => `${path}/${index}`), `${index}`],
             pathLayouts: this.pathLayouts,

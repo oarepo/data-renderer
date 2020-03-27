@@ -1,5 +1,5 @@
 import KVPairComponent from './KVPairComponent'
-import { RendererMixin } from './mixins'
+import {RendererMixin} from './mixins'
 
 export default {
   name: 'data-renderer-object-component',
@@ -8,25 +8,26 @@ export default {
     value: Object,
     paths: Array
   },
-  render (h) {
+  render(h) {
     const layout = this.currentLayout
+    const value = this.value ? this.value : {}
     let childrenLayouts = layout.children
     if (childrenLayouts === undefined) {
       childrenLayouts = this.$oarepo.dataRenderer.createDynamicObjectLayout({
-        value: this.value,
+        value: value,
         paths: this.paths,
         schema: this.schema,
         layout: layout,
         vue: this
       })
     }
-    const valueProps = Object.keys(this.value)
+    const valueProps = Object.keys(value)
     if (valueProps.length !== childrenLayouts.length) {
       const childrenLayoutProps = []
       childrenLayouts.forEach(childLayout => childrenLayoutProps.push(childLayout.prop))
       valueProps.forEach(valueProp => {
         if (!childrenLayoutProps.includes(valueProp)) {
-          childrenLayouts.push({ prop: valueProp })
+          childrenLayouts.push({prop: valueProp})
         }
       })
     }
@@ -47,12 +48,12 @@ export default {
           ...childLayout,
           showEmpty
         }
-        if ((this.value[prop] === null || this.value[prop] === undefined) && !showEmpty) {
+        if ((value[prop] === null || value[prop] === undefined) && !showEmpty) {
           return
         }
         ret.push(h(KVPairComponent, {
           props: {
-            context: this.value,
+            context: value,
             prop: prop,
             schema: this.schema,
             layout: dynamicLayout,
