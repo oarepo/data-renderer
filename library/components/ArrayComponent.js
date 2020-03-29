@@ -11,7 +11,7 @@ export default {
   },
   render (h) {
     const layout = this.currentLayout
-    const value = this.value ? this.value : []
+    const value = this.value
     let itemLayout = layout.item
     if (itemLayout === undefined) {
       itemLayout = this.$oarepo.dataRenderer.createDynamicArrayLayout({

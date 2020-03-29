@@ -8,6 +8,7 @@ import BooleanComponent from "./components/primitive/BooleanComponent";
 import UndefinedComponent from "./components/primitive/UndefinedComponent";
 import ArrayComponent from "./components/ArrayComponent";
 import ObjectComponent from "./components/ObjectComponent";
+import RendererMixin from "./components/mixins"
 
 export default {
   install (Vue, options) {
@@ -156,5 +157,6 @@ export {
   BooleanComponent,
   UndefinedComponent,
   ArrayComponent,
-  ObjectComponent
+  ObjectComponent,
+  RendererMixin
 }

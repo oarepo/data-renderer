@@ -16,7 +16,7 @@ function createDynamicObjectLayout ({ /*paths, layout,*/ value, schema, vue }) {
 
 function createDynamicObjectPropLayout ({ /*paths, layout,*/ value, schema, vue }) {
   const itemDef = vue.$oarepo.dataRenderer.layouts[schema]
-  const item = { ...itemDef, value }
+  const item = { ...itemDef }
   if (!item.label.label) {
     item.label = { ...item.label, label: value }
   }

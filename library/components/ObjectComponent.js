@@ -10,7 +10,7 @@ export default {
   },
   render(h) {
     const layout = this.currentLayout
-    const value = this.value ? this.value : {}
+    const value = this.value || {}
     let childrenLayouts = layout.children
     if (childrenLayouts === undefined) {
       childrenLayouts = this.$oarepo.dataRenderer.createDynamicObjectLayout({
