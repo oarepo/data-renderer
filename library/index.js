@@ -1,14 +1,13 @@
 import DataRendererComponent from './components/DataRendererComponent'
-import { createDynamicArrayLayout, createDynamicObjectLayout, createDynamicObjectPropLayout } from './dynamiclayouts'
+import {createDynamicArrayLayout, createDynamicObjectLayout, createDynamicObjectPropLayout} from './dynamiclayouts'
 import startCase from 'lodash.startcase'
-import { f } from './layoututils'
+import {f} from './layoututils'
 import StringComponent from "./components/primitive/StringComponent";
 import NumberComponent from "./components/primitive/NumberComponent";
 import BooleanComponent from "./components/primitive/BooleanComponent";
 import UndefinedComponent from "./components/primitive/UndefinedComponent";
 import ArrayComponent from "./components/ArrayComponent";
 import ObjectComponent from "./components/ObjectComponent";
-import RendererMixin from "./components/mixins"
 
 export default {
   install (Vue, options) {
@@ -151,12 +150,10 @@ export default {
 
 export {
   DataRendererComponent,
-  f,
   StringComponent,
   NumberComponent,
   BooleanComponent,
   UndefinedComponent,
   ArrayComponent,
-  ObjectComponent,
-  RendererMixin
+  ObjectComponent
 }
