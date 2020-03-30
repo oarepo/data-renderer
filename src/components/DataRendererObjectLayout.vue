@@ -12,10 +12,7 @@ export default {
   data: function () {
     return {
       record: {
-        object: {
-          a: '1',
-          b: null
-        }
+        object: {}
       },
       layout: {
         showEmpty: true,
@@ -26,25 +23,25 @@ export default {
           {
             prop: 'object',
             label: {
-              label: 'Object label'
+              label: 'object'
             },
             children: [
               {
-                prop: 'a',
+                prop: 'creator',
                 label: {
-                  label: 'AAA'
+                  label: 'creator'
                 }
               },
               {
-                prop: 'b',
+                prop: 'phone',
                 label: {
-                  label: 'BBB'
+                  label: 'phone'
                 }
               },
               {
-                prop: 'c',
+                prop: 'email',
                 label: {
-                  label: 'CCC'
+                  label: 'email'
                 }
               }]
           }]

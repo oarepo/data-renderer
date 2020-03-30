@@ -14,8 +14,9 @@ export default {
     return {
       record: {
         object: {
-          a: '1',
-          b: null
+          creator: 'Mary Black',
+          phone: '+420123123123',
+          email: null
         }
       },
       layout: {
@@ -27,19 +28,19 @@ export default {
           {
             prop: 'object',
             label: {
-              label: 'Object label'
+              label: 'object'
             },
             children: [
               {
-                prop: 'a',
+                prop: 'creator',
                 label: {
-                  label: 'AAA'
+                  label: 'creator'
                 }
               },
               {
-                prop: 'b',
+                prop: 'phone',
                 label: {
-                  label: 'BBB'
+                  label: 'phone'
                 }
               }]
           }]

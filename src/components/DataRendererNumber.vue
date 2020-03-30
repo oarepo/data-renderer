@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    data-renderer-number-component(:value="record.a" :layout="layout" :paths="paths" :schema="query.schema")
+    data-renderer-number-component(:value="record.id" :layout="layout" :paths="paths" :schema="query.schema")
 </template>
 
 <script>
@@ -13,7 +13,7 @@ export default {
   },
   data: function () {
     return {
-      record: { a: 111 },
+      record: { id: 1 },
       layout: {},
       paths: []
     }
