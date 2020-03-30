@@ -15,7 +15,7 @@ const CustomBeforeComponent = {
         title: 'See console log for details'
       },
       class: 'text-red',
-    }, 'This is a custom before component');
+    }, 'custom component');
   }
 }
 
@@ -29,7 +29,7 @@ const CustomAfterComponent = {
         title: 'See console log for details'
       },
       class: 'text-blue',
-    }, 'This is a custom after component');
+    }, 'custom component');
   }
 }
 
@@ -40,7 +40,7 @@ export default {
   },
   data: function () {
     return {
-      record: { array: [1, 2, 3] },
+      record: { keywords: ['first keyword', 'second keyword'] },
       layout: {
         before: CustomBeforeComponent,
         after: CustomAfterComponent

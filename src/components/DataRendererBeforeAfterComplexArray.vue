@@ -15,7 +15,7 @@ const CustomBeforeComponent = {
         title: 'See console log for details'
       },
       class: 'text-red',
-    }, 'This is a custom before component');
+    }, 'custom component');
   }
 }
 
@@ -29,7 +29,7 @@ const CustomAfterComponent = {
         title: 'See console log for details'
       },
       class: 'text-blue',
-    }, 'This is a custom after component');
+    }, 'custom component');
   }
 }
 
@@ -43,7 +43,7 @@ const CustomComponent = {
         title: 'See console log for details'
       },
       class: 'text-green',
-    }, 'This is another custom component');
+    }, 'custom component');
   }
 }
 
@@ -55,7 +55,7 @@ export default {
   data: function () {
     return {
       record: {
-        array: [{ a: 1 }, { b: 2 }, { c: 3 }]
+        contact: [[{ phone: '+420123123124' }, { email: 'mary.black@gmail.com' }]]
       },
       layout: {
         before: CustomBeforeComponent,
@@ -66,14 +66,11 @@ export default {
         },
         children: [
           {
-            prop: 'array',
+            prop: 'contact',
             label: {
-              label: 'Array label'
+              label: 'List of contacts'
             },
             item: {
-              label: {
-                label: 'Item label'
-              },
               before: CustomComponent,
               after: CustomComponent
             }

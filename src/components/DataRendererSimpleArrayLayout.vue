@@ -10,9 +10,7 @@ export default {
   },
   data: function () {
     return {
-      record: {
-        array: [1, 2, 3]
-      },
+      record: {},
       layout: {
         showEmpty: true,
         arrayWrapper: {

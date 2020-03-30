@@ -12,22 +12,15 @@ export default {
   data: function () {
     return {
       record: {
-        tree: {
-          a: {
-            b: {
-              c: {
-                d: {
-                  e: 1,
-                  f: 2
-                },
-                g: {
-                  h: 1,
-                  i: 2
-                }
-              }
-            }
-          }
-        }
+        object: [
+          { creator: 'Mary Black' },
+          {
+            contact: [
+              { phone: '+420123123123' },
+              { email: ['mary.black@gmail.com'] },
+              { phone: '+420123123123' },
+              { email: ['mary.black@gmail.com'] }]
+          }]
       },
       layout: {}
     }

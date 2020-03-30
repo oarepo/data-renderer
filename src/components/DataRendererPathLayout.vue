@@ -13,29 +13,29 @@ export default {
     return {
       record: {
         object: {
-          a: '1',
-          b: null
+          creator: 'Mary Black',
+          phone: null
         }
       },
       layout: { showEmpty: true },
       pathLayouts: {
         object: {
           label: {
-            label: 'label'
+            label: 'object'
           }
         },
-        a: {
+        creator: {
           label: {
-            label: 'AAAA',
+            label: 'creator',
             class: ['text-red']
           },
           value: {
             class: ['text-red']
           }
         },
-        b: {
+        phone: {
           label: {
-            label: 'BBBB',
+            label: 'phone',
             class: ['text-blue']
           },
           value: {
