@@ -7,7 +7,7 @@ import UndefinedComponent from '../../library/components/primitive/UndefinedComp
 import BooleanComponent from '../../library/components/primitive/BooleanComponent'
 import NumberComponent from '../../library/components/primitive/NumberComponent'
 import StringComponent from '../../library/components/primitive/StringComponent'
-import {f} from '../../library'
+import {f} from '../../library/layoututils'
 
 describe('DataRendererComponent.vue', () => {
 
