@@ -29,6 +29,10 @@ const KVPairComponent = {
         type = 'array'
       } else if (valueType === '[object Object]') {
         type = 'object'
+      } else if (this.layout.children !== undefined) {
+        type = 'object'
+      } else if (this.layout.item !== undefined) {
+        type = 'array'
       } else {
         type = 'undefined'
       }
@@ -48,7 +52,10 @@ const KVPairComponent = {
           layout: this.layout,
           paths: this.paths,
           pathLayouts: this.pathLayouts,
-          rendererComponents: this.rendererComponents
+          rendererComponents: this.rendererComponents,
+          extraProps: this.extraProps,
+          context: this.context,
+          prop: this.prop
         },
         scopedSlots: this.$scopedSlots,
         slots: this.slots
