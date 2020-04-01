@@ -52,7 +52,8 @@ const RendererMixin = {
             class: [
               ...(elDef.class || []),
               `iqdr-${classCode}`,
-              ...paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
+              ...paths.map(path => `iqdr-path-${path.replace('/', '-')}`),
+              `level-${this.level}`
             ],
             style: elDef.style,
             attrs: elDef.attrs,
@@ -72,7 +73,8 @@ const RendererMixin = {
               class: [
                 ...(elDef.class || []),
                 `iqdr-${classCode}`,
-                ...paths.map(path => `iqdr-path-${path.replace('/', '-')}`)
+                ...paths.map(path => `iqdr-path-${path.replace('/', '-')}`),
+                `level-${this.level}`
               ],
               style: elDef.style,
               attrs: elDef.attrs,
