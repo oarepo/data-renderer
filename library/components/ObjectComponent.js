@@ -6,7 +6,8 @@ export default {
   mixins: [RendererMixin],
   props: {
     value: Object,
-    paths: Array
+    paths: Array,
+    level: Number
   },
   render(h) {
     const layout = this.currentLayout
@@ -32,7 +33,7 @@ export default {
       })
     }
     const showEmpty = layout.showEmpty || this.$oarepo.dataRenderer.layouts[this.schema].showEmpty
-    return this.renderElement(h, this.getLayout('childrenWrapper', this.$props), this.$props, this.paths, () => {
+    return this.renderElement(h, this.getLayout('childrenWrapper', {...this.$props, value: value}), {...this.$props, value: value}, this.paths, () => {
       const ret = []
       if (layout.before) {
         ret.push(this.renderBefore(h, layout.before))
@@ -60,7 +61,8 @@ export default {
             paths: [...this.paths.map(path => `${path}/${prop}`), prop],
             pathLayouts: this.pathLayouts,
             rendererComponents: this.rendererComponents,
-            extraProps: this.extraProps
+            extraProps: this.extraProps,
+            level: this.level
           },
           scopedSlots: this.$scopedSlots,
           slots: this.slots
