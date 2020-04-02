@@ -11,7 +11,11 @@ const RendererMixin = {
     pathLayouts: Object,
     rendererComponents: Object,
     extraProps: Object,
-    prop: [String, Number]
+    prop: [String, Number],
+    level: {
+      type: Number,
+      default: 0
+    }
   },
   methods: {
     renderBefore (h, before) {
@@ -53,7 +57,7 @@ const RendererMixin = {
               ...(elDef.class || []),
               `iqdr-${classCode}`,
               ...paths.map(path => `iqdr-path-${path.replace('/', '-')}`),
-              `level-${this.level}`
+              `iqdr-level-${this.level}`
             ],
             style: elDef.style,
             attrs: elDef.attrs,
@@ -74,7 +78,7 @@ const RendererMixin = {
                 ...(elDef.class || []),
                 `iqdr-${classCode}`,
                 ...paths.map(path => `iqdr-path-${path.replace('/', '-')}`),
-                `level-${this.level}`
+                `iqdr-level-${this.level}`
               ],
               style: elDef.style,
               attrs: elDef.attrs,
