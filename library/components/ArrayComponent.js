@@ -8,10 +8,7 @@ export default {
   props: {
     value: Array,
     paths: Array,
-    level: {
-      type: Number,
-      default: 0
-    }
+    level: Number
   },
   render (h) {
     const layout = this.currentLayout
@@ -45,7 +42,7 @@ export default {
             pathLayouts: this.pathLayouts,
             rendererComponents: this.rendererComponents,
             extraProps: this.extraProps,
-            level: this.level + 1
+            level: this.level
           },
           scopedSlots: this.$scopedSlots,
           slots: this.slots
