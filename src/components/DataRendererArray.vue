@@ -13,7 +13,7 @@ export default {
   data: function () {
     return {
       record: {
-        array: [1, 2, 3]
+        keywords: ['first keyword', 'second keyword']
       },
       layout: {}
     }

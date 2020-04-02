@@ -17,11 +17,11 @@ export default {
       url: '/link-test',
       record: {
         object: {
-          a: 'https://cis-login.vscht.cz/static/web/logo_small.png'
+          link: 'https://cis-login.vscht.cz/static/web/logo_small.png'
         }
       },
       pathLayouts: {
-        a: {
+        link: {
           value: {
             element: 'a',
             attrs: {

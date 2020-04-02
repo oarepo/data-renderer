@@ -40,7 +40,8 @@ export default {
             paths: [...this.paths.map(path => `${path}/${index}`), `${index}`],
             pathLayouts: this.pathLayouts,
             rendererComponents: this.rendererComponents,
-            extraProps: this.extraProps
+            extraProps: this.extraProps,
+            level: this.level + 1
           },
           scopedSlots: this.$scopedSlots,
           slots: this.slots

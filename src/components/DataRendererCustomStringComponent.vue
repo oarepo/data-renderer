@@ -26,10 +26,10 @@ export default {
   data: function () {
     return {
       record: {
-        a: 'aaa',
-        b: 1,
-        c: 'bbb',
-        d: true
+        id: 1,
+        phone: '+420123123124',
+        email: 'mary.black@gmail.com',
+        published: true
       },
       rendererComponents: {
         string: CustomComponent

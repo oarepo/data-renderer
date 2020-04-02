@@ -55,7 +55,8 @@ const KVPairComponent = {
           rendererComponents: this.rendererComponents,
           extraProps: this.extraProps,
           context: this.context,
-          prop: this.prop
+          prop: this.prop,
+          level: this.level
         },
         scopedSlots: this.$scopedSlots,
         slots: this.slots

@@ -15,7 +15,7 @@ const CustomBeforeComponent = {
         title: 'See console log for details'
       },
       class: 'text-red',
-    }, 'This is a custom before component');
+    }, 'custom component');
   }
 }
 
@@ -29,7 +29,7 @@ const CustomAfterComponent = {
         title: 'See console log for details'
       },
       class: 'text-blue',
-    }, 'This is a custom after component');
+    }, 'custom component');
   }
 }
 
@@ -43,7 +43,7 @@ const CustomComponent = {
         title: 'See console log for details'
       },
       class: 'text-green',
-    }, 'This is another custom component');
+    }, 'custom component');
   }
 }
 
@@ -55,7 +55,7 @@ export default {
   data: function () {
     return {
       record: {
-        object: { a: { a: 'one', b: 'two' }, b: { a: 'one', b: 'two' } }
+        object: { creator: 'Mary Black', contact: { phone: '+420123123124', email: 'mary.black@gmail.com' } }
       },
       layout: {
         childrenWrapper: {
@@ -68,17 +68,17 @@ export default {
             prop: 'object',
             children: [
               {
-                prop: 'a',
+                prop: 'creator',
                 label: {
-                  label: 'firstObject'
+                  label: 'creator'
                 },
                 before: CustomComponent,
                 after: CustomComponent
               },
               {
-                prop: 'b',
+                prop: 'contact',
                 label: {
-                  label: 'secondObject'
+                  label: 'contact'
                 },
                 before: CustomComponent,
                 after: CustomComponent

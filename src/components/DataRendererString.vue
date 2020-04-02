@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    data-renderer-string-component(:value="record.a" :layout="layout" :paths="paths" :schema="query.schema")
+    data-renderer-string-component(:value="record.phone" :layout="layout" :paths="paths" :schema="query.schema")
 </template>
 
 <script>
@@ -16,12 +16,12 @@ export default {
   },
   data: function () {
     return {
-      record: { a: 'aaa' },
+      record: { phone: '+420123123123' },
       layout: {
         children: [{
-          prop: 'a',
+          prop: 'phone',
           label: {
-            label: 'AAA'
+            label: 'phone'
           }
         }]
       },

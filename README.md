@@ -18,6 +18,9 @@ A library for providing simple (but configurable) UI for rendering JSON data
 - [Installation](#installation)
 - [What the component does](#what-the-component-does)
 - [Usage](#usage)
+  * [Data](#data)
+  * [Layout](#layout)
+  * [Rendering children](#rendering-children)
   * [Overriding parts of layout](#overriding-parts-of-layout)
     + [Path details](#path-details)
   * [Translating labels](#translating-labels)
@@ -142,6 +145,11 @@ data-renderer(:layout="layout" :data="data"
               schema="block|inline|table|<object with default definition>")
 ```
 
+### Data
+
+``data`` passed to data renderer must be object. To render data consisting of an array of objects, data renderer can be wrapped with an element using v-for directive. Example:
+        schema="block|inline|table|<object with default definition>")
+
 ### Layout
 
 The ``layout`` element might contain the layout as shown above, or shortcut can be used:
@@ -174,27 +182,27 @@ layout: {
         },
         children: [
           {
-            prop: 'object',
+            prop: 'location',
             label: {
-              label: 'Object label'
+              label: 'Location label'
             },
             children: [
               {
-                prop: 'a',
+                prop: 'street',
                 label: {
-                  label: 'AAA'
+                  label: 'Street'
                 }
               },
               {
-                prop: 'b',
+                prop: 'number',
                 label: {
-                  label: 'BBB'
+                  label: 'Number'
                 }
               },
               {
-                prop: 'c',
+                prop: 'zipcode',
                 label: {
-                  label: 'CCC'
+                  label: 'Zipcode'
                 }
               }]
           }]
@@ -294,9 +302,9 @@ data-renderer(:layout="layout" :data="data" renderer-components="rendererCompone
 ```
 ```vue
 data: {
-        a: 'aaa',
+        a: 'string value',
         b: 1,
-        c: 'bbb',
+        c: 'string value',
         d: true
       }
 

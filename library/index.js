@@ -155,5 +155,6 @@ export {
   BooleanComponent,
   UndefinedComponent,
   ArrayComponent,
-  ObjectComponent
+  ObjectComponent,
+  f
 }

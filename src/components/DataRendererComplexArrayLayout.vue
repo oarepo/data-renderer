@@ -11,7 +11,7 @@ export default {
   data: function () {
     return {
       record: {
-        array: [{ a: 1 }, { b: 2 }, { c: 3 }]
+        contact: [{ phone: '+420123123124' }, { phone: '+420123123125' }]
       },
       layout: {
         showEmpty: true,
@@ -20,14 +20,17 @@ export default {
         },
         children: [
           {
-            prop: 'array',
+            prop: 'contact',
             label: {
-              label: 'Array label'
+              label: 'listOfContacts'
             },
             item: {
-              label: {
-                label: 'Item label'
-              }
+              children: [
+                {
+                  prop: 'phone',
+                  label: {
+                    label: 'phoneNumber'
+                  }}]
             }
           }
         ]
