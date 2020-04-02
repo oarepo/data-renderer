@@ -6,7 +6,11 @@ const KVPairComponent = {
   props: {
     context: [Array, Object],
     prop: [String, Number],
-    paths: Array
+    paths: Array,
+    level: {
+      type: Number,
+      default: 0
+    }
   },
   methods: {
     createLabel (h, label, value, extra) {
@@ -56,7 +60,7 @@ const KVPairComponent = {
           extraProps: this.extraProps,
           context: this.context,
           prop: this.prop,
-          level: this.level
+          level: this.level + 1
         },
         scopedSlots: this.$scopedSlots,
         slots: this.slots

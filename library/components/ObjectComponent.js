@@ -6,7 +6,8 @@ export default {
   mixins: [RendererMixin],
   props: {
     value: Object,
-    paths: Array
+    paths: Array,
+    level: Number
   },
   render(h) {
     const layout = this.currentLayout
@@ -61,7 +62,7 @@ export default {
             pathLayouts: this.pathLayouts,
             rendererComponents: this.rendererComponents,
             extraProps: this.extraProps,
-            level: this.level + 1
+            level: this.level
           },
           scopedSlots: this.$scopedSlots,
           slots: this.slots
