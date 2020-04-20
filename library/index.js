@@ -133,12 +133,12 @@ export default {
       },
       layoutMergeOptions: {},
       rendererComponents: {
-        string: StringComponent,
-        number: NumberComponent,
-        boolean: BooleanComponent,
-        undefined: UndefinedComponent,
-        array: ArrayComponent,
-        object: ObjectComponent
+        string: { component: StringComponent },
+        number: { component: NumberComponent },
+        boolean: { component: BooleanComponent },
+        undefined: { component: UndefinedComponent },
+        array: { component: ArrayComponent },
+        object: { component: ObjectComponent }
       },
       createDynamicObjectLayout,
       createDynamicArrayLayout,
