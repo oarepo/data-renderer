@@ -23,9 +23,9 @@ export default {
           paths: [],
           schema: this.schema,
           layout: this.layout || {},
-          pathLayouts: this.pathLayouts,
+          pathLayouts: this.pathLayouts || {},
           rendererComponents: this.rendererComponents || {},
-          extraProps: this.extraProps
+          extraProps: this.extraProps || {}
         }
       })
     } else {
@@ -35,9 +35,9 @@ export default {
           paths: [],
           schema: this.schema,
           layout: this.layout || {},
-          pathLayouts: this.pathLayouts,
+          pathLayouts: this.pathLayouts || {},
           rendererComponents: this.rendererComponents || {},
-          extraProps: this.extraProps
+          extraProps: this.extraProps || {}
         }
       })
     }

@@ -9,14 +9,14 @@ const KVPairComponent = {
     paths: Array
   },
   methods: {
-    createLabel (h, label, value, extra) {
+    createLabel(h, label, value, extra) {
       const labelTranslator = this.layout.labelTranslator || this.$oarepo.dataRenderer.layouts[this.schema].labelTranslator
       return this.renderElement(h, label, {
         ...this.$props,
         value
       }, this.paths, () => [labelTranslator(label.label, extra)], 'label', {})
     },
-    getChildComponent (value) {
+    getValueWrapper(value) {
       const valueType = Object.prototype.toString.call(value)
       let type
       if (valueType === '[object String]') {
@@ -36,20 +36,21 @@ const KVPairComponent = {
       } else {
         type = 'undefined'
       }
-      return this.rendererComponents[type] || this.$oarepo.dataRenderer.rendererComponents[type]
+      const valueWrapper = this.rendererComponents[type] || this.$oarepo.dataRenderer.rendererComponents[type]
+      return {...valueWrapper, ...(this.layout.valueWrapper || {}), valueType: type}
     },
-    renderChildren (h, value, extra) {
+    renderChildren(h, value, extra) {
       const ret = []
       const label = this.getLayout('label', extra)
       if (label.label) {
         ret.push(this.createLabel(h, label, value, extra))
       }
-      const childComponent = this.getChildComponent(value)
-      ret.push(h(childComponent, {
+      const valueWrapper = this.getValueWrapper(value)
+      ret.push(h(valueWrapper.component, {
         props: {
           value: value,
           schema: this.schema,
-          layout: this.layout,
+          layout: {...this.layout, valueWrapper},
           paths: this.paths,
           pathLayouts: this.pathLayouts,
           rendererComponents: this.rendererComponents,
@@ -64,7 +65,7 @@ const KVPairComponent = {
       return ret
     }
   },
-  render (h) {
+  render(h) {
     const value = this.context[this.prop]
     const extra = {
       ...this.$props,

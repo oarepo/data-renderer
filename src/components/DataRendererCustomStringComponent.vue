@@ -32,7 +32,7 @@ export default {
         published: true
       },
       rendererComponents: {
-        string: CustomComponent
+        string: { component: CustomComponent }
       }
     }
   }
