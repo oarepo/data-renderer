@@ -25,7 +25,7 @@ export default {
     Vue.prototype.$oarepo.dataRenderer = {
       layouts: {
         inline: {
-          childrenWrapper: {
+          'children-wrapper': {
             element: 'div',
             style: { 'margin-left': '30px' }
           },
@@ -35,7 +35,7 @@ export default {
               to: f((options) => options.url)
             }
           },
-          arrayWrapper: {
+          'array-wrapper': {
             element: 'div',
             style: {display: 'inline-table'},
             class: [],
@@ -51,16 +51,15 @@ export default {
             element: 'div',
             style: { display: 'inline' }
           },
-          // labelTranslator: (label, /*extra*/) => `${label}: `,
           labelTranslator: (label, /*extra*/) => `${startCase(label)}: `,
           showEmpty: false
         },
         block: {
-          childrenWrapper: {
+          'children-wrapper': {
             element: 'div',
             style: { 'margin-left': '30px' }
           },
-          arrayWrapper: {
+          'array-wrapper': {
             element: 'div',
             style: {display: 'block'},
             class: [],
@@ -80,34 +79,35 @@ export default {
           showEmpty: false
         },
         table: {
-          childrenWrapper: {
+          'children-wrapper': {
             element: 'table',
-            style: { 'border-collapse': 'collapse' }
+            style: { 'padding-left': '5px', 'border': '1px'}
           },
-          arrayWrapper: {
-            element: 'div',
-            style: {display: 'block'},
-            class: [],
+          'array-wrapper': {
+            element: 'td',
+            style: { 'vertical-align': 'top', 'border': '1px'},
             attrs: {}
           },
           wrapper: {
-            element: 'tr'
-          },
-          label: {
-            element: 'td',
+            element: 'tr',
             style: { 'vertical-align': 'top' }
           },
+          label: {
+            element: 'th',
+            style: { 'word-wrap': 'break-word', 'vertical-align': 'top', 'border': '1px', 'text-align': 'left' }
+          },
           value: {
-            element: 'td'
+            element: 'td',
+            style: { 'padding-left': '5px', 'border': '1px' }
           },
           labelTranslator: (label, /*extra*/) => startCase(label),
           showEmpty: false
         },
         flex: {
-          childrenWrapper: {
+          'children-wrapper': {
             element: 'div'
           },
-          arrayWrapper: {
+          'array-wrapper': {
             element: 'div',
             style: {display: 'block'},
             class: [],

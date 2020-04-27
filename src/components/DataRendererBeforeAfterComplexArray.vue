@@ -61,7 +61,7 @@ export default {
         before: CustomBeforeComponent,
         after: CustomAfterComponent,
         showEmpty: true,
-        arrayWrapper: {
+        'array-wrapper': {
           element: 'div'
         },
         children: [

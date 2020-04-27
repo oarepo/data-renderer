@@ -32,7 +32,7 @@ export default {
       })
     }
     const showEmpty = layout.showEmpty || this.$oarepo.dataRenderer.layouts[this.schema].showEmpty
-    return this.renderElement(h, this.getLayout('childrenWrapper', {...this.$props, value: value}), {...this.$props, value: value}, this.paths, () => {
+    return this.renderElement(h, this.getLayout('children-wrapper', {...this.$props, value: value}), {...this.$props, value: value}, this.paths, () => {
       const ret = []
       if (layout.before) {
         ret.push(this.renderBefore(h, layout.before))
@@ -72,7 +72,7 @@ export default {
         ret.push(this.renderAfter(h, layout.after))
       }
       return ret
-    }, 'childrenWrapper', {})
+    }, 'children-wrapper', {})
   },
   computed: {}
 }

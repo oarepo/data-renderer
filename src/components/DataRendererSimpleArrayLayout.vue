@@ -13,7 +13,7 @@ export default {
       record: {},
       layout: {
         showEmpty: true,
-        arrayWrapper: {
+        'array-wrapper': {
           element: 'div'
         },
         children: [

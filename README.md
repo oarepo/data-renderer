@@ -106,7 +106,7 @@ layout = {
        ...elementProperties,
        element: 'div',      
    },
-   childrenWrapper: {
+   'children-wrapper': {
        ...elementProperties,
        element: 'div',      
    },
@@ -177,7 +177,7 @@ data: {
       },
 layout: {
         showEmpty: true,
-        childrenWrapper: {
+        'children-wrapper': {
           element: 'div'
         },
         children: [

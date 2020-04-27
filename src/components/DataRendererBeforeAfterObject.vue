@@ -58,7 +58,7 @@ export default {
         object: { creator: 'Mary Black', contact: { phone: '+420123123124', email: 'mary.black@gmail.com' } }
       },
       layout: {
-        childrenWrapper: {
+        'children-wrapper': {
           element: 'div'
         },
         before: CustomBeforeComponent,
