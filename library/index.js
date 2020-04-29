@@ -70,7 +70,7 @@ export default {
           },
           label: {
             element: 'label',
-            style: { 'vertical-align': 'top' }
+            style: { 'vertical-align': 'top', 'color': 'gray' }
           },
           value: {
             element: 'div'
@@ -93,8 +93,8 @@ export default {
             style: { 'vertical-align': 'top' }
           },
           label: {
-            element: 'th',
-            style: { 'word-wrap': 'break-word', 'vertical-align': 'top', 'border': '1px', 'text-align': 'left' }
+            element: 'td',
+            style: { 'word-wrap': 'break-word', 'vertical-align': 'top', 'border': '1px', 'text-align': 'left', 'color': 'gray' }
           },
           value: {
             element: 'td',
