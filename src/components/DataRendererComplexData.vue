@@ -1,6 +1,5 @@
 <template lang="pug">
-  div
-    data-renderer(:data="record" :layout="layout" :schema="query.schema")
+  data-renderer(:data="record" :layout="layout" :schema="query.schema")
 </template>
 
 <script>

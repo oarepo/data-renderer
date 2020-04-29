@@ -27,7 +27,11 @@ export default {
         inline: {
           'children-wrapper': {
             element: 'div',
-            style: { 'margin-left': '30px' }
+            style: { 'padding-left': '5px', 'display': 'inline-block' },
+            value: {
+              element: 'div',
+              style: { display: 'inline' }
+            }
           },
           linkWrapper: {
             element: 'router-link',
@@ -37,7 +41,7 @@ export default {
           },
           'array-wrapper': {
             element: 'div',
-            style: {display: 'inline-table'},
+            style: { 'display': 'inline-table' },
             class: [],
             attrs: {}
           },
@@ -45,11 +49,12 @@ export default {
             element: 'div'
           },
           label: {
-            element: 'label'
+            element: 'label',
+            style: { 'vertical-align': 'top', 'color': 'gray' }
           },
           value: {
             element: 'div',
-            style: { display: 'inline' }
+            style: { 'display': 'inline' }
           },
           labelTranslator: (label, /*extra*/) => `${startCase(label)}: `,
           showEmpty: false
@@ -57,11 +62,11 @@ export default {
         block: {
           'children-wrapper': {
             element: 'div',
-            style: { 'margin-left': '30px' }
+            style: { 'padding-left': '10px' }
           },
           'array-wrapper': {
             element: 'div',
-            style: {display: 'block'},
+            style: { 'display': 'block' },
             class: [],
             attrs: {}
           },
@@ -81,11 +86,11 @@ export default {
         table: {
           'children-wrapper': {
             element: 'table',
-            style: { 'padding-left': '5px', 'border': '1px'}
+            style: { 'vertical-align': 'top', 'padding-left': '5px', 'border-spacing': '0px 0px'}
           },
           'array-wrapper': {
             element: 'td',
-            style: { 'vertical-align': 'top', 'border': '1px'},
+            style: { 'vertical-align': 'top', 'text-align': 'left'},
             attrs: {}
           },
           wrapper: {
@@ -94,11 +99,11 @@ export default {
           },
           label: {
             element: 'td',
-            style: { 'word-wrap': 'break-word', 'vertical-align': 'top', 'border': '1px', 'text-align': 'left', 'color': 'gray' }
+            style: { 'word-wrap': 'break-word', 'vertical-align': 'top', 'text-align': 'left', 'color': 'gray' }
           },
           value: {
             element: 'td',
-            style: { 'padding-left': '5px', 'border': '1px' }
+            style: { 'padding-left': '5px' }
           },
           labelTranslator: (label, /*extra*/) => startCase(label),
           showEmpty: false
@@ -109,7 +114,7 @@ export default {
           },
           'array-wrapper': {
             element: 'div',
-            style: {display: 'block'},
+            style: { 'display': 'block' },
             class: [],
             attrs: {}
           },
@@ -120,12 +125,12 @@ export default {
           label: {
             element: 'label',
             style: { 'vertical-align': 'top' },
-            class: ['col-3']
+            class: ['col-auto']
           },
           value: {
             element: 'div',
-            style: { display: 'block' },
-            class: ['col-9']
+            style: { 'display': 'block' },
+            class: ['col-auto']
           },
           labelTranslator: (label, /*extra*/) => startCase(label),
           showEmpty: false

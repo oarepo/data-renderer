@@ -1,6 +1,5 @@
 <template lang="pug">
-  div
-    data-renderer-string-component(:value="record.phone" :layout="layout" :paths="paths" :schema="query.schema")
+  data-renderer-string-component(:value="record.phone" :layout="layout" :paths="paths" :schema="query.schema")
 </template>
 
 <script>
