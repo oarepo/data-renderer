@@ -62,7 +62,7 @@ export default {
         block: {
           'children-wrapper': {
             element: 'div',
-            style: { 'padding-left': '10px' }
+            style: { 'padding-left': '10px', 'margin-top': '5px'  }
           },
           'array-wrapper': {
             element: 'div',
@@ -86,7 +86,7 @@ export default {
         table: {
           'children-wrapper': {
             element: 'table',
-            style: { 'vertical-align': 'top', 'padding-left': '5px', 'border-spacing': '0px 0px'}
+            style: { 'vertical-align': 'top', 'padding-left': '5px'}
           },
           'array-wrapper': {
             element: 'td',
