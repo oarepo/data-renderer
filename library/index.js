@@ -27,11 +27,7 @@ export default {
         inline: {
           'children-wrapper': {
             element: 'div',
-            style: { 'padding-left': '5px', 'display': 'inline-block' },
-            value: {
-              element: 'div',
-              style: { display: 'inline' }
-            }
+            style: { 'padding-left': '5px', 'display': 'inline-block' }
           },
           linkWrapper: {
             element: 'router-link',
@@ -50,7 +46,7 @@ export default {
           },
           label: {
             element: 'label',
-            style: { 'vertical-align': 'top', 'color': 'gray' }
+            style: { 'vertical-align': 'top', 'color': 'gray', 'max-width': '60px' }
           },
           value: {
             element: 'div',
@@ -75,7 +71,7 @@ export default {
           },
           label: {
             element: 'label',
-            style: { 'vertical-align': 'top', 'color': 'gray' }
+            style: { 'vertical-align': 'top', 'color': 'gray', 'max-width': '60px' }
           },
           value: {
             element: 'div'
@@ -99,7 +95,7 @@ export default {
           },
           label: {
             element: 'td',
-            style: { 'word-wrap': 'break-word', 'vertical-align': 'top', 'text-align': 'left', 'color': 'gray' }
+            style: { 'word-wrap': 'break-word', 'vertical-align': 'top', 'text-align': 'left', 'color': 'gray', 'max-width': '60px' }
           },
           value: {
             element: 'td',
@@ -124,7 +120,7 @@ export default {
           },
           label: {
             element: 'label',
-            style: { 'vertical-align': 'top' },
+            style: { 'vertical-align': 'top', 'max-width': '60px' },
             class: ['col-auto']
           },
           value: {
