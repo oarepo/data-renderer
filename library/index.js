@@ -1,5 +1,5 @@
 import DataRendererComponent from './components/DataRendererComponent'
-import {createDynamicArrayLayout, createDynamicObjectLayout, createDynamicObjectPropLayout} from './dynamiclayouts'
+import {createDynamicArrayLayout, createDynamicObjectLayout} from './dynamiclayouts'
 import startCase from 'lodash.startcase'
 import {f} from './layoututils'
 import StringComponent from "./components/primitive/StringComponent";
@@ -84,7 +84,7 @@ export default {
             element: 'table'
           },
           'array-wrapper': {
-            element: 'td'
+            element: 'table'
           },
           wrapper: {
             element: 'tr'
@@ -137,7 +137,6 @@ export default {
       },
       createDynamicObjectLayout,
       createDynamicArrayLayout,
-      createDynamicObjectPropLayout,
       ...options
     }
   }
