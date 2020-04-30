@@ -9,7 +9,15 @@ export default {
   },
   render (h) {
     const valueDef = this.getLayout('value', this.$props)
-    return this.renderElement(h, valueDef, this.$props, this.paths, () => [this.value], 'value', {})
+    const children = []
+    if (this.$slots.before) {
+      children.push(this.$slots.before)
+    }
+    children.push(this.value)
+    if (this.$slots.after) {
+      children.push(this.$slots.after)
+    }
+    return this.renderElement(h, valueDef, this.$props, this.paths, () => children, 'value', {})
   },
   computed: {}
 }
