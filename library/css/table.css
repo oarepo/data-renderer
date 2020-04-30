@@ -1,0 +1,37 @@
+.iqdr-layout-table table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.iqdr-layout-table td {
+    vertical-align: baseline;
+}
+
+.iqdr-layout-table table.iqdr-children-wrapper {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 5px;
+    border-spacing: 0;
+    /*background-image: url("/bg.svg");*/
+    /*background-size: 100% 100%;*/
+}
+
+.iqdr-layout-table td.iqdr-array-wrapper {
+    text-align: left;
+    padding-top: 0
+}
+
+.iqdr-layout-table tr.iqdr-wrapper {
+}
+
+.iqdr-layout-table td.iqdr-label {
+    word-wrap: break-word;
+    text-align: left;
+    color: gray;
+    max-width: 60px;
+    padding-top: 0;
+}
+
+.iqdr-layout-table td.iqdr-value {
+    padding-left: 5px;
+}

@@ -34,6 +34,9 @@ export default {
               {
                 prop: 'firstImage',
                 label: {
+                  style: {
+                    'vertical-align': 'top'
+                  },
                   label: 'firstImage'
                 },
                 value: {
