@@ -10,7 +10,7 @@ import ArrayComponent from "./components/ArrayComponent";
 import ObjectComponent from "./components/ObjectComponent";
 
 export default {
-  install (Vue, options) {
+  install(Vue, options) {
     options = {
       ...options,
       showEmpty: false
@@ -27,7 +27,7 @@ export default {
         inline: {
           'children-wrapper': {
             element: 'div',
-            style: { 'padding-left': '5px', 'display': 'inline-block' }
+            style: {'padding-left': '5px', 'display': 'inline-block'}
           },
           linkWrapper: {
             element: 'router-link',
@@ -37,7 +37,7 @@ export default {
           },
           'array-wrapper': {
             element: 'div',
-            style: { 'display': 'inline-table' },
+            style: {'display': 'inline-table'},
             class: [],
             attrs: {}
           },
@@ -46,11 +46,11 @@ export default {
           },
           label: {
             element: 'label',
-            style: { 'vertical-align': 'top', 'color': 'gray', 'max-width': '60px' }
+            style: {'vertical-align': 'top', 'color': 'gray', 'max-width': '60px'}
           },
           value: {
             element: 'div',
-            style: { 'display': 'inline' }
+            style: {'display': 'inline'}
           },
           labelTranslator: (label, /*extra*/) => `${startCase(label)}: `,
           showEmpty: false
@@ -58,11 +58,11 @@ export default {
         block: {
           'children-wrapper': {
             element: 'div',
-            style: { 'padding-left': '10px', 'margin-top': '5px'  }
+            style: {'padding-left': '10px', 'margin-top': '5px'}
           },
           'array-wrapper': {
             element: 'div',
-            style: { 'display': 'block' },
+            style: {'display': 'block'},
             class: [],
             attrs: {}
           },
@@ -71,7 +71,7 @@ export default {
           },
           label: {
             element: 'label',
-            style: { 'vertical-align': 'top', 'color': 'gray', 'max-width': '60px' }
+            style: {'vertical-align': 'top', 'color': 'gray', 'max-width': '60px'}
           },
           value: {
             element: 'div'
@@ -81,25 +81,19 @@ export default {
         },
         table: {
           'children-wrapper': {
-            element: 'table',
-            style: { 'vertical-align': 'top', 'padding-left': '5px'}
+            element: 'table'
           },
           'array-wrapper': {
-            element: 'td',
-            style: { 'vertical-align': 'top', 'text-align': 'left'},
-            attrs: {}
+            element: 'td'
           },
           wrapper: {
-            element: 'tr',
-            style: { 'vertical-align': 'top' }
+            element: 'tr'
           },
           label: {
-            element: 'td',
-            style: { 'word-wrap': 'break-word', 'vertical-align': 'top', 'text-align': 'left', 'color': 'gray', 'max-width': '60px' }
+            element: 'td'
           },
           value: {
-            element: 'td',
-            style: { 'padding-left': '5px' }
+            element: 'td'
           },
           labelTranslator: (label, /*extra*/) => startCase(label),
           showEmpty: false
@@ -110,7 +104,7 @@ export default {
           },
           'array-wrapper': {
             element: 'div',
-            style: { 'display': 'block' },
+            style: {'display': 'block'},
             class: [],
             attrs: {}
           },
@@ -120,12 +114,12 @@ export default {
           },
           label: {
             element: 'label',
-            style: { 'vertical-align': 'top', 'max-width': '60px' },
+            style: {'vertical-align': 'top', 'color': 'gray', 'max-width': '60px'},
             class: ['col-auto']
           },
           value: {
             element: 'div',
-            style: { 'display': 'block' },
+            style: {'display': 'block'},
             class: ['col-auto']
           },
           labelTranslator: (label, /*extra*/) => startCase(label),
@@ -134,12 +128,12 @@ export default {
       },
       layoutMergeOptions: {},
       rendererComponents: {
-        string: { component: StringComponent },
-        number: { component: NumberComponent },
-        boolean: { component: BooleanComponent },
-        undefined: { component: UndefinedComponent },
-        array: { component: ArrayComponent },
-        object: { component: ObjectComponent }
+        string: {component: StringComponent},
+        number: {component: NumberComponent},
+        boolean: {component: BooleanComponent},
+        undefined: {component: UndefinedComponent},
+        array: {component: ArrayComponent},
+        object: {component: ObjectComponent}
       },
       createDynamicObjectLayout,
       createDynamicArrayLayout,
