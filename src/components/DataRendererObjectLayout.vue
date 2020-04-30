@@ -20,6 +20,7 @@ export default {
         },
         children: [
           {
+            showEmpty: true,
             prop: 'object',
             label: {
               label: 'object'
