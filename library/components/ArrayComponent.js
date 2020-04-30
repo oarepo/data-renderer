@@ -25,7 +25,7 @@ export default {
       })
     }
     itemLayout.showEmpty = layout.showEmpty || this.$oarepo.dataRenderer.layouts[this.schema].showEmpty
-    return this.renderElement(h, this.getLayout('arrayWrapper', this.$props), this.$props, this.paths, () => {
+    return this.renderElement(h, this.getLayout('array-wrapper', this.$props), this.$props, this.paths, () => {
       if (!value) {
         return []
       }
@@ -47,7 +47,7 @@ export default {
           slots: this.slots
         })
       })
-    }, 'arrayWrapper', {})
+    }, 'array-wrapper', {})
   },
   computed: {}
 }

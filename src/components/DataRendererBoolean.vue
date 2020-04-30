@@ -1,6 +1,5 @@
 <template lang="pug">
-  div
-    data-renderer-boolean-component(:data="record.a" :layout="layout" :paths="paths" :schema="query.schema")
+  data-renderer-boolean-component(:data="record.a" :layout="layout" :paths="paths" :schema="query.schema")
 </template>
 
 <script>

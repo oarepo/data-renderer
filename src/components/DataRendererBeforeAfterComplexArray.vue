@@ -1,6 +1,5 @@
 <template lang="pug">
-  div
-    data-renderer(:data="record" :layout="layout" :schema="query.schema")
+  data-renderer(:data="record" :layout="layout" :schema="query.schema")
 </template>
 
 <script>
@@ -61,7 +60,7 @@ export default {
         before: CustomBeforeComponent,
         after: CustomAfterComponent,
         showEmpty: true,
-        arrayWrapper: {
+        'array-wrapper': {
           element: 'div'
         },
         children: [

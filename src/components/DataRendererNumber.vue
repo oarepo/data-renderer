@@ -1,6 +1,5 @@
 <template lang="pug">
-  div
-    data-renderer-number-component(:value="record.id" :layout="layout" :paths="paths" :schema="query.schema")
+  data-renderer-number-component(:value="record.id" :layout="layout" :paths="paths" :schema="query.schema")
 </template>
 
 <script>

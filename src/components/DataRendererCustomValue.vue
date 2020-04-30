@@ -1,6 +1,5 @@
 <template lang="pug">
-  div
-    data-renderer(:data="record" :layout="layout" :schema="query.schema")
+  data-renderer(:data="record" :layout="layout" :schema="query.schema")
 </template>
 
 <script>
@@ -22,7 +21,7 @@ export default {
       },
       layout: {
         showEmpty: true,
-        childrenWrapper: {
+        'children-wrapper': {
           element: 'div'
         },
         children: [

@@ -15,7 +15,7 @@ export default {
       },
       layout: {
         showEmpty: true,
-        arrayWrapper: {
+        'array-wrapper': {
           element: 'div'
         },
         children: [

@@ -1,6 +1,5 @@
 <template lang="pug">
-  div
-    data-renderer(:data="record" :layout="layout" :schema="query.schema")
+  data-renderer(:data="record" :layout="layout" :schema="query.schema")
 </template>
 
 <script>
@@ -58,7 +57,7 @@ export default {
         object: { creator: 'Mary Black', contact: { phone: '+420123123124', email: 'mary.black@gmail.com' } }
       },
       layout: {
-        childrenWrapper: {
+        'children-wrapper': {
           element: 'div'
         },
         before: CustomBeforeComponent,
