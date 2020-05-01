@@ -28,12 +28,6 @@ export default {
           'children-wrapper': {
             element: 'div'
           },
-          linkWrapper: {
-            element: 'router-link',
-            attrs: {
-              to: f((options) => options.url)
-            }
-          },
           'array-wrapper': {
             element: 'div'
           },
