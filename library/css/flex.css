@@ -7,6 +7,7 @@
 
 .iqdr-layout-flex div.iqdr-children-wrapper {
     margin-left: 5px;
+    /*padding-left: 5px;*/
 }
 
 .iqdr-layout-flex div.iqdr-array-wrapper {
@@ -26,6 +27,7 @@
     text-align: left;
     color: gray;
     /*padding-left: 10px;*/
+    padding-left: 10px;
 }
 
 .iqdr-layout-flex div.iqdr-value {
