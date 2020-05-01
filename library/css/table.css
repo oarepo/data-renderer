@@ -14,7 +14,7 @@
 
 .iqdr-layout-table td.iqdr-array-wrapper {
     text-align: left;
-    padding-top: 0
+    padding-top: 0;
 }
 
 .iqdr-layout-table tr.iqdr-wrapper {
@@ -25,6 +25,7 @@
     text-align: left;
     color: gray;
     padding-top: 0;
+    /*nechat tady padding?*/
     padding-left: 10px;
 }
 

@@ -1,0 +1,31 @@
+.iqdr-layout-inline div {
+}
+
+.iqdr-layout-inline td {
+    vertical-align: baseline;
+}
+
+.iqdr-layout-inline div.iqdr-children-wrapper {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.iqdr-layout-inline div.iqdr-array-wrapper {
+    display: inline-table;
+}
+
+.iqdr-layout-inline div.iqdr-wrapper {
+}
+
+.iqdr-layout-inline label.iqdr-label {
+    vertical-align: top;
+    word-wrap: normal;
+    text-align: left;
+    color: gray;
+}
+
+.iqdr-layout-inline div.iqdr-value {
+    display: inline;
+    padding-right: 10px;
+    padding-left: 5px;
+}

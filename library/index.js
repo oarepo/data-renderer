@@ -26,8 +26,7 @@ export default {
       layouts: {
         inline: {
           'children-wrapper': {
-            element: 'div',
-            style: {'padding-left': '5px', 'display': 'inline-block'}
+            element: 'div'
           },
           linkWrapper: {
             element: 'router-link',
@@ -36,42 +35,32 @@ export default {
             }
           },
           'array-wrapper': {
-            element: 'div',
-            style: {'display': 'inline-table'},
-            class: [],
-            attrs: {}
+            element: 'div'
           },
           wrapper: {
             element: 'div'
           },
           label: {
-            element: 'label',
-            style: {'vertical-align': 'top', 'color': 'gray', 'max-width': '60px'}
+            element: 'label'
           },
           value: {
-            element: 'div',
-            style: {'display': 'inline'}
+            element: 'div'
           },
           labelTranslator: (label, /*extra*/) => `${startCase(label)}: `,
           showEmpty: false
         },
         block: {
           'children-wrapper': {
-            element: 'div',
-            style: {'padding-left': '10px', 'margin-top': '5px'}
+            element: 'div'
           },
           'array-wrapper': {
-            element: 'div',
-            style: {'display': 'block'},
-            class: [],
-            attrs: {}
+            element: 'div'
           },
           wrapper: {
             element: 'div'
           },
           label: {
-            element: 'label',
-            style: {'vertical-align': 'top', 'color': 'gray', 'max-width': '60px'}
+            element: 'label'
           },
           value: {
             element: 'div'
@@ -104,22 +93,17 @@ export default {
           },
           'array-wrapper': {
             element: 'div',
-            style: {'display': 'block'},
-            class: [],
-            attrs: {}
           },
           wrapper: {
             element: 'div',
-            class: ['row', 'q-col-gutter-sm']
+            class: ['row']
           },
           label: {
             element: 'label',
-            style: {'vertical-align': 'top', 'color': 'gray', 'max-width': '60px'},
             class: ['col-auto']
           },
           value: {
             element: 'div',
-            style: {'display': 'block'},
             class: ['col-auto']
           },
           labelTranslator: (label, /*extra*/) => startCase(label),
