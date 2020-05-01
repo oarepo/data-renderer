@@ -21,33 +21,14 @@ export default {
         vue: this
       })
     }
-    const valueProps = Object.keys(value)
-    if (valueProps.length !== childrenLayouts.length) {
-      const childrenLayoutProps = []
-      childrenLayouts.forEach(childLayout => childrenLayoutProps.push(childLayout.prop))
-      valueProps.forEach(valueProp => {
-        if (!childrenLayoutProps.includes(valueProp)) {
-          childrenLayouts.push({prop: valueProp})
-        }
-      })
-    }
     const showEmpty = layout.showEmpty || this.$oarepo.dataRenderer.layouts[this.schema].showEmpty
-    return this.renderElement(h, this.getLayout('children-wrapper', {...this.$props, value: value}), {...this.$props, value: value}, this.paths, () => {
+    return this.renderElement(h, this.getLayout('children-wrapper', this.$props), this.$props, this.paths, () => {
       const ret = []
       if (layout.before) {
         ret.push(this.renderBefore(h, layout.before))
       }
       const renderedItems = childrenLayouts.map(childLayout => {
         const prop = childLayout.prop
-        const dynamicLayout = {
-          ...this.$oarepo.dataRenderer.createDynamicObjectPropLayout({
-            value: prop,
-            schema: this.schema,
-            vue: this
-          }),
-          ...childLayout,
-          showEmpty
-        }
         if ((value[prop] === null || value[prop] === undefined) && !showEmpty) {
           return
         }
@@ -56,7 +37,7 @@ export default {
             context: value,
             prop: prop,
             schema: this.schema,
-            layout: dynamicLayout,
+            layout: childLayout,
             paths: [...this.paths.map(path => `${path}/${prop}`), prop],
             pathLayouts: this.pathLayouts,
             rendererComponents: this.rendererComponents,

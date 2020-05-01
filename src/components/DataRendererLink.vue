@@ -27,6 +27,9 @@ export default {
               href: f(({value}) => {
                 return value
               })
+            },
+            style: {
+              'padding-left': '5px'
             }
           }
         }

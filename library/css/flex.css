@@ -1,0 +1,35 @@
+.iqdr-layout-flex div {
+}
+
+.iqdr-layout-flex div {
+    vertical-align: baseline;
+}
+
+.iqdr-layout-flex div.iqdr-children-wrapper {
+    margin-left: 5px;
+}
+
+.iqdr-layout-flex div.iqdr-array-wrapper {
+    display: block;
+    text-align: left;
+    padding-top: 0
+}
+
+.iqdr-layout-flex div.iqdr-wrapper {
+    /*dat tady inline-flex?*/
+    /*display: inline-flex;*/
+}
+
+.iqdr-layout-flex label.iqdr-label {
+    vertical-align: top;
+    word-wrap: normal;
+    text-align: left;
+    color: gray;
+    /*padding-left: 10px;*/
+}
+
+.iqdr-layout-flex div.iqdr-value {
+    display: flex;
+    padding-right: 10px;
+    padding-left: 5px;
+}

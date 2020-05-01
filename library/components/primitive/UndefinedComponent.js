@@ -9,7 +9,15 @@ export default {
   },
   render (h) {
     const value = this.getLayout('value', this.$props)
-    return this.renderElement(h, value, this.$props, this.paths, () => ['---'], 'value', {})
+    const children = []
+    if (this.$slots.before) {
+      children.push(this.$slots.before)
+    }
+    children.push('---')
+    if (this.$slots.after) {
+      children.push(this.$slots.after)
+    }
+    return this.renderElement(h, value, this.$props, this.paths, () => children, 'value', {})
   },
   computed: {}
 }

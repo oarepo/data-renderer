@@ -1,5 +1,5 @@
 import DataRendererComponent from './components/DataRendererComponent'
-import {createDynamicArrayLayout, createDynamicObjectLayout, createDynamicObjectPropLayout} from './dynamiclayouts'
+import {createDynamicArrayLayout, createDynamicObjectLayout} from './dynamiclayouts'
 import startCase from 'lodash.startcase'
 import {f} from './layoututils'
 import StringComponent from "./components/primitive/StringComponent";
@@ -26,52 +26,35 @@ export default {
       layouts: {
         inline: {
           'children-wrapper': {
-            element: 'div',
-            style: {'padding-left': '5px', 'display': 'inline-block'}
-          },
-          linkWrapper: {
-            element: 'router-link',
-            attrs: {
-              to: f((options) => options.url)
-            }
+            element: 'div'
           },
           'array-wrapper': {
-            element: 'div',
-            style: {'display': 'inline-table'},
-            class: [],
-            attrs: {}
+            element: 'div'
           },
           wrapper: {
             element: 'div'
           },
           label: {
-            element: 'label',
-            style: {'vertical-align': 'top', 'color': 'gray', 'max-width': '60px'}
+            element: 'label'
           },
           value: {
-            element: 'div',
-            style: {'display': 'inline'}
+            element: 'div'
           },
           labelTranslator: (label, /*extra*/) => `${startCase(label)}: `,
           showEmpty: false
         },
         block: {
           'children-wrapper': {
-            element: 'div',
-            style: {'padding-left': '10px', 'margin-top': '5px'}
+            element: 'div'
           },
           'array-wrapper': {
-            element: 'div',
-            style: {'display': 'block'},
-            class: [],
-            attrs: {}
+            element: 'div'
           },
           wrapper: {
             element: 'div'
           },
           label: {
-            element: 'label',
-            style: {'vertical-align': 'top', 'color': 'gray', 'max-width': '60px'}
+            element: 'label'
           },
           value: {
             element: 'div'
@@ -84,7 +67,7 @@ export default {
             element: 'table'
           },
           'array-wrapper': {
-            element: 'td'
+            element: 'table'
           },
           wrapper: {
             element: 'tr'
@@ -104,22 +87,17 @@ export default {
           },
           'array-wrapper': {
             element: 'div',
-            style: {'display': 'block'},
-            class: [],
-            attrs: {}
           },
           wrapper: {
             element: 'div',
-            class: ['row', 'q-col-gutter-sm']
+            class: ['row']
           },
           label: {
             element: 'label',
-            style: {'vertical-align': 'top', 'color': 'gray', 'max-width': '60px'},
             class: ['col-auto']
           },
           value: {
             element: 'div',
-            style: {'display': 'block'},
             class: ['col-auto']
           },
           labelTranslator: (label, /*extra*/) => startCase(label),
@@ -137,7 +115,6 @@ export default {
       },
       createDynamicObjectLayout,
       createDynamicArrayLayout,
-      createDynamicObjectPropLayout,
       ...options
     }
   }
