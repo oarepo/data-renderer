@@ -32,6 +32,11 @@ export default {
         if ((value[prop] === null || value[prop] === undefined) && !showEmpty) {
           return
         }
+        if (!childLayout.label) {
+          childLayout.label = {
+            label: prop
+          }
+        }
         ret.push(h(KVPairComponent, {
           props: {
             context: value,
