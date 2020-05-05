@@ -7,17 +7,17 @@
 
 .iqdr-layout-flex div.iqdr-children-wrapper {
     margin-left: 5px;
+    margin-top: 5px;
     /*padding-left: 5px;*/
 }
 
 .iqdr-layout-flex div.iqdr-array-wrapper {
-    display: block;
     text-align: left;
-    padding-top: 0
+    margin-top: 5px;
+    padding-top: 0;
 }
 
 .iqdr-layout-flex div.iqdr-wrapper {
-    /*dat tady inline-flex?*/
     /*display: inline-flex;*/
 }
 
@@ -31,7 +31,6 @@
 }
 
 .iqdr-layout-flex div.iqdr-value {
-    display: flex;
     padding-right: 10px;
     padding-left: 5px;
 }
