@@ -142,18 +142,22 @@ layout = {
 
 To apply this layout, add to template:
 
-```pug
+```vue
+<template lang="pug">
 data-renderer(:layout="layout" :data="data"
               schema="block|inline|table|<object with default definition>")
+</template>
 ```
 
 ### Data
 
 ``data`` passed to data renderer must be an object. To render data consisting of an array of objects, data renderer can be wrapped with an element using v-for directive. Example:
 
-```pug
+```vue
+<template lang="pug">
 div(v-for="arrayItem in array")
   data-renderer(:data="arrayItem")
+</template>
 ```
 
 ### Layout
@@ -351,12 +355,14 @@ a = {
 ### Using slots before and after rendered value
 
 Components for primitive values contain a ``before`` and ``after`` slot which can be used to render custom code before and after rendered value. Example:
-```pug
+```vue
+<template lang="pug">
 data-renderer(:layout="layout" :data="data")
     template(v-slot:before)
         div a
     template(v-slot:after)
         div b
+</template>
 ```
 
 ### Rendering components before and after rendered data
@@ -367,8 +373,10 @@ To render custom component before or after rendered data, register component in 
 
 Custom components can be used based instead of default ones, when passed to ``:renderer-components`` property. Example:
 
-```pug
+```vue
+<template lang="pug">
 data-renderer(:layout="layout" :data="data" renderer-components="rendererComponents")
+</template>
 ```
 ```javascript
 data = {
