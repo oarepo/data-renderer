@@ -19,7 +19,7 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "build": "/bin/bash build.sh",
-    "demo-build": "vue-cli-service build --help",
+    "demo-build": "vue-cli-service build",
     "toc": "markdown-toc --maxdepth 5 -i README.md"
   },
   "dependencies": {
