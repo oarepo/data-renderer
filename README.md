@@ -68,7 +68,7 @@ export default async ({ Vue, store, router }) => {
 
 ## What the component does
 
-``DataRendererComponent`` is a component that iterates a layout tree and converts the layout
+``DataRendererComponent`` component iterates a layout tree and converts the layout
 into Vuejs component. Without any settings, the created component tree will look like:
 
 ```pug
@@ -100,13 +100,17 @@ layout = {
    label: {
        ...elementProperties,
        element: 'label',
-       value: 'Label to be shown',
+       label: 'Label to be shown',
    },
    value: {
        ...elementProperties,
        element: 'div',      
    },
    'children-wrapper': {
+       ...elementProperties,
+       element: 'div',      
+   },
+   'array-wrapper': {
        ...elementProperties,
        element: 'div',      
    },
@@ -119,10 +123,8 @@ layout = {
 Every property can be a function ``func({context, layout, data, vue, paths, ...})`` where context
 points to the actual parts of data being rendered. To use the function, wrap it inside ``f``:
 
-```vue
-import { f } from '@oarepo/data-renderer'
-
-{
+```javascript
+layout = {
     prop: 'thumbnail',
     value: {
         component: 'img',
@@ -147,8 +149,12 @@ data-renderer(:layout="layout" :data="data"
 
 ### Data
 
-``data`` passed to data renderer must be object. To render data consisting of an array of objects, data renderer can be wrapped with an element using v-for directive. Example:
-        schema="block|inline|table|<object with default definition>")
+``data`` passed to data renderer must be an object. To render data consisting of an array of objects, data renderer can be wrapped with an element using v-for directive. Example:
+
+```pug
+div(v-for="arrayItem in array")
+  data-renderer(:data="arrayItem")
+```
 
 ### Layout
 
@@ -171,11 +177,12 @@ layout = {
 
 Array and object children can be defined in ``layout``. The array or object itself is placed inside ``children`` in ``layout`` and may contain another array of ``children``. 
 
-```vue
-data: {
+For an object, layout can be defined as below:
+```javascript
+data = {
         object: {}
-      },
-layout: {
+      }
+layout = {
         showEmpty: true,
         'children-wrapper': {
           element: 'div'
@@ -207,6 +214,61 @@ layout: {
               }]
           }]
       }
+```
+
+Layout of an array contains the item property to define layout of array items:
+```javascript
+data = {
+        object: {}
+      }
+layout = {
+        showEmpty: true,
+        'array-wrapper': {
+          element: 'div'
+        },
+        children: [
+          {
+            prop: 'Contact',
+            label: {
+              label: 'List of contacts'
+            },
+            item: {
+              label: {
+                label: 'Phone number'
+            }
+          }
+        }]
+      }
+```
+
+If the item of an array is a complex value, then the ``item`` property in ``layout`` must contain ``children``. Example:
+```javascript
+data = {
+        object: {}
+      }
+layout = {
+        showEmpty: true,
+        'array-wrapper': {
+          element: 'div'
+        },
+        children: [
+          {
+            prop: 'Contact',
+            label: {
+              label: 'List of contacts'
+            },
+            item: {
+             children: [
+               {
+                  prop: 'phone',
+                  label: {
+                    label: 'Phone number'
+                  }
+                }
+              ]
+            }
+          }]
+        }
 ```
 
 ### Overriding parts of layout
@@ -243,9 +305,9 @@ for each rendered node is constructed as follows:
 layout = {
     prop: "location",
     children: [
-        {prop: 'street'}, 
-        {prop: 'number'}, 
-        {prop: 'zipcode'}
+        { prop: 'street' }, 
+        { prop: 'number' }, 
+        { prop: 'zipcode' }
     ]
 }
 ``` 
@@ -273,20 +335,28 @@ If no layout was specified for the object, it is created dynamically from the da
 
 To render the value as a link, define ``a`` html tag and href attribute in pathLayouts.
 
-```vue
-import { f } from '@oarepo/data-renderer'
+```javascript
+a = {
+  value: {
+    element: 'a',
+      attrs: {
+        href: f(({url}) => {
+          return url
+        })
+      }
+  }
+}
+```
 
-a: {
-          value: {
-            element: 'a',
-            attrs: {
-              href: f(({url}) => {
-                         return url
-                     })
-              })
-            }
-          }
-        }
+### Using slots before and after rendered value
+
+Components for primitive values contain a ``before`` and ``after`` slot which can be used to render custom code before and after rendered value. Example:
+```pug
+data-renderer(:layout="layout" :data="data")
+    template(v-slot:before)
+        div a
+    template(v-slot:after)
+        div b
 ```
 
 ### Rendering components before and after rendered data
@@ -295,20 +365,20 @@ To render custom component before or after rendered data, register component in 
 
 ### Rendering custom components based on type of value
 
-Custom components can be used based on type of value, when passed to ``:renderer-components`` property.
+Custom components can be used based instead of default ones, when passed to ``:renderer-components`` property. Example:
 
 ```pug
 data-renderer(:layout="layout" :data="data" renderer-components="rendererComponents")
 ```
-```vue
-data: {
+```javascript
+data = {
         a: 'string value',
         b: 1,
         c: 'string value',
         d: true
       }
 
-rendererComponents: {
+rendererComponents = {
         string: CustomComponent
       }
 ```
