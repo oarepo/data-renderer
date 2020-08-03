@@ -95,7 +95,9 @@ const RendererMixin = {
   },
   computed: {
     currentLayout () {
-      return this.layout || {}
+      const layout = this.layout || {}
+      const pathLayout = this.pathLayouts !== undefined ? this.pathLayouts[this.prop] || {} : {}
+      return {...layout, ...pathLayout}
     }
   }
 }

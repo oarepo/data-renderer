@@ -11,35 +11,23 @@ export default {
   data: function () {
     return {
       record: {
-        object: {
-          creator: 'Mary Black',
-          phone: null
-        }
+        object: {}
       },
       layout: { showEmpty: true },
       pathLayouts: {
         object: {
           label: {
-            label: 'object'
-          }
-        },
-        creator: {
-          label: {
-            label: 'creator',
-            class: ['text-red']
+            label: 'object label'
           },
-          value: {
-            class: ['text-red']
-          }
-        },
-        phone: {
-          label: {
-            label: 'phone',
-            class: ['text-blue']
-          },
-          value: {
-            class: ['text-blue']
-          }
+          children: [
+            {
+              prop: 'creator', label: {
+                label: 'creator label',
+                class: ['text-red']
+              }
+            }
+          ],
+          showEmpty: true
         }
       }
     }

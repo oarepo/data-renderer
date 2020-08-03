@@ -2,8 +2,6 @@ json=$(realpath $(dirname $0)/node_modules/.bin/json)
 bili=$(realpath $(dirname $0)/node_modules/.bin/bili)
 
 rm -rf dist
-echo bla
-ls
 cd library
 $bili -c bili.config.js --plugins.vue --format esm ./index.js
 mv dist/index.esm.js dist/oarepo-data-renderer.esm.js
