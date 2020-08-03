@@ -7,6 +7,7 @@ module.exports = {
       rtlSupport: false
     }
   },
+  publicPath: '/data-renderer/',
   configureWebpack (cfg) {
     cfg.resolve.alias['@oarepo/data-renderer'] =
       path.join(__dirname, 'library/index.js')
