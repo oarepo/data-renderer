@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -e
+
 json=$(realpath $(dirname $0)/node_modules/.bin/json)
 bili=$(realpath $(dirname $0)/node_modules/.bin/bili)
 
