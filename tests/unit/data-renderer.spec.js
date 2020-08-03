@@ -439,16 +439,16 @@ describe('DataRendererComponent.vue', () => {
     console.log(wrapper.html())
     expect(wrapper.html()).to.include(
       '<div class="iqdr-children-wrapper iqdr-level-0 iqdr-layout-inline">\n' +
-      '  <div class="iqdr-wrapper iqdr-path-object iqdr-level-1"><label class="iqdr-label iqdr-path-object iqdr-level-1">Label: </label>\n' +
-      '    <div class="iqdr-children-wrapper iqdr-path-object iqdr-level-1">\n' +
-      '      <div class="iqdr-wrapper iqdr-path-object-a iqdr-path-a iqdr-level-2"><span class="text-red iqdr-label iqdr-path-object-a iqdr-path-a iqdr-level-2">Aa: </span>\n' +
-      '        <div class="text-red iqdr-value iqdr-path-object-a iqdr-path-a iqdr-level-2">1</div>\n' +
-      '      </div>\n' +
-      '      <div class="iqdr-wrapper iqdr-path-object-b iqdr-path-b iqdr-level-2"><label class="text-blue iqdr-label iqdr-path-object-b iqdr-path-b iqdr-level-2">Bb: </label>\n' +
-      '        <div class="text-blue iqdr-value iqdr-path-object-b iqdr-path-b iqdr-level-2">---</div>\n' +
-      '      </div>\n' +
-      '    </div>\n' +
-      '  </div>\n' +
-      '</div>')
+        '  <div class="iqdr-wrapper iqdr-path-object iqdr-level-1"><label class="iqdr-label iqdr-path-object iqdr-level-1">Label: </label>\n' +
+        '    <div class="iqdr-children-wrapper iqdr-path-object iqdr-level-1">\n' +
+        '      <div class="iqdr-wrapper iqdr-path-object-a iqdr-path-a iqdr-level-2"><span class="text-red text-red iqdr-label iqdr-path-object-a iqdr-path-a iqdr-level-2">Aa: </span>\n' +
+        '        <div class="text-red text-red iqdr-value iqdr-path-object-a iqdr-path-a iqdr-level-2">1</div>\n' +
+        '      </div>\n' +
+        '      <div class="iqdr-wrapper iqdr-path-object-b iqdr-path-b iqdr-level-2"><label class="text-blue text-blue iqdr-label iqdr-path-object-b iqdr-path-b iqdr-level-2">Bb: </label>\n' +
+        '        <div class="text-blue text-blue iqdr-value iqdr-path-object-b iqdr-path-b iqdr-level-2">---</div>\n' +
+        '      </div>\n' +
+        '    </div>\n' +
+        '  </div>\n' +
+        '</div>')
   })
 })
