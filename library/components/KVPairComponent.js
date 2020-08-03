@@ -50,7 +50,7 @@ const KVPairComponent = {
         props: {
           value: value,
           schema: this.schema,
-          layout: {...this.layout, valueWrapper},
+          layout: {...this.currentLayout, valueWrapper},
           paths: this.paths,
           pathLayouts: this.pathLayouts,
           rendererComponents: this.rendererComponents,

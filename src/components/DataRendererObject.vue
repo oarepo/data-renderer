@@ -19,16 +19,13 @@ export default {
         }
       },
       layout: {
-        showEmpty: true,
-        'children-wrapper': {
-          element: 'div'
-        },
         children: [
           {
             prop: 'object',
             label: {
               label: 'object'
             },
+            showEmpty: true,
             children: [
               {
                 prop: 'creator',
@@ -41,6 +38,9 @@ export default {
                 label: {
                   label: 'phone'
                 }
+              },
+              {
+                prop: 'email'
               }]
           }]
       }
