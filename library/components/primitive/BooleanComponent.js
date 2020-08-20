@@ -13,7 +13,11 @@ export default {
     if (this.$slots.before) {
       children.push(this.$slots.before)
     }
-    children.push(this.value.toString())
+    if (this.value === undefined) {
+      children.push('false')
+    } else {
+      children.push(this.value.toString())
+    }
     if (this.$slots.after) {
       children.push(this.$slots.after)
     }
