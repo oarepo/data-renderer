@@ -1,6 +1,6 @@
 {
   "name": "@oarepo/data-renderer",
-  "version": "v2.4.7",
+  "version": "v2.4.8",
   "license": "MIT",
   "main": "oarepo-data-renderer.esm.js",
   "description": "A library for providing simple (but configurable) UI for rendering of JSON data",
