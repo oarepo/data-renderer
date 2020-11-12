@@ -130,6 +130,13 @@ q-page.q-ma-lg
           q-separator.q-mb-md.q-mt-sm
           data-renderer-custom-string-component-demo(:query="query")
 
+    .div.col-4
+      .q-card.full-height
+        q-card-section
+          .text-weight-medium Render object with children layout
+          q-separator.q-mb-md.q-mt-sm
+          data-renderer-children-layout-object-demo(:query="query")
+
 </template>
 
 <script>
@@ -149,9 +156,11 @@ import DataRendererBeforeAfterComplexArrayDemo from './DataRendererBeforeAfterCo
 import DataRendererLinkDemo from './DataRendererLink'
 import DataRendererPathLayoutDemo from './DataRendererPathLayout'
 import DataRendererCustomStringComponentDemo from "./DataRendererCustomStringComponent";
+import DataRendererChildrenLayoutObjectDemo from "@/components/DataRendererChildrenLayoutObject";
 
 export default {
   components: {
+    DataRendererChildrenLayoutObjectDemo,
     DataRendererCustomStringComponentDemo,
     DataRendererPathLayoutDemo,
     DataRendererLinkDemo,

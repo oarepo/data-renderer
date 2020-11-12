@@ -1,5 +1,5 @@
 import KVPairComponent from './KVPairComponent'
-import {RendererMixin} from './mixins'
+import { RendererMixin } from './mixins'
 
 export default {
   name: 'data-renderer-object-component',
@@ -8,19 +8,20 @@ export default {
     value: Object,
     paths: Array
   },
-  render(h) {
+  render (h) {
     const layout = this.currentLayout
     const value = this.value || {}
     let childrenLayouts = layout.children
-    if (childrenLayouts === undefined || childrenLayouts.length===0) {
+    if (childrenLayouts === undefined || childrenLayouts.length === 0) {
       childrenLayouts = this.$oarepo.dataRenderer.createDynamicObjectLayout({
         value: value,
         paths: this.paths,
         schema: this.schema,
-        layout: layout,
+        layout: layout.childrenLayout,
         vue: this
       })
     }
+
     const showEmpty = layout.showEmpty || this.$oarepo.dataRenderer.layouts[this.schema].showEmpty
     return this.renderElement(h, this.getLayout('children-wrapper', this.$props), this.$props, this.paths, () => {
       const ret = []
@@ -36,6 +37,9 @@ export default {
           childLayout.label = {
             label: prop
           }
+        }
+        if (layout.childrenLayout !== undefined) {
+          childLayout = {...childLayout, ...layout.childrenLayout}
         }
         ret.push(h(KVPairComponent, {
           props: {
